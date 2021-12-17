@@ -5,7 +5,7 @@ import Flex from "../../styled/Flex";
 import Grid from "../../styled/Grid";
 
 interface Props {
-  children?: any;
+  children?: childNode;
 }
 
 const Layout: React.FC<Props> = ({ children }): JSX.Element => {

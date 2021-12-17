@@ -1,17 +1,11 @@
 import styled, { StyledComponent } from "styled-components";
+import { FlexProps } from "styled-system";
 import tw from "twin.macro";
-import { FlexProps } from "../interface/styled-interface";
 
 export const flex = tw`flex justify-center items-center`;
 export const grid = tw`grid`;
 
-export const StyledForm: StyledComponent<
-    "div",
-    any,
-    { Flex },
-    never
-> = styled.div<FlexProps>`
-    ${(props) => props?.Flex && flex}
+export const StyledForm = styled.div<FlexProps>`
     ${tw`flex-col`}
     & {
         form {
