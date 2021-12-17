@@ -1,0 +1,30 @@
+version: 2
+
+# Define the jobs we want to run for this project
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.4.0
+    steps:
+      - checkout
+      - run: echo "build project"
+      - run: yarn 
+      - run: yarn build
+  test:
+    docker:
+      - image: cimg/node:16.4.0
+    steps:
+      - checkout
+      - run: echo "Running tests"
+      - run: yarn install
+      - run: yarn test
+
+
+# Orchestrate our job run sequence
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test

@@ -1,0 +1,8 @@
+@font-face {
+  font-family: Mukta;
+  src: local('Mukta Light'), local('Mukta-Light'),
+    url('/fonts//Mukta-Light.ttf');
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
