@@ -1,8 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { findJSXByAttr } from "./testUtils";
+import { findJSXByAttr } from "../testUtils";
 
-import Calendar from "../components/Calendar";
+import Calendar from "../../components/Calendar";
 
 const setup = (props = {}, state = null) => {
     return shallow(<Calendar {...props} />);
