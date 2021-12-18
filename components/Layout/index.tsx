@@ -16,9 +16,9 @@ const Layout: React.FC<Props> = ({ children }): JSX.Element => {
       gridTemplateColumns={['1fr 1fr 1fr']}
     >
       <Box />
-      <Flex width={["400px", "600px", "800px", "1300px"]}
+      <Flex width={["400px", "600px", '800px', null, "1300px"]}
         height='100%'
-        flexDirection='column'
+        flexDirection={['column', null, 'row']}
         justifyContent='center'
         alignItems='center'
       >

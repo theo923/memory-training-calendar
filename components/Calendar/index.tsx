@@ -21,8 +21,12 @@ const CalendarColumn = styled(Flex) <CalendarColumnProps>`
   `}
 `;
 
-const Calendar = () => {
-  const [target, setTarget] = useState(new Date());
+interface Props {
+  target: Date
+  setTarget: React.Dispatch<React.SetStateAction<Date>>
+}
+
+const Calendar: React.FC<Props> = ({ target, setTarget }) => {
   const [calendar, setCalendar] = useState([]);
 
   useEffect(() => {
@@ -32,7 +36,7 @@ const Calendar = () => {
   return (
     <Box
       data-test="component-calendar"
-      width={['100%', null, "50vw"]}
+      width='100%'
     >
       <CalendarHeader
         setTarget={setTarget}
@@ -41,7 +45,7 @@ const Calendar = () => {
       {calendar.map((week, cidx) => (
         <Grid
           key={cidx}
-          gridTemplateColumns={["1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
+          gridTemplateColumns={["1fr", "1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
         >
           {week.map((day, didx) => (
             <CalendarColumn
