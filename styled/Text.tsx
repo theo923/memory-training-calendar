@@ -3,7 +3,8 @@ import { typography, TypographyProps } from "./styled-system";
 
 const Text = styled.p<TypographyProps>`
     font-family: Mukta;
-    ${typography};
+    word-wrap: break-word;
+    ${typography}
 `;
 
 export default Text;

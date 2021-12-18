@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import Calendar from "../components/Calendar";
 import JobBoard from "../components/JobBoard";
 import Grid from "../styled/Grid";
+import Box from "../styled/Box";
 
 const App: NextPage = (): JSX.Element => {
   const [target, setTarget] = useState(new Date());
