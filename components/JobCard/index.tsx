@@ -17,6 +17,8 @@ const JobCard: React.FC<Props> = ({
       <Flex
         flexDirection='column'
         justifyContent='center'
+        overflowX='hidden'
+        width='100%'
       >
         <Text
           fontSize={['20px', null, '20px']}
