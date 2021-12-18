@@ -13,10 +13,10 @@ const Layout: React.FC<Props> = ({ children }): JSX.Element => {
     <Grid
       data-test="component-layout"
       height='100%'
-      gridTemplateColumns={['1fr 1fr 1fr']}
+      gridTemplateColumns={['0.5fr 1fr 0.5fr']}
     >
       <Box />
-      <Flex width={["400px", "600px", '800px', null, "1300px"]}
+      <Flex width={["400px", "600px", '800px', "1000px"]}
         height='100%'
         flexDirection={['column', null, 'row']}
         justifyContent='center'
