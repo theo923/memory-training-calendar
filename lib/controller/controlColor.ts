@@ -6,26 +6,34 @@ const identifyDay = {
     2: "afterDay",
     3: "dayLastMonth",
     4: "dayNextMonth",
+    5: "targetDay",
+    6: "white",
 };
 
 export const setTextColor = (result) => {
     switch (identifyDay[result]) {
         case "curDay":
-            return "text-red-500";
+            return "#ef4444";
+        case "targetDay":
+            return "#171717";
         case "beforeDay":
-            return "text-black";
+            return "#171717";
         case "afterDay":
-            return "text-black";
+            return "#171717";
         case "dayLastMonth":
-            return "text-stone-500";
+            return "#78716c";
         case "dayNextMonth":
-            return "text-stone-500";
+            return "#78716c";
+        case "white":
+            return "#fff";
     }
 };
 
 export const setBgColor = (result) => {
     switch (identifyDay[result]) {
         case "curDay":
+            return "#fff";
+        case "targetDay":
             return "#ffedd5";
         case "beforeDay":
             return "#fff";
@@ -39,7 +47,7 @@ export const setBgColor = (result) => {
 };
 
 export const dayIdentifier = (date: Date, target: Date) => {
-    if (isSameDay(date, target)) return 0;
+    if (isSameDay(date, target)) return 5;
     if (date < target) {
         if (
             date.getFullYear() < target.getFullYear() ||

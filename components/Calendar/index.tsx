@@ -7,10 +7,23 @@ import Flex from "../../styled/Flex";
 import { getCalendar } from "../../lib/get/getCalendar";
 import CalendarHeader from "./CalendarHeader";
 import { setTextColor, setBgColor, dayIdentifier } from "../../lib/controller/controlColor";
+import { getFullDate } from "../../lib/get/getFullDate";
+import tw from "twin.macro";
+import { useWindowDimensions } from "../../lib/get/getWindowDimensions";
 
 type CalendarColumnProps = {
   setColor: string
 }
+
+const TaskBox = styled(Box) <{ setTaskColor: string }>`
+  width: 100%;
+  font-weight: 700;
+    ${tw`border-2 border-black shadow-lg rounded-md px-2`}
+
+  ${({ setTaskColor }) => css`
+    background-color: ${setTaskColor || ''}
+  `}
+`
 
 const CalendarColumn = styled(Flex) <CalendarColumnProps>`
   border: .5px solid #808080;
@@ -24,10 +37,20 @@ const CalendarColumn = styled(Flex) <CalendarColumnProps>`
 interface Props {
   target: Date
   setTarget: React.Dispatch<React.SetStateAction<Date>>
+  userTasks: any
 }
 
-const Calendar: React.FC<Props> = ({ target, setTarget }) => {
+const Calendar: React.FC<Props> = ({ target, setTarget, userTasks }) => {
   const [calendar, setCalendar] = useState([]);
+  const width = useWindowDimensions()?.width
+  const [textlimit, setTextlimit] = useState(0);
+
+  useEffect(() => {
+    if (width >= 1012) setTextlimit(9 + 1)
+    else if (width >= 768) setTextlimit(6 + 1)
+    else if (width >= 540) setTextlimit(3 + 1)
+    else setTextlimit(0)
+  }, [width])
 
   useEffect(() => {
     setCalendar(getCalendar(target))
@@ -54,18 +77,44 @@ const Calendar: React.FC<Props> = ({ target, setTarget }) => {
               onClick={() => setTarget(day)}
             >
               <Flex
+                flexDirection='column'
                 my='5px'
                 mx='5px'
-                height={["100px"]}>
+                minWidth={["20px", '70px', "100px", "120px"]}
+                minHeight={['0', "150px"]}
+              >
                 {<Text
                   fontSize='20px'
-                  className={setTextColor(dayIdentifier(day, target))}
+                  color={setTextColor(dayIdentifier(day, target))}
                 >
                   {day.getDate()}
                 </Text>}
+                {userTasks![getFullDate(day)] && userTasks![getFullDate(day)].map(
+                  (task, tidx) => {
+                    if (tidx >= 3) return ''
+                    return <TaskBox
+                      key={tidx}
+                      padding={['3px']}
+                      my={['5px']}
+                      setTaskColor={"#2563eb"}
+                    >
+                      <Text
+                        fontSize='18px'
+                        color={setTextColor(6)}
+                      >
+                        {
+                          textlimit ?
+                            task.taskTitle.length > textlimit ?
+                              task.taskTitle.substring(0, textlimit) + '...'
+                              : task.taskTitle.substring(0, textlimit)
+                            : task.taskTitle
+                        }
+                      </Text>
+                    </TaskBox>
+                  })}
               </Flex>
-            </CalendarColumn>)
-          )}
+            </CalendarColumn>
+          ))}
         </Grid>
       )
       )}
