@@ -24,10 +24,7 @@
     "**/*.ts",
     "**/*.tsx",
     "__test__/setupTests.js",
-    "pages/shoppingCart.tsx",
     "pages/_app.tsx",
-    "pages/tracking/[username]/[order_id].js",
-    "pages/api/security/checkAdminStatus.tsx"
   ],
   "exclude": [
     "node_modules"
