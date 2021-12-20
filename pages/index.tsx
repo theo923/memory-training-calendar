@@ -6,6 +6,9 @@ import Calendar from "../components/Calendar";
 import JobBoard from "../components/JobBoard";
 import Grid from "../styled/Grid";
 import Box from "../styled/Box";
+import TaskBoard from "../components/TaskBoard";
+import Flex from "../styled/Flex";
+import CreateTaskBoard from "../components/CreateTaskComponent";
 
 const App: NextPage = (): JSX.Element => {
   const [target, setTarget] = useState(new Date());
@@ -21,13 +24,19 @@ const App: NextPage = (): JSX.Element => {
         <Calendar
           target={target}
           setTarget={setTarget}
-        />
-        <JobBoard
           userTasks={userTasks}
-          setUserTasks={setUserTasks}
-          target={target}
-          setTarget={setTarget}
         />
+        <JobBoard>
+          <CreateTaskBoard
+            userTasks={userTasks}
+            setUserTasks={setUserTasks}
+            target={target}
+          />
+          <TaskBoard
+            userTasks={userTasks}
+            target={target}
+          />
+        </JobBoard>
       </Layout>
     </>
   );
