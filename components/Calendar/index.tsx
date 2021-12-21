@@ -6,10 +6,11 @@ import Grid from "../../styled/Grid";
 import Flex from "../../styled/Flex";
 import { getCalendar } from "../../lib/get/getCalendar";
 import CalendarHeader from "./CalendarHeader";
-import { setTextColor, setBgColor, dayIdentifier } from "../../lib/controller/controlColor";
+import { setTextColor, setBgColor, dayIdentifier, targetIdentifier } from "../../lib/controller/controlColor";
 import { getFullDate } from "../../lib/get/getFullDate";
 import tw from "twin.macro";
 import { useWindowDimensions } from "../../lib/get/getWindowDimensions";
+import { UserTaskProps } from "../Board";
 
 type CalendarColumnProps = {
   setColor: string
@@ -38,9 +39,17 @@ interface Props {
   target: Date
   setTarget: React.Dispatch<React.SetStateAction<Date>>
   userTasks: any
+  targetedTask: UserTaskProps
+  setTargetedTask: React.Dispatch<React.SetStateAction<UserTaskProps>>
 }
 
-const Calendar: React.FC<Props> = ({ target, setTarget, userTasks }) => {
+const Calendar: React.FC<Props> = ({
+  target,
+  setTarget,
+  userTasks,
+  targetedTask,
+  setTargetedTask
+}) => {
   const [calendar, setCalendar] = useState([]);
   const width = useWindowDimensions()?.width
   const [textlimit, setTextlimit] = useState(0);
@@ -90,17 +99,18 @@ const Calendar: React.FC<Props> = ({ target, setTarget, userTasks }) => {
                   {day.getDate()}
                 </Text>}
                 {userTasks![getFullDate(day)] && userTasks![getFullDate(day)].map(
-                  (task, tidx) => {
+                  (task: UserTaskProps, tidx: number) => {
                     if (tidx >= 3) return ''
                     return <TaskBox
                       key={tidx}
+                      onClick={() => setTargetedTask(task)}
                       padding={['3px']}
                       my={['5px']}
-                      setTaskColor={"#2563eb"}
+                      setTaskColor={setTextColor(targetIdentifier(task, targetedTask)) || "#2563eb"}
                     >
                       <Text
                         fontSize='18px'
-                        color={setTextColor(6)}
+                        color={task === targetedTask ? setTextColor(5) : setTextColor(6)}
                       >
                         {
                           textlimit ?

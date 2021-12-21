@@ -8,14 +8,15 @@ import { getFullDate } from '../../lib/get/getFullDate';
 import TextArea from '../../styled/TextArea'
 import Button from '../../styled/Button'
 import { controlTaskTitle, controlTaskDescription, initailizeTask, addTask } from '../../lib/controller/controlTask'
+import { UserTaskProps } from '../Board'
 
 const InputText = styled(Box)`
   align-self: center;
 `
 
 interface Props {
-  userTasks: any,
-  setUserTasks: React.Dispatch<React.SetStateAction<{}>>,
+  targetedTask: any,
+  setTargetedTask: React.Dispatch<React.SetStateAction<UserTaskProps>>,
   target: Date,
   // setTarget: React.Dispatch<React.SetStateAction<Date>>
 }
@@ -26,17 +27,16 @@ export const initialCard = {
 }
 
 const JobCreationBoard: React.FC<Props> = ({
-  userTasks,
-  setUserTasks,
+  targetedTask,
+  setTargetedTask,
   target,
   // setTarget
 }): JSX.Element => {
-  const [inputVal, setInputVal] = useState(initialCard)
+  const [inputVal, setInputVal] = useState(targetedTask)
 
   useEffect(() => {
-    if (!userTasks![getFullDate(target)])
-      initailizeTask(setUserTasks, target)
-  }, [target])
+    setInputVal(targetedTask)
+  }, [targetedTask])
 
   return (
     <Box>
@@ -67,7 +67,7 @@ const JobCreationBoard: React.FC<Props> = ({
         />
         <Box />
         <Flex justifyContent='space-around'>
-          <Button onClick={() => addTask(setUserTasks, target, inputVal)}>Submit</Button>
+          {/* <Button onClick={() => addTask(setUserTasks, target, inputVal)}>Submit</Button> */}
           <Button onClick={() => setInputVal(initialCard)}>Reset</Button>
         </Flex>
       </Grid>
