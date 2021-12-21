@@ -43,6 +43,8 @@ export const setBgColor = (result) => {
             return "#d1d5db";
         case "dayNextMonth":
             return "#d1d5db";
+        case "white":
+            return "#fff";
     }
 };
 
@@ -64,4 +66,9 @@ export const dayIdentifier = (date: Date, target: Date) => {
             return 4;
         return 2;
     }
+};
+
+export const targetIdentifier = (task, targetedTask) => {
+    if (task == targetedTask) return 6;
+    return null;
 };

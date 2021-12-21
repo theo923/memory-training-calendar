@@ -14,9 +14,8 @@ const Wrapper = styled(Box)`
 `
 
 interface Props {
-  userTasks: any,
-  setUserTasks: React.Dispatch<React.SetStateAction<{}>>,
-  target: Date,
+  title: string,
+  children?: React.ReactNode,
 }
 
 export interface UserTaskProps {
@@ -24,10 +23,9 @@ export interface UserTaskProps {
   taskDescription: string
 }
 
-const CreateTaskBoard: React.FC<Props> = ({
-  userTasks,
-  setUserTasks,
-  target,
+const Board: React.FC<Props> = ({
+  title,
+  children,
 }): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false)
   return (
@@ -35,7 +33,7 @@ const CreateTaskBoard: React.FC<Props> = ({
       <Flex justifyContent='space-between' alignItems='center'>
         <Box mr='5px'>
           <Text fontSize={'20px'} fontWeight='600'>
-            Create Task Board
+            {title}
           </Text>
         </Box>
         <Button onClick={() => setOpen(prev => !prev)}>
@@ -51,15 +49,11 @@ const CreateTaskBoard: React.FC<Props> = ({
           width={['100%', null, '40vw', '40vw', '20vw']}
           height={['100%', null, '85%']}
         >
-          <JobCreationBoard
-            userTasks={userTasks}
-            setUserTasks={setUserTasks}
-            target={target}
-          />
+          {children}
         </Box>
       }
     </Wrapper>
   )
 }
 
-export default CreateTaskBoard
+export default Board

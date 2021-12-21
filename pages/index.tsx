@@ -4,15 +4,15 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Calendar from "../components/Calendar";
 import JobBoard from "../components/JobBoard";
-import Grid from "../styled/Grid";
-import Box from "../styled/Box";
-import TaskBoard from "../components/TaskBoard";
-import Flex from "../styled/Flex";
-import CreateTaskBoard from "../components/CreateTaskComponent";
+import TaskBoard from "../components/Tasks";
+import Board, { UserTaskProps } from "../components/Board";
+import JobCreationBoard, { initialCard } from "../components/JobCreationBoard";
+import ModifyBoard from "../components/ModifyBoard";
 
 const App: NextPage = (): JSX.Element => {
   const [target, setTarget] = useState(new Date());
   const [userTasks, setUserTasks] = useState({})
+  const [targetedTask, setTargetedTask] = useState<UserTaskProps>(initialCard)
 
   return (
     <>
@@ -25,17 +25,30 @@ const App: NextPage = (): JSX.Element => {
           target={target}
           setTarget={setTarget}
           userTasks={userTasks}
+          targetedTask={targetedTask}
+          setTargetedTask={setTargetedTask}
         />
         <JobBoard>
-          <CreateTaskBoard
-            userTasks={userTasks}
-            setUserTasks={setUserTasks}
-            target={target}
-          />
-          <TaskBoard
-            userTasks={userTasks}
-            target={target}
-          />
+          <Board title={'Create Task Board'}>
+            <JobCreationBoard
+              userTasks={userTasks}
+              setUserTasks={setUserTasks}
+              target={target}
+            />
+          </Board>
+          <Board title={'Task Board'}>
+            <TaskBoard
+              userTasks={userTasks}
+              target={target}
+            />
+          </Board>
+          <Board title={'Modify Board'}>
+            <ModifyBoard
+              targetedTask={targetedTask}
+              setTargetedTask={setTargetedTask}
+              target={target}
+            />
+          </Board>
         </JobBoard>
       </Layout>
     </>
