@@ -39,7 +39,7 @@ const JobCreationBoard: React.FC<Props> = ({
   }, [target])
 
   return (
-    <Box>
+    <Box data-test="component-jobCreationBoard">
       <Grid
         gridTemplateColumns={['0.7fr 1.3fr']}
         verticalAlign={['center']}

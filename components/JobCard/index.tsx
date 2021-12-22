@@ -27,6 +27,7 @@ const JobCard: React.FC<Props> = ({
 }): JSX.Element => {
   return (
     <FullTaskContent
+      data-test="component-jobCard"
       padding={['3px']}
       my={['5px']}
       setTaskColor={"#2563eb"}

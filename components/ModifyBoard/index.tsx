@@ -4,7 +4,7 @@ import Input from '../../styled/Input'
 import Grid from '../../styled/Grid'
 import Flex from '../../styled/Flex'
 import styled from "styled-components";
-import { getFullDate } from '../../lib/get/getFullDate';
+// import { getFullDate } from '../../lib/get/getFullDate';
 import TextArea from '../../styled/TextArea'
 import Button from '../../styled/Button'
 import { controlTaskTitle, controlTaskDescription, initailizeTask, addTask } from '../../lib/controller/controlTask'
@@ -28,18 +28,16 @@ export const initialCard = {
 
 const JobCreationBoard: React.FC<Props> = ({
   targetedTask,
-  setTargetedTask,
-  target,
   // setTarget
 }): JSX.Element => {
-  const [inputVal, setInputVal] = useState(targetedTask)
+  const [inputVal, setInputVal] = useState<UserTaskProps>(targetedTask)
 
   useEffect(() => {
     setInputVal(targetedTask)
   }, [targetedTask])
 
   return (
-    <Box>
+    <Box data-test="component-modifyBoard">
       <Grid
         gridTemplateColumns={['0.7fr 1.3fr']}
         verticalAlign={['center']}
@@ -52,7 +50,7 @@ const JobCreationBoard: React.FC<Props> = ({
           Title:
         </InputText>
         <Input
-          value={inputVal.taskTitle}
+          value={inputVal?.taskTitle}
           onChange={e => controlTaskTitle(setInputVal, e)}
         />
         <InputText
@@ -62,7 +60,7 @@ const JobCreationBoard: React.FC<Props> = ({
           Description:
         </InputText>
         <TextArea
-          value={inputVal.taskDescription}
+          value={inputVal?.taskDescription}
           onChange={e => controlTaskDescription(setInputVal, e)}
         />
         <Box />
