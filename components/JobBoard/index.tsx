@@ -14,6 +14,7 @@ interface Props {
 const JobBoard: React.FC<Props> = ({ children }): JSX.Element => {
   return (
     <JobBoardWrapper
+      data-test="component-jobBoard"
       m={['10px']}
       // @ts-ignore
       position={['sticky', null, 'fixed']}

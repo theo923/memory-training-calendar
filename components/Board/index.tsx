@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Box from '../../styled/Box'
 import styled from "styled-components";
 import tw from 'twin.macro'
-import JobCreationBoard from '../JobCreationBoard'
 import Button from '../../styled/Button';
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from 'react-icons/fa';
 import Flex from '../../styled/Flex';
@@ -29,7 +28,7 @@ const Board: React.FC<Props> = ({
 }): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false)
   return (
-    <Wrapper>
+    <Wrapper data-test="component-board">
       <Flex justifyContent='space-between' alignItems='center'>
         <Box mr='5px'>
           <Text fontSize={'20px'} fontWeight='600'>
