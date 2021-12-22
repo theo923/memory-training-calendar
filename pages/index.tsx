@@ -15,6 +15,8 @@ const App = ({ tasks = {} }): JSX.Element => {
   const [target, setTarget] = useState(new Date());
   const [userTasks, setUserTasks] = useState(tasks || {})
   const [targetedTask, setTargetedTask] = useState<UserTaskProps>(initialCard)
+  console.log(tasks)
+  console.log(userTasks)
 
   return (
     <>
