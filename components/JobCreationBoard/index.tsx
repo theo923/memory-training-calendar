@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import Box from '../../styled/Box'
-import Input from '../../styled/Input'
-import Grid from '../../styled/Grid'
-import Flex from '../../styled/Flex'
-import styled from "styled-components";
-import { getFullDate } from '../../lib/get/getFullDate';
-import TextArea from '../../styled/TextArea'
-import Button from '../../styled/Button'
-import { controlTaskTitle, controlTaskDescription, initailizeTask, addTask } from '../../lib/controller/controlTask'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { TaskProps, UserTasksProps } from 'lib/interface'
+import { initailizeTask, controlTaskTitle, controlTaskDescription, addTask } from 'lib/controller/controlTask'
+import { getFullDate } from 'lib/get/getFullDate'
+import styled from 'styled-components'
+import Box from 'styled/Box'
+import Button from 'styled/Button'
+import Flex from 'styled/Flex'
+import Grid from 'styled/Grid'
+import Input from 'styled/Input'
+import TextArea from 'styled/TextArea'
 
 const InputText = styled(Box)`
   align-self: center;
 `
 
 interface Props {
-  userTasks: any,
-  setUserTasks: React.Dispatch<React.SetStateAction<{}>>,
+  userTasks: UserTasksProps,
+  setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
   // setTarget: React.Dispatch<React.SetStateAction<Date>>
 }
@@ -31,7 +32,7 @@ const JobCreationBoard: React.FC<Props> = ({
   target,
   // setTarget
 }): JSX.Element => {
-  const [inputVal, setInputVal] = useState(initialCard)
+  const [inputVal, setInputVal] = useState<TaskProps>(initialCard)
 
   useEffect(() => {
     if (!userTasks![getFullDate(target)])
@@ -53,7 +54,7 @@ const JobCreationBoard: React.FC<Props> = ({
         </InputText>
         <Input
           value={inputVal.taskTitle}
-          onChange={e => controlTaskTitle(setInputVal, e)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskTitle(setInputVal, e)}
         />
         <InputText
           fontSize={['20px', null, '20px']}
@@ -63,7 +64,7 @@ const JobCreationBoard: React.FC<Props> = ({
         </InputText>
         <TextArea
           value={inputVal.taskDescription}
-          onChange={e => controlTaskDescription(setInputVal, e)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskDescription(setInputVal, e)}
         />
         <Box />
         <Flex justifyContent='space-around'>

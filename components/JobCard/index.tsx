@@ -1,10 +1,11 @@
+import { setTextColor } from 'lib/controller/controlColor'
 import React from 'react'
-import Box from '../../styled/Box'
-import Text from '../../styled/Text'
-import Flex from '../../styled/Flex';
-import styled, { css } from 'styled-components';
-import tw from 'twin.macro';
-import { setTextColor } from '../../lib/controller/controlColor';
+import styled, { css } from 'styled-components'
+import Box from 'styled/Box'
+import Flex from 'styled/Flex'
+import Text from 'styled/Text'
+import tw from 'twin.macro'
+
 
 const FullTaskContent = styled(Box) <{ setTaskColor: string }>`
     width: 100%;

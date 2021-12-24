@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import tw from "twin.macro";
-import { normal } from "./styled-system";
+import { normal } from "../styled-system";
 
 const StyledInput = styled.input`
     font-family: Mukta;

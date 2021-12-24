@@ -1,16 +1,17 @@
+import { setBgColor, dayIdentifier, setTextColor, targetIdentifier } from "lib/controller/controlColor";
+import { getCalendar } from "lib/get/getCalendar";
+import { getFullDate } from "lib/get/getFullDate";
+import { useWindowDimensions } from "lib/get/getWindowDimensions";
+import { UserTasksProps, TaskProps } from "lib/interface";
 import React, { useEffect, useState } from "react";
-import Text from "../../styled/Text";
-import Box from "../../styled/Box";
 import styled, { css } from "styled-components";
-import Grid from "../../styled/Grid";
-import Flex from "../../styled/Flex";
-import { getCalendar } from "../../lib/get/getCalendar";
-import CalendarHeader from "./CalendarHeader";
-import { setTextColor, setBgColor, dayIdentifier, targetIdentifier } from "../../lib/controller/controlColor";
-import { getFullDate } from "../../lib/get/getFullDate";
+import Box from "styled/Box";
+import Flex from "styled/Flex";
+import Text from "styled/Text";
+import Grid from "styled/Grid";
 import tw from "twin.macro";
-import { useWindowDimensions } from "../../lib/get/getWindowDimensions";
-import { UserTaskProps } from "../Board";
+import CalendarHeader from "./CalendarHeader";
+
 
 type CalendarColumnProps = {
   setColor: string
@@ -38,9 +39,9 @@ const CalendarColumn = styled(Flex) <CalendarColumnProps>`
 interface Props {
   target: Date
   setTarget: React.Dispatch<React.SetStateAction<Date>>
-  userTasks: any
-  targetedTask: UserTaskProps
-  setTargetedTask: React.Dispatch<React.SetStateAction<UserTaskProps>>
+  userTasks: UserTasksProps
+  targetedTask: TaskProps
+  setTargetedTask: React.Dispatch<React.SetStateAction<TaskProps>>
 }
 
 const Calendar: React.FC<Props> = ({
@@ -50,7 +51,7 @@ const Calendar: React.FC<Props> = ({
   targetedTask,
   setTargetedTask
 }) => {
-  const [calendar, setCalendar] = useState([]);
+  const [calendar, setCalendar] = useState<any>([]);
   const width = useWindowDimensions()?.width
   const [textlimit, setTextlimit] = useState(0);
 
@@ -74,15 +75,15 @@ const Calendar: React.FC<Props> = ({
         setTarget={setTarget}
         target={target}
       />
-      {calendar.map((week, cidx) => (
+      {calendar.map((week: any, cidx: number) => (
         <Grid
           key={cidx}
           gridTemplateColumns={["1fr", "1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
         >
-          {week.map((day, didx) => (
+          {week.map((day: any, didx: number) => (
             <CalendarColumn
               key={didx}
-              setColor={setBgColor(dayIdentifier(day, target))}
+              setColor={setBgColor(dayIdentifier(day, target)) || '#fff'}
               onClick={() => setTarget(day)}
             >
               <Flex
@@ -99,7 +100,7 @@ const Calendar: React.FC<Props> = ({
                   {day.getDate()}
                 </Text>}
                 {userTasks![getFullDate(day)] && userTasks![getFullDate(day)].map(
-                  (task: UserTaskProps, tidx: number) => {
+                  (task: TaskProps, tidx: number) => {
                     if (tidx >= 3) return ''
                     return <TaskBox
                       key={tidx}

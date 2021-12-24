@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import Box from '../../styled/Box'
-import styled from "styled-components";
+import { FaCompressArrowsAlt, FaExpandArrowsAlt } from 'react-icons/fa'
+import styled from 'styled-components'
+import Box from 'styled/Box'
+import Button from 'styled/Button'
+import Flex from 'styled/Flex'
+import Text from 'styled/Text'
 import tw from 'twin.macro'
-import Button from '../../styled/Button';
-import { FaCompressArrowsAlt, FaExpandArrowsAlt } from 'react-icons/fa';
-import Flex from '../../styled/Flex';
-import Text from '../../styled/Text';
+
 
 const Wrapper = styled(Box)`
   background-color: white;
@@ -17,10 +18,6 @@ interface Props {
   children?: React.ReactNode,
 }
 
-export interface UserTaskProps {
-  taskTitle: string,
-  taskDescription: string
-}
 
 const Board: React.FC<Props> = ({
   title,
