@@ -1,6 +1,6 @@
 import React from 'react'
-import Box from '../../styled/Box'
 import styled from "styled-components";
+import Box from 'styled/Box';
 
 const JobBoardWrapper = styled(Box)`
   z-index: 50;

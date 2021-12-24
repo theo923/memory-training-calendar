@@ -51,7 +51,7 @@ export const buttonVariant = {
 
 // export const IconVariant = {
 //     hoverMessenger: {
-// outline: "none",         
+// outline: "none",
 // backgroundColor: "#f8f8ff",
 //         color: "#0080f7",
 //         borderRadius: "10px",
@@ -61,7 +61,7 @@ export const buttonVariant = {
 //         opacity: 0,
 //     },
 //     hoverWhatsapp: {
-// outline: "none",         
+// outline: "none",
 // backgroundColor: "#f8f8ff",
 //         color: "#25d366",
 //         borderRadius: "10px",
@@ -71,7 +71,7 @@ export const buttonVariant = {
 //         opacity: 0,
 //     },
 //     hoverInstagram: {
-// outline: "none",         
+// outline: "none",
 // backgroundColor: "#f8f8ff",
 //         color: "#fd1d1d",
 //         borderRadius: "10px",
@@ -81,7 +81,7 @@ export const buttonVariant = {
 //         opacity: 0,
 //     },
 //     hoverTelegram: {
-// outline: "none",         
+// outline: "none",
 // backgroundColor: "#f8f8ff",
 //         color: "#35a9db",
 //         borderRadius: "10px",
@@ -107,7 +107,7 @@ export const buttonVariant = {
 //     animateMessenger: {
 //         y: [280, -10],
 //         opacity: 1,
-// outline: "none",         
+// outline: "none",
 // backgroundColor: "#0080f7",
 //         color: "#f8f8ff",
 //         transition: {
@@ -118,7 +118,7 @@ export const buttonVariant = {
 //     animateWhatsapp: {
 //         y: [220, -10],
 //         opacity: 1,
-// outline: "none",         
+// outline: "none",
 // backgroundColor: "#25d366",
 //         color: "#f8f8ff",
 //         transition: {
@@ -129,7 +129,7 @@ export const buttonVariant = {
 //     animateInstagram: {
 //         y: [160, -10],
 //         opacity: 1,
-// outline: "none",         
+// outline: "none",
 // backgroundColor: "#fd1d1d",
 //         color: "#f8f8ff",
 //         transition: {
@@ -140,7 +140,7 @@ export const buttonVariant = {
 //     animateTelegram: {
 //         y: [100, -10],
 //         opacity: 1,
-// outline: "none",         
+// outline: "none",
 // backgroundColor: "#35a9db",
 //         color: "#f8f8ff",
 //         transition: {

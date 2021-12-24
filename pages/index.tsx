@@ -5,17 +5,18 @@ import Layout from "../components/Layout";
 import Calendar from "../components/Calendar";
 import JobBoard from "../components/JobBoard";
 import TaskBoard from "../components/Tasks";
-import Board, { UserTaskProps } from "../components/Board";
+import Board from "../components/Board";
 import JobCreationBoard, { initialCard } from "../components/JobCreationBoard";
 import ModifyBoard from "../components/ModifyBoard";
 import { client, DEFAULT_HEADERS } from "../lib/apollo";
 // import { useCookies } from "react-cookie";
 import { CALENDAR_QUERY } from "../lib/queries/graphql-calendar";
+import { TaskProps, UserTasksProps } from "lib/interface";
 
 const App = ({ tasks = {} }): JSX.Element => {
-  const [target, setTarget] = useState(new Date());
-  const [userTasks, setUserTasks] = useState(tasks || {})
-  const [targetedTask, setTargetedTask] = useState<UserTaskProps>(initialCard)
+  const [target, setTarget] = useState<any>(new Date());
+  const [userTasks, setUserTasks] = useState<UserTasksProps>(tasks || {})
+  const [targetedTask, setTargetedTask] = useState<TaskProps>(initialCard)
   // const [cookies, setCookie, removeCookie] = useCookies(['calendar-user-token']);
   // setCookie('calendar-user-token', '', {
   //   path: "/",
@@ -68,7 +69,7 @@ const App = ({ tasks = {} }): JSX.Element => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
     if (!req.cookies['calendar-user-token'])
       return {
@@ -83,11 +84,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
 
-    const tasks = data.filter((each) => each?.attributes!['targetedDate'].length > 0)
+    const tasks = data.filter((each: any) => each?.attributes!['targetedDate'].length > 0)
 
-    const returnVal = {}
-    tasks.forEach((task) => {
-      task.attributes.targetedDate.forEach((date) => {
+    const returnVal: any = {}
+    tasks.forEach((task: any) => {
+      task.attributes.targetedDate.forEach((date: any) => {
         const { t_date } = date
         const returnObject = { id: parseInt(task.id), ...task?.attributes }
         if (returnVal![t_date])

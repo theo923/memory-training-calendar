@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - run: echo "build project"
-      - run: yarn 
+      - run: yarn
       - run: yarn build
   test:
     docker:
@@ -19,7 +19,6 @@ jobs:
       - run: echo "Running tests"
       - run: yarn install
       - run: yarn test
-
 
 # Orchestrate our job run sequence
 workflows:

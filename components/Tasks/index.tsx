@@ -1,8 +1,8 @@
+import JobCard from 'components/JobCard'
+import { getFullDate } from 'lib/get/getFullDate'
+import { TaskProps } from 'lib/interface'
 import React from 'react'
-import Box from '../../styled/Box'
-import { getFullDate } from '../../lib/get/getFullDate';
-import JobCard from '../JobCard';
-import { UserTaskProps } from '../Board';
+import Box from 'styled/Box'
 
 interface Props {
   userTasks: any,
@@ -17,7 +17,7 @@ const Tasks: React.FC<Props> = ({
     <>
       {userTasks![getFullDate(target)] ?
         userTasks![getFullDate(target)]?.map(
-          (task: UserTaskProps, idx: number) => (
+          (task: TaskProps, idx: number) => (
             <JobCard
               key={idx}
               taskTitle={task.taskTitle}

@@ -1,8 +1,8 @@
+import { childNode } from "lib/interface";
 import React from "react";
-import { childNode } from "../../interface";
-import Box from "../../styled/Box";
-import Flex from "../../styled/Flex";
-import Grid from "../../styled/Grid";
+import Box from "styled/Box";
+import Flex from "styled/Flex";
+import Grid from "styled/Grid";
 
 interface Props {
   children?: childNode;
