@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getHiddenWords } from 'lib/get/getHiddenWords';
 import { initializeLoginInfo } from 'lib/initialize';
 import { LoginInfoProps } from 'lib/interface';
 import { NextRouter, useRouter } from 'next/router';
@@ -80,7 +81,7 @@ const LoginPanel = () => {
             Password:
           </Flex>
           <Input
-            value={loginInfo.password}
+            value={getHiddenWords(loginInfo.password)}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setLoginInfo(prev => { return { ...prev, password: e.target.value } })
             }
