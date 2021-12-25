@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { getHiddenWords } from 'lib/get/getHiddenWords';
 import { initializeLoginInfo } from 'lib/initialize';
 import { LoginInfoProps } from 'lib/interface';
 import { NextRouter, useRouter } from 'next/router';
@@ -25,9 +24,11 @@ const LoginPanel = () => {
   const router: NextRouter = useRouter()
   const [_c, setCookie, _rC] = useCookies(['calendar-user-token']);
   const [loginInfo, setLoginInfo] = useState<LoginInfoProps>(initializeLoginInfo)
-  const [fail, setFail] = useState<boolean>(false)
+  const [status, setStatus] = useState<string>('')
+  console.log(loginInfo)
 
   const handleClick = async () => {
+    setStatus('Loading...')
     const response = await axios.post('/api/authorization', {
       identifier: loginInfo.email,
       password: loginInfo.password
@@ -44,7 +45,7 @@ const LoginPanel = () => {
     }
     else {
       setLoginInfo(initializeLoginInfo)
-      setFail(true)
+      setStatus('Failed, please try again!')
     }
   }
 
@@ -69,6 +70,7 @@ const LoginPanel = () => {
             Email:
           </Flex>
           <Input
+            type='email'
             value={loginInfo.email}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setLoginInfo(prev => { return { ...prev, email: e.target.value } })
@@ -81,7 +83,8 @@ const LoginPanel = () => {
             Password:
           </Flex>
           <Input
-            value={getHiddenWords(loginInfo.password)}
+            type='password'
+            value={loginInfo.password}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setLoginInfo(prev => { return { ...prev, password: e.target.value } })
             }
@@ -103,7 +106,7 @@ const LoginPanel = () => {
           </Button>
         </Flex>
       </Flex>
-      {fail && <Text color='red'>Failed, please try again!</Text>}
+      {status.length > 0 && <Text color='red'>{status}</Text>}
     </ContentBox>
   )
 }

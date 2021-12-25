@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { getHiddenWords } from 'lib/get/getHiddenWords';
 import { initializeRegisterInfo } from 'lib/initialize';
 import { RegisterInfoProps } from 'lib/interface';
 import { NextRouter, useRouter } from 'next/router';
@@ -25,7 +24,7 @@ const RegisterPanel = () => {
   const router: NextRouter = useRouter()
   const [_c, setCookie, _rC] = useCookies(['calendar-user-token']);
   const [registerInfo, setRegisterInfo] = useState<RegisterInfoProps>(initializeRegisterInfo)
-  const [fail, setFail] = useState<string>('')
+  const [status, setStatus] = useState<string>('')
 
   const handleClick = async () => {
     if (
@@ -40,9 +39,10 @@ const RegisterPanel = () => {
           confirmPassword: ''
         }
       })
-      setFail('Please make sure all the fields are correct!')
+      setStatus('Please make sure all the fields are correct!')
       return
     }
+    setStatus('Loading...')
     const response = await axios.post('/api/registration', {
       email: registerInfo.email,
       username: registerInfo.username,
@@ -60,7 +60,7 @@ const RegisterPanel = () => {
     }
     else {
       setRegisterInfo(initializeRegisterInfo)
-      setFail('Failed, please try again!')
+      setStatus('Failed, please try again!')
     }
   }
 
@@ -85,6 +85,7 @@ const RegisterPanel = () => {
             Email:
           </Flex>
           <Input
+            type='email'
             value={registerInfo.email}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setRegisterInfo(prev => { return { ...prev, email: e.target.value } })
@@ -109,7 +110,8 @@ const RegisterPanel = () => {
             Password:
           </Flex>
           <Input
-            value={getHiddenWords(registerInfo.password)}
+            type='password'
+            value={registerInfo.password}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setRegisterInfo(prev => { return { ...prev, password: e.target.value } })
             }
@@ -121,7 +123,8 @@ const RegisterPanel = () => {
             Confirm Password:
           </Flex>
           <Input
-            value={getHiddenWords(registerInfo.confirmPassword)}
+            type='password'
+            value={registerInfo.confirmPassword}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setRegisterInfo(prev => { return { ...prev, confirmPassword: e.target.value } })
             }
@@ -134,16 +137,22 @@ const RegisterPanel = () => {
       >
         <Flex>
           <Box mr='5px'>
-            <Button onClick={() => handleClick()}>
+            <Button
+              onClick={() => handleClick()}
+              disabled={Boolean(status === 'Loading...')}
+            >
               Submit
             </Button>
           </Box>
-          <Button onClick={() => setRegisterInfo(initializeRegisterInfo)}>
+          <Button
+            onClick={() => setRegisterInfo(initializeRegisterInfo)}
+            disabled={Boolean(status === 'Loading...')}
+          >
             Reset
           </Button>
         </Flex>
       </Flex>
-      {fail.length > 0 && <Text color='red'>{fail}</Text>}
+      {status.length > 0 && <Text color='red'>{status}</Text>}
     </ContentBox>
   )
 }
