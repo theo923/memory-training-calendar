@@ -1,5 +1,5 @@
 import JobCard from 'components/JobCard'
-import { getFullDate } from 'lib/get/getFullDate'
+import { getFullDate } from 'lib/get/getDate'
 import { TaskProps } from 'lib/interface'
 import React from 'react'
 import Box from 'styled/Box'

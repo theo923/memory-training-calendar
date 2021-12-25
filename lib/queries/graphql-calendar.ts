@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 //template
 export const CALENDAR_QUERY = gql`
-  query Task {
+  query Task($t_date_gte: Date, $t_date_lte: Date) {
     tasks {
       data {
         id
@@ -10,7 +10,7 @@ export const CALENDAR_QUERY = gql`
           taskTitle
           taskDescription
           targetedDate(
-            filters: { t_date: { gt: "2021-12-20", lt: "2021-12-31" } }
+            filters: { t_date: { gte: $t_date_gte, lte: $t_date_lte } }
           ) {
             t_date
             t_period
