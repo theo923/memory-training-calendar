@@ -30,8 +30,6 @@ const App: React.FC<Props> = ({ targetYear, status, tasks }): JSX.Element => {
 
   const router: NextRouter = useRouter()
   useEffect(() => {
-    console.log(currentYear, target)
-    console.log(isSameYear(currentYear, target))
     if (!isSameYear(currentYear, target)) {
       router.push({
         pathname: '/',
@@ -59,6 +57,12 @@ const App: React.FC<Props> = ({ targetYear, status, tasks }): JSX.Element => {
             <Board
               title={'Login'}
               type='login'
+            />
+          }
+          {status === false &&
+            <Board
+              title={'Register'}
+              type='register'
             />
           }
           <Board title={'Create Task Board'}>
@@ -124,7 +128,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       })
 
     const returnVal: any = {}
-
     if (data) {
       const tasks = data.filter((each: any) => each?.attributes!['targetedDate'].length > 0)
       tasks.forEach((task: any) => {

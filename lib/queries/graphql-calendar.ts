@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client'
 
-//template
 export const CALENDAR_QUERY = gql`
   query Task($t_date_gte: Date, $t_date_lte: Date) {
     tasks {
