@@ -22,3 +22,9 @@ export interface LoginInfoProps {
   email: string
   password: string
 }
+
+export interface RegisterInfoProps {
+  email: string
+  username: string
+  password: string
+}

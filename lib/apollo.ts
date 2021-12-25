@@ -8,7 +8,6 @@ import { NEXT_PUBLIC_API_URL } from './env'
 
 const httpLink = createHttpLink({
   uri: `${NEXT_PUBLIC_API_URL}/graphql`,
-  // uri: "http://localhost:1337/graphql",
 })
 
 const defaultOptions: DefaultOptions = {

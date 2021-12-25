@@ -10,7 +10,6 @@ import Flex from 'styled/Flex'
 import Text from 'styled/Text'
 import tw from 'twin.macro'
 
-
 const Wrapper = styled(Box)`
   background-color: white;
   ${tw`border-2 border-black shadow-md rounded-md px-2 py-1 mb-5`}
@@ -21,7 +20,6 @@ interface Props {
   children?: React.ReactNode,
   type?: string
 }
-
 
 const Board: React.FC<Props> = ({
   title,
@@ -50,6 +48,15 @@ const Board: React.FC<Props> = ({
         {type === 'login' &&
           <Button>
             <Link href='/login'>
+              <Box>
+                <RiLoginBoxLine size='20px' />
+              </Box>
+            </Link>
+          </Button>
+        }
+        {type === 'register' &&
+          <Button>
+            <Link href='/register'>
               <Box>
                 <RiLoginBoxLine size='20px' />
               </Box>
