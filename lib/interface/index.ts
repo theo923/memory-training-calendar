@@ -17,3 +17,8 @@ export interface childNode {
   }
   children?: React.ReactNode
 }
+
+export interface LoginInfoProps {
+  email: string
+  password: string
+}

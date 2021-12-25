@@ -1,10 +1,10 @@
-import styled, { StyledComponent } from "styled-components";
+import styled from "styled-components";
 import tw from "twin.macro";
 import { motion } from "framer-motion";
 import { buttonVariant } from "../../assets/animationVariant";
 import Box from "../Box";
 
-const StyledButton: StyledComponent<"div", any, {}, never> = styled(Box)`
+const StyledButton = styled(Box)`
     font-family: Mukta;
     outline: none;
     ${tw`text-base m-2`}
