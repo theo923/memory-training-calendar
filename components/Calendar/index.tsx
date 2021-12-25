@@ -1,6 +1,6 @@
 import { setBgColor, dayIdentifier, setTextColor, targetIdentifier } from "lib/controller/controlColor";
 import { getCalendar } from "lib/get/getCalendar";
-import { getFullDate } from "lib/get/getFullDate";
+import { getFullDate } from "lib/get/getDate";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
 import { UserTasksProps, TaskProps } from "lib/interface";
 import React, { useEffect, useState } from "react";
