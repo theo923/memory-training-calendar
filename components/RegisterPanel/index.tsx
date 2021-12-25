@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getHiddenWords } from 'lib/get/getHiddenWords';
 import { initializeRegisterInfo } from 'lib/initialize';
 import { RegisterInfoProps } from 'lib/interface';
 import { NextRouter, useRouter } from 'next/router';
@@ -24,9 +25,24 @@ const RegisterPanel = () => {
   const router: NextRouter = useRouter()
   const [_c, setCookie, _rC] = useCookies(['calendar-user-token']);
   const [registerInfo, setRegisterInfo] = useState<RegisterInfoProps>(initializeRegisterInfo)
-  const [fail, setFail] = useState<boolean>(false)
+  const [fail, setFail] = useState<string>('')
 
   const handleClick = async () => {
+    if (
+      !registerInfo.email ||
+      !registerInfo.username ||
+      !registerInfo.password ||
+      registerInfo.confirmPassword != registerInfo.password
+    ) {
+      setRegisterInfo(prev => {
+        return {
+          ...prev,
+          confirmPassword: ''
+        }
+      })
+      setFail('Please make sure all the fields are correct!')
+      return
+    }
     const response = await axios.post('/api/registration', {
       email: registerInfo.email,
       username: registerInfo.username,
@@ -44,7 +60,7 @@ const RegisterPanel = () => {
     }
     else {
       setRegisterInfo(initializeRegisterInfo)
-      setFail(true)
+      setFail('Failed, please try again!')
     }
   }
 
@@ -93,9 +109,21 @@ const RegisterPanel = () => {
             Password:
           </Flex>
           <Input
-            value={registerInfo.password}
+            value={getHiddenWords(registerInfo.password)}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setRegisterInfo(prev => { return { ...prev, password: e.target.value } })
+            }
+          />
+          <Flex
+            flexDirection='column'
+            justifyContent='center'
+          >
+            Confirm Password:
+          </Flex>
+          <Input
+            value={getHiddenWords(registerInfo.confirmPassword)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setRegisterInfo(prev => { return { ...prev, confirmPassword: e.target.value } })
             }
           />
         </Grid>
@@ -115,7 +143,7 @@ const RegisterPanel = () => {
           </Button>
         </Flex>
       </Flex>
-      {fail && <Text color='red'>Failed, please try again!</Text>}
+      {fail.length > 0 && <Text color='red'>{fail}</Text>}
     </ContentBox>
   )
 }

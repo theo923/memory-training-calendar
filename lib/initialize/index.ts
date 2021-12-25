@@ -19,6 +19,7 @@ export const initializeRegisterInfo: RegisterInfoProps = {
   email: '',
   username: '',
   password: '',
+  confirmPassword: ''
 }
 
 export const initializeTask: TaskProps = {
