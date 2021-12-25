@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import Layout from "../../components/Layout";
-import Box from "../../styled/Box";
+import LoginPanel from "components/LoginPanel";
 
 
 const App = (): JSX.Element => {
@@ -12,10 +12,7 @@ const App = (): JSX.Element => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Box background='white'>
-
-          hjgjghfjghfj
-        </Box>
+        <LoginPanel />
       </Layout>
     </>
   );

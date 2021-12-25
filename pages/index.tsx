@@ -9,24 +9,18 @@ import Board from "../components/Board";
 import JobCreationBoard, { initialCard } from "../components/JobCreationBoard";
 import ModifyBoard from "../components/ModifyBoard";
 import { client, DEFAULT_HEADERS } from "../lib/apollo";
-// import { useCookies } from "react-cookie";
 import { CALENDAR_QUERY } from "../lib/queries/graphql-calendar";
 import { TaskProps, UserTasksProps } from "lib/interface";
 
-const App = ({ tasks = {} }): JSX.Element => {
-  const [target, setTarget] = useState<any>(new Date());
+interface Props {
+  status: boolean
+  tasks: UserTasksProps
+}
+
+const App: React.FC<Props> = ({ status, tasks }): JSX.Element => {
+  const [target, setTarget] = useState<Date>(new Date());
   const [userTasks, setUserTasks] = useState<UserTasksProps>(tasks || {})
   const [targetedTask, setTargetedTask] = useState<TaskProps>(initialCard)
-  // const [cookies, setCookie, removeCookie] = useCookies(['calendar-user-token']);
-  // setCookie('calendar-user-token', '', {
-  //   path: "/",
-  //   maxAge: 3600,
-  //   sameSite: true,
-  // })
-
-  // console.log(tasks)
-  // console.log(userTasks)
-
 
   return (
     <>
@@ -43,6 +37,12 @@ const App = ({ tasks = {} }): JSX.Element => {
           setTargetedTask={setTargetedTask}
         />
         <JobBoard>
+          {status === false &&
+            <Board
+              title={'Login'}
+              type='login'
+            />
+          }
           <Board title={'Create Task Board'}>
             <JobCreationBoard
               userTasks={userTasks}
@@ -63,6 +63,12 @@ const App = ({ tasks = {} }): JSX.Element => {
               target={target}
             />
           </Board>
+          {status === true &&
+            <Board
+              title={'Logout'}
+              type='logout'
+            />
+          }
         </JobBoard>
       </Layout>
     </>
@@ -74,6 +80,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     if (!req.cookies['calendar-user-token'])
       return {
         props: {
+          status: false,
           tasks: {}
         }
       }
@@ -85,7 +92,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       })
 
     const tasks = data.filter((each: any) => each?.attributes!['targetedDate'].length > 0)
-
     const returnVal: any = {}
     tasks.forEach((task: any) => {
       task.attributes.targetedDate.forEach((date: any) => {
@@ -93,12 +99,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         const returnObject = { id: parseInt(task.id), ...task?.attributes }
         if (returnVal![t_date])
           returnVal[t_date].push(returnObject)
+
         else returnVal[t_date] = [returnObject]
       })
     })
 
     return {
       props: {
+        status: true,
         tasks: returnVal
       }
     }
@@ -106,6 +114,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     console.log(err)
     return {
       props: {
+        status: false,
         tasks: {}
       }
     }

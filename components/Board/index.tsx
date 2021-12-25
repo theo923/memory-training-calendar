@@ -1,5 +1,8 @@
+import { remove_cookie } from 'lib/utils/remove_cookie'
+import Link from 'next/link'
 import React, { useState } from 'react'
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from 'react-icons/fa'
+import { RiLoginBoxLine, RiLogoutBoxLine } from 'react-icons/ri'
 import styled from 'styled-components'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
@@ -16,12 +19,14 @@ const Wrapper = styled(Box)`
 interface Props {
   title: string,
   children?: React.ReactNode,
+  type?: string
 }
 
 
 const Board: React.FC<Props> = ({
   title,
   children,
+  type = ''
 }): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false)
   return (
@@ -32,12 +37,34 @@ const Board: React.FC<Props> = ({
             {title}
           </Text>
         </Box>
-        <Button onClick={() => setOpen(prev => !prev)}>
-          {open ?
+        {!type && open &&
+          <Button onClick={() => setOpen(prev => !prev)}>
             <FaCompressArrowsAlt size='20px' />
-            :
-            <FaExpandArrowsAlt size='20px' />}
-        </Button>
+          </Button>
+        }
+        {!type && !open &&
+          <Button onClick={() => setOpen(prev => !prev)}>
+            <FaExpandArrowsAlt size='20px' />
+          </Button>
+        }
+        {type === 'login' &&
+          <Button>
+            <Link href='/login'>
+              <Box>
+                <RiLoginBoxLine size='20px' />
+              </Box>
+            </Link>
+          </Button>
+        }
+        {type === 'logout' &&
+          <Button onClick={() => remove_cookie()} >
+            <Link href='/'>
+              <Box>
+                <RiLogoutBoxLine size='20px' />
+              </Box>
+            </Link>
+          </Button>
+        }
       </Flex>
       {
         open &&
