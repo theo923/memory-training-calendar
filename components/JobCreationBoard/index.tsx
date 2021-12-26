@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { TaskProps, UserProps, UserTasksProps } from 'lib/interface'
-import { controlTaskTitle, controlTaskDescription, addTask } from 'lib/controller/controlTask'
+import { controlTaskTitle, controlTaskDescription } from 'lib/controller/controlTask'
 import { initializeUserTask, initializeTask } from 'lib/initialize'
-import { getFullDate } from 'lib/get/getDate'
+import { getFullDate, getYearMonth } from 'lib/get/getDate'
 import styled from 'styled-components'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
@@ -10,8 +10,9 @@ import Flex from 'styled/Flex'
 import Grid from 'styled/Grid'
 import Input from 'styled/Input'
 import TextArea from 'styled/TextArea'
-import default_schedule from 'lib/utils/default_schedule'
+import default_schedule, { addDays } from 'lib/utils/default_schedule'
 import axios from 'axios'
+import { NextRouter, useRouter } from 'next/router'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -31,21 +32,27 @@ const JobCreationBoard: React.FC<Props> = ({
   currentUser
 }): JSX.Element => {
   const [inputVal, setInputVal] = useState<TaskProps>(initializeTask)
+  const router: NextRouter = useRouter()
 
   useEffect(() => {
     if (!userTasks![getFullDate(target)])
       initializeUserTask(setUserTasks, target)
   }, [target])
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      addTask(setUserTasks, target, inputVal)
-      axios.post('/api/createTask', {
+      await axios.post('/api/createTask', {
         userID: currentUser.id,
         userName: currentUser.username,
         taskTitle: inputVal.taskTitle,
         taskDescription: inputVal.taskDescription,
         targetedDate: default_schedule(target)
+      }).then(({ data: { success } }) => {
+        if (success) {
+          router.push({
+            pathname: `/year/${getYearMonth(addDays(target, 1))}`,
+          })
+        }
       })
     }
     catch (err) {
