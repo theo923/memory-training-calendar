@@ -27,7 +27,12 @@ interface Props {
 const App: React.FC<Props> = ({ user, targetYear, status, tasks }): JSX.Element => {
   const currentYear: Date = new Date(targetYear)
   const currentUser: UserProps = user || initializeUser
-  const [target, setTarget] = useState<Date>(new Date(targetYear));
+  const [target, setTarget] = useState<Date>(
+    isSameMonth(currentYear, new Date()) ?
+      new Date()
+      :
+      new Date(targetYear)
+  );
   const [userTasks, setUserTasks] = useState<UserTasksProps>(tasks || {})
   const [targetedTask, setTargetedTask] = useState<TaskProps>(initializeTask)
 
