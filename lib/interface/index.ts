@@ -34,3 +34,8 @@ export interface UserProps {
   id: string
   username: string
 }
+
+export interface TaskDateProps {
+  t_date: Date | string
+  t_period: string
+}
