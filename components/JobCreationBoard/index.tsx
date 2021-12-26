@@ -10,6 +10,8 @@ import Flex from 'styled/Flex'
 import Grid from 'styled/Grid'
 import Input from 'styled/Input'
 import TextArea from 'styled/TextArea'
+import default_schedule from 'lib/utils/default_schedule'
+import axios from 'axios'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -19,7 +21,6 @@ interface Props {
   userTasks: UserTasksProps,
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
-  // setTarget: React.Dispatch<React.SetStateAction<Date>>
   currentUser: UserProps
 }
 
@@ -27,8 +28,7 @@ const JobCreationBoard: React.FC<Props> = ({
   userTasks,
   setUserTasks,
   target,
-  // setTarget
-  // currentUser
+  currentUser
 }): JSX.Element => {
   const [inputVal, setInputVal] = useState<TaskProps>(initializeTask)
 
@@ -36,6 +36,22 @@ const JobCreationBoard: React.FC<Props> = ({
     if (!userTasks![getFullDate(target)])
       initializeUserTask(setUserTasks, target)
   }, [target])
+
+  const handleSubmit = () => {
+    try {
+      addTask(setUserTasks, target, inputVal)
+      axios.post('/api/createTask', {
+        userID: currentUser.id,
+        userName: currentUser.username,
+        taskTitle: inputVal.taskTitle,
+        taskDescription: inputVal.taskDescription,
+        targetedDate: default_schedule(target)
+      })
+    }
+    catch (err) {
+      console.log('Failed to add task...')
+    }
+  }
 
   return (
     <Box data-test="component-jobCreationBoard">
@@ -66,7 +82,7 @@ const JobCreationBoard: React.FC<Props> = ({
         />
         <Box />
         <Flex justifyContent='space-around'>
-          <Button onClick={() => addTask(setUserTasks, target, inputVal)}>Submit</Button>
+          <Button onClick={() => handleSubmit()}>Submit</Button>
           <Button onClick={() => setInputVal(initializeTask)}>Reset</Button>
         </Flex>
       </Grid>
