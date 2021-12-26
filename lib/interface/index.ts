@@ -29,3 +29,8 @@ export interface RegisterInfoProps {
   password: string
   confirmPassword: string
 }
+
+export interface UserProps {
+  id: string
+  username: string
+}

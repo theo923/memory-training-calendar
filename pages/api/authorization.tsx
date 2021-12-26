@@ -1,18 +1,19 @@
-import axios from "axios"
-import {
-  NEXT_PUBLIC_API_URL,
-  GET_AUTH
-} from "lib/env"
+import { client } from "lib/apollo"
+import { REFRESH_TOKEN_MUTATION } from "lib/queries/refresh-token"
 
 const authorization = async (req: any, res: any) => {
   try {
     const { identifier, password } = req.body
-      const response = await axios.post(`${NEXT_PUBLIC_API_URL}${GET_AUTH}`, {
-      identifier,
-      password
-    })
+    const { data: { login } } =
+      await client.mutate({
+        mutation: REFRESH_TOKEN_MUTATION,
+        variables: {
+          identifier,
+          password
+        }
+      })
     res.json({
-      data: response.data,
+      data: login,
       success: true
     })
   }
