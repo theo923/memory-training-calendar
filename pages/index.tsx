@@ -136,7 +136,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       await client.query({
         query: CALENDAR_QUERY,
         variables: {
-          userID: id.toString(),
+          userID: id,
+          userName: username,
           t_date_gte: getFullDate(startYear),
           t_date_lte: getFullDate(endYear),
         },
