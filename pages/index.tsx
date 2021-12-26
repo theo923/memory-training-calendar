@@ -10,20 +10,23 @@ import JobCreationBoard from "../components/JobCreationBoard";
 import ModifyBoard from "../components/ModifyBoard";
 import { client, DEFAULT_HEADERS } from "../lib/apollo";
 import { CALENDAR_QUERY } from "../lib/queries/graphql-calendar";
-import { TaskProps, UserTasksProps } from "lib/interface";
-import { initializeTask } from "lib/initialize";
+import { TaskProps, UserProps, UserTasksProps } from "lib/interface";
+import { initializeTask, initializeUser } from "lib/initialize";
 import { startOfWeek, startOfYear, endOfYear, isSameYear } from "date-fns";
 import { getFullDate } from "lib/get/getDate";
 import { NextRouter, useRouter } from "next/router";
+import { USER_INFO_QUERY } from "lib/queries/user-info";
 
 interface Props {
   status: boolean
   tasks: UserTasksProps
   targetYear: Date
+  user: UserProps
 }
 
-const App: React.FC<Props> = ({ targetYear, status, tasks }): JSX.Element => {
-  const currentYear = new Date(targetYear)
+const App: React.FC<Props> = ({ user, targetYear, status, tasks }): JSX.Element => {
+  const currentYear: Date = new Date(targetYear)
+  const currentUser: UserProps = user || initializeUser
   const [target, setTarget] = useState<Date>(new Date());
   const [userTasks, setUserTasks] = useState<UserTasksProps>(tasks || {})
   const [targetedTask, setTargetedTask] = useState<TaskProps>(initializeTask)
@@ -67,6 +70,7 @@ const App: React.FC<Props> = ({ targetYear, status, tasks }): JSX.Element => {
           }
           <Board title={'Create Task Board'}>
             <JobCreationBoard
+              currentUser={currentUser}
               userTasks={userTasks}
               setUserTasks={setUserTasks}
               target={target}
@@ -111,16 +115,28 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
     if (!req.cookies['calendar-user-token'])
       return {
         props: {
+          user: initializeUser,
           targetYear: targetYear.toString(),
           status: false,
           tasks: {}
         }
       }
 
+    const { data: { me: { id, username } } } =
+      await client.query({
+        query: USER_INFO_QUERY,
+        context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
+      })
+
+    const user = {
+      id, username
+    }
+
     const { data: { tasks: { data } } } =
       await client.query({
         query: CALENDAR_QUERY,
         variables: {
+          userID: id.toString(),
           t_date_gte: getFullDate(startYear),
           t_date_lte: getFullDate(endYear),
         },
@@ -144,6 +160,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
     return {
       props: {
+        user,
         targetYear: targetYear.toString(),
         status: true,
         tasks: returnVal
@@ -153,6 +170,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
     console.log(err)
     return {
       props: {
+        user: initializeUser,
         targetYear: '',
         status: false,
         tasks: {}

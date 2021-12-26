@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { TaskProps, UserTasksProps } from 'lib/interface'
+import { TaskProps, UserProps, UserTasksProps } from 'lib/interface'
 import { controlTaskTitle, controlTaskDescription, addTask } from 'lib/controller/controlTask'
 import { initializeUserTask, initializeTask } from 'lib/initialize'
 import { getFullDate } from 'lib/get/getDate'
@@ -20,6 +20,7 @@ interface Props {
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
   // setTarget: React.Dispatch<React.SetStateAction<Date>>
+  currentUser: UserProps
 }
 
 const JobCreationBoard: React.FC<Props> = ({
@@ -27,6 +28,7 @@ const JobCreationBoard: React.FC<Props> = ({
   setUserTasks,
   target,
   // setTarget
+  // currentUser
 }): JSX.Element => {
   const [inputVal, setInputVal] = useState<TaskProps>(initializeTask)
 

@@ -22,10 +22,11 @@ const ContentBox = styled(Box)`
 
 const LoginPanel = () => {
   const router: NextRouter = useRouter()
-  const [_c, setCookie, _rC] = useCookies(['calendar-user-token']);
+  const [_cT, setTokenCookie, _rTC] = useCookies(['calendar-user-token']);
+  const [_cI, setIDCookie, _rIC] = useCookies(['calendar-user-id']);
+  const [_cN, setNameCookie, _rNC] = useCookies(['calendar-user-name']);
   const [loginInfo, setLoginInfo] = useState<LoginInfoProps>(initializeLoginInfo)
   const [status, setStatus] = useState<string>('')
-  console.log(loginInfo)
 
   const handleClick = async () => {
     setStatus('Loading...')
@@ -35,8 +36,18 @@ const LoginPanel = () => {
     })
     const { success } = response.data
     if (success) {
-      const { data: { jwt } } = response.data
-      setCookie('calendar-user-token', jwt, {
+      const { data: { jwt, user: { id, username } } } = response.data
+      setTokenCookie('calendar-user-token', jwt, {
+        path: "/",
+        maxAge: 3600,
+        sameSite: true,
+      })
+      setIDCookie('calendar-user-id', id, {
+        path: "/",
+        maxAge: 3600,
+        sameSite: true,
+      })
+      setNameCookie('calendar-user-name', username, {
         path: "/",
         maxAge: 3600,
         sameSite: true,
