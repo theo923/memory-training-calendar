@@ -1,19 +1,22 @@
-import { getFullDate } from 'lib/get/getDate'
-import { TaskProps, UserTasksProps } from 'lib/interface'
+// import { getFullDate } from 'lib/get/getDate'
+import {
+  TaskProps,
+  // UserTasksProps
+} from 'lib/interface'
 import { ChangeEvent } from 'react'
 
-export const addTask = (
-  setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
-  target: Date,
-  inputVal: TaskProps
-) => {
-  setUserTasks((prev: UserTasksProps) => {
-    return {
-      ...prev,
-      [getFullDate(target)]: [...prev[getFullDate(target)], inputVal],
-    }
-  })
-}
+// export const addTask = (
+//   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
+//   target: Date,
+//   inputVal: TaskProps
+// ) => {
+//   setUserTasks((prev: UserTasksProps) => {
+//     return {
+//       ...prev,
+//       [getFullDate(target)]: [...prev[getFullDate(target)], inputVal],
+//     }
+//   })
+// }
 
 export const controlTaskTitle = (
   setInputVal: React.Dispatch<React.SetStateAction<TaskProps>>,

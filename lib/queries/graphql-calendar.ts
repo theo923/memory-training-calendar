@@ -7,7 +7,10 @@ export const CALENDAR_QUERY = gql`
     $t_date_gte: Date
     $t_date_lte: Date
   ) {
-    tasks(filters: { userID: { eq: $userID }, userName: { eq: $userName } }) {
+    tasks(
+      filters: { userID: { eq: $userID }, userName: { eq: $userName } }
+      pagination: { limit: 3000 }
+    ) {
       data {
         id
         attributes {
@@ -15,6 +18,7 @@ export const CALENDAR_QUERY = gql`
           taskDescription
           targetedDate(
             filters: { t_date: { gte: $t_date_gte, lte: $t_date_lte } }
+            pagination: { limit: 50 }
           ) {
             t_date
             t_period
