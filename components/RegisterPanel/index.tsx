@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { initializeRegisterInfo } from 'lib/initialize';
 import { RegisterInfoProps } from 'lib/interface';
-import { NextRouter, useRouter } from 'next/router';
+import { NextRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { BsFillArrowLeftSquareFill } from 'react-icons/bs'
@@ -20,8 +20,11 @@ const ContentBox = styled(Box)`
   ${tw`border-2 border-black shadow-md rounded-md mb-5`}
 `
 
-const RegisterPanel = () => {
-  const router: NextRouter = useRouter()
+interface Props {
+  router: NextRouter
+}
+
+const RegisterPanel: React.FC<Props> = ({ router }) => {
   const [_c, setCookie, _rC] = useCookies(['calendar-user-token']);
   const [registerInfo, setRegisterInfo] = useState<RegisterInfoProps>(initializeRegisterInfo)
   const [status, setStatus] = useState<string>('')

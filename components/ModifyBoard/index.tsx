@@ -11,20 +11,20 @@ import TextArea from 'styled/TextArea'
 import axios from 'axios'
 import { addDays } from 'date-fns'
 import { getYearMonth } from 'lib/get/getDate'
-import { NextRouter, useRouter } from 'next/router'
+import { NextRouter } from 'next/router'
 
 const InputText = styled(Box)`
   align-self: center;
 `
 
 interface Props {
+  router: NextRouter
   targetedTask: TaskProps,
-  setTargetedTask: React.Dispatch<React.SetStateAction<TaskProps>>,
   target: Date,
-  // setTarget: React.Dispatch<React.SetStateAction<Date>>
 }
 
 const JobCreationBoard: React.FC<Props> = ({
+  router,
   targetedTask,
   target
 }): JSX.Element => {
@@ -32,16 +32,13 @@ const JobCreationBoard: React.FC<Props> = ({
 
   useEffect(() => {
     setInputVal(targetedTask)
-    console.log(targetedTask)
   }, [targetedTask])
 
-  const router: NextRouter = useRouter()
   const handleSubmit = async () => {
     if (
       targetedTask.taskTitle !== inputVal.taskTitle ||
       targetedTask.taskDescription !== inputVal.taskDescription
     ) {
-      console.log('updating...')
       await axios.post('/api/modifyTaskInfo', {
         id: targetedTask.id,
         userID: targetedTask.userID,

@@ -12,13 +12,14 @@ import Input from 'styled/Input'
 import TextArea from 'styled/TextArea'
 import default_schedule, { addDays } from 'lib/utils/default_schedule'
 import axios from 'axios'
-import { NextRouter, useRouter } from 'next/router'
+import { NextRouter } from 'next/router'
 
 const InputText = styled(Box)`
   align-self: center;
 `
 
 interface Props {
+  router: NextRouter,
   userTasks: UserTasksProps,
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
@@ -26,13 +27,13 @@ interface Props {
 }
 
 const JobCreationBoard: React.FC<Props> = ({
+  router,
   userTasks,
   setUserTasks,
   target,
   currentUser
 }): JSX.Element => {
   const [inputVal, setInputVal] = useState<TaskProps>(initializeTask)
-  const router: NextRouter = useRouter()
 
   useEffect(() => {
     if (!userTasks![getFullDate(target)])
