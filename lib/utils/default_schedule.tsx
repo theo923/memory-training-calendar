@@ -15,7 +15,8 @@ const default_schedule = (target: Date) => {
   for (let i = 0; i < 7; i++) {
     returnVal.push({
       t_date: getFullDate(cTarget),
-      t_period: 'Daily'
+      t_period: 'Daily',
+      t_finished: false
     })
     cTarget = addDays(cTarget, 1)
   }
@@ -23,7 +24,8 @@ const default_schedule = (target: Date) => {
   for (let i = 0; i < 3; i++) {
     returnVal.push({
       t_date: getFullDate(cTarget),
-      t_period: 'BiDaily'
+      t_period: 'BiDaily',
+      t_finished: false
     })
     cTarget = addDays(cTarget, 2)
   }
@@ -31,7 +33,8 @@ const default_schedule = (target: Date) => {
   for (let i = 0; i < 2; i++) {
     returnVal.push({
       t_date: getFullDate(cTarget),
-      t_period: 'Weekly'
+      t_period: 'Weekly',
+      t_finished: false
     })
     cTarget = addDays(cTarget, 7)
   }
@@ -39,14 +42,16 @@ const default_schedule = (target: Date) => {
   for (let i = 0; i < 3; i++) {
     returnVal.push({
       t_date: getFullDate(cTarget),
-      t_period: 'Monthly'
+      t_period: 'Monthly',
+      t_finished: false
     })
     cTarget = addDays(cTarget, 30)
   }
 
   returnVal.push({
     t_date: getFullDate(cTarget),
-    t_period: 'Monthly'
+    t_period: 'Monthly',
+    t_finished: false
   })
 
   return returnVal
