@@ -16,6 +16,7 @@ import { startOfWeek, startOfYear, endOfYear, addDays, isSameMonth } from "date-
 import { getFullDate, getYearMonth } from "lib/get/getDate";
 import { NextRouter, useRouter } from "next/router";
 import { USER_INFO_QUERY } from "lib/queries/user-info";
+import { Server_TaskDateProps, Server_TaskProps } from "lib/interface/server";
 
 interface Props {
   status: boolean
@@ -146,16 +147,16 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
 
-    const returnVal: any = {}
+    const sortedDateTask: UserTasksProps = {}
     if (data) {
-      const tasks = data.filter((each: any) => each?.attributes!['targetedDate'].length > 0)
-      tasks.forEach((task: any) => {
-        task.attributes.targetedDate.forEach((date: any) => {
+      const tasks = data.filter((task: Server_TaskProps) => task?.attributes!['targetedDate'].length > 0)
+      tasks.forEach((task: Server_TaskProps) => {
+        task.attributes.targetedDate.forEach((date: Server_TaskDateProps) => {
           const { t_date } = date
-          const returnObject = { id: parseInt(task.id), ...task?.attributes }
-          if (returnVal![t_date])
-            returnVal[t_date].push(returnObject)
-          else returnVal[t_date] = [returnObject]
+          const returnObject = { id: task.id, ...task?.attributes }
+          if (sortedDateTask![t_date as string])
+            sortedDateTask[t_date as string].push(returnObject)
+          else sortedDateTask[t_date as string] = [returnObject]
         })
       })
     }
@@ -165,7 +166,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
         user,
         targetYear: targetYear.toString(),
         status: true,
-        tasks: returnVal
+        tasks: sortedDateTask
       }
     }
   } catch (err) {

@@ -8,6 +8,10 @@ import Flex from 'styled/Flex'
 import Grid from 'styled/Grid'
 import Input from 'styled/Input'
 import TextArea from 'styled/TextArea'
+import axios from 'axios'
+import { addDays } from 'date-fns'
+import { getYearMonth } from 'lib/get/getDate'
+import { NextRouter, useRouter } from 'next/router'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -20,20 +24,40 @@ interface Props {
   // setTarget: React.Dispatch<React.SetStateAction<Date>>
 }
 
-export const initialCard = {
-  taskTitle: '',
-  taskDescription: ''
-}
-
 const JobCreationBoard: React.FC<Props> = ({
   targetedTask,
-  // setTarget
+  target
 }): JSX.Element => {
   const [inputVal, setInputVal] = useState<TaskProps>(targetedTask)
 
   useEffect(() => {
     setInputVal(targetedTask)
+    console.log(targetedTask)
   }, [targetedTask])
+
+  const router: NextRouter = useRouter()
+  const handleSubmit = async () => {
+    if (
+      targetedTask.taskTitle !== inputVal.taskTitle ||
+      targetedTask.taskDescription !== inputVal.taskDescription
+    ) {
+      console.log('updating...')
+      await axios.post('/api/modifyTaskInfo', {
+        id: targetedTask.id,
+        userID: targetedTask.userID,
+        userName: targetedTask.userName,
+        targetedDate: targetedTask.targetedDate,
+        taskTitle: inputVal.taskTitle,
+        taskDescription: inputVal.taskDescription
+      }).then(({ data: { success } }) => {
+        if (success) {
+          router.push({
+            pathname: `/year/${getYearMonth(addDays(target, 1))}`,
+          })
+        }
+      })
+    }
+  }
 
   return (
     <Box data-test="component-modifyBoard">
@@ -64,8 +88,8 @@ const JobCreationBoard: React.FC<Props> = ({
         />
         <Box />
         <Flex justifyContent='space-around'>
-          {/* <Button onClick={() => addTask(setUserTasks, target, inputVal)}>Submit</Button> */}
-          <Button onClick={() => setInputVal(initialCard)}>Reset</Button>
+          <Button onClick={() => handleSubmit()}>Submit</Button>
+          <Button onClick={() => setInputVal(targetedTask)}>Reset</Button>
         </Flex>
       </Grid>
     </Box>
