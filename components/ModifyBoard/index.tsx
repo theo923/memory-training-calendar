@@ -9,8 +9,6 @@ import Grid from 'styled/Grid'
 import Input from 'styled/Input'
 import TextArea from 'styled/TextArea'
 import axios from 'axios'
-import { addDays } from 'date-fns'
-import { getYearMonth } from 'lib/get/getDate'
 import { NextRouter } from 'next/router'
 
 const InputText = styled(Box)`
@@ -25,8 +23,7 @@ interface Props {
 
 const JobCreationBoard: React.FC<Props> = ({
   router,
-  targetedTask,
-  target
+  targetedTask
 }): JSX.Element => {
   const [inputVal, setInputVal] = useState<TaskProps>(targetedTask)
 
@@ -47,11 +44,10 @@ const JobCreationBoard: React.FC<Props> = ({
         taskTitle: inputVal.taskTitle,
         taskDescription: inputVal.taskDescription
       }).then(({ data: { success } }) => {
-        if (success) {
+        if (success)
           router.push({
-            pathname: `/year/${getYearMonth(addDays(target, 1))}`,
+            pathname: `/year/${router.query['year']}`,
           })
-        }
       })
     }
   }
