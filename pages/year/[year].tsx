@@ -27,7 +27,7 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.Element => {
-  const currentYear: Date = new Date()
+  const currentYear: Date = targetYear ? new Date(targetYear) : new Date()
   const currentUser: UserProps = user || initializeUser
   const [target, setTarget] = useState<Date>(
     isSameMonth(currentYear, new Date()) ?
@@ -112,8 +112,8 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+  const targetYear = new Date((query!['year'] + '-01') as string)
   try {
-    const targetYear = new Date((query!['year'] + '-01') as string)
     const startYear = startOfWeek(startOfYear(targetYear))
     const endYear = endOfYear(targetYear)
 
@@ -148,7 +148,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
 
-    const sortedDateTask: UserTasksProps  = {}
+    const sortedDateTask: UserTasksProps = {}
 
     if (data) {
       const tasks = data.filter((task: Server_TaskProps) => task?.attributes['targetedDate'].length > 0)
