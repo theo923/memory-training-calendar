@@ -13,5 +13,5 @@ export interface Server_TaskProps {
 export interface Server_TaskDateProps {
   t_date: string
   t_period: string
-  __typename: string
+  t_finished: boolean
 }

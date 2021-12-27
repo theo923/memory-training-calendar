@@ -39,4 +39,5 @@ export const initializeUser: UserProps = {
 export const initializeTaskDate: TaskDateProps = {
   t_date: new Date(),
   t_period: '',
+  t_finished: false
 }

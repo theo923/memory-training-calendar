@@ -42,4 +42,5 @@ export interface UserProps {
 export interface TaskDateProps {
   t_date: Date | string
   t_period: string
+  t_finished: boolean
 }
