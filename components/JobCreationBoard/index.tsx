@@ -13,6 +13,7 @@ import TextArea from 'styled/TextArea'
 import default_schedule from 'lib/utils/default_schedule'
 import axios from 'axios'
 import { NextRouter } from 'next/router'
+import { refreshData } from 'lib/utils/refresh_data'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -50,9 +51,7 @@ const JobCreationBoard: React.FC<Props> = ({
         targetedDate: default_schedule(target)
       }).then(({ data: { success } }) => {
         if (success)
-          router.push({
-            pathname: `/year/${router.query['year']}`,
-          })
+          refreshData(router)
       })
     }
     catch (err) {

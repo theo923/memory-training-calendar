@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { initializeRegisterInfo } from 'lib/initialize';
 import { RegisterInfoProps } from 'lib/interface';
+import { refreshData } from 'lib/utils/refresh_data';
 import { NextRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
@@ -59,7 +60,7 @@ const RegisterPanel: React.FC<Props> = ({ router }) => {
         maxAge: 3600,
         sameSite: true,
       })
-      router.push('/')
+      refreshData(router, '/')
     }
     else {
       setRegisterInfo(initializeRegisterInfo)

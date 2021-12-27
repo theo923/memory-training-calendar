@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { setTextColor } from 'lib/controller/controlColor'
+import { refreshData } from 'lib/utils/refresh_data'
 import { NextRouter } from 'next/router'
 import React from 'react'
 import { RiDeleteBin5Line } from 'react-icons/ri'
@@ -41,9 +42,7 @@ const JobCard: React.FC<Props> = ({
       id: taskID
     }).then(({ data: { success } }) => {
       if (success)
-        router.push({
-          pathname: `/year/${router.query['year']}`,
-        })
+        refreshData(router)
     })
   }
 
