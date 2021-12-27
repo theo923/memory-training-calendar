@@ -4,7 +4,7 @@ export const CREATE_TASK_MUTATION = gql`
   mutation CreateTask(
     $userID: String
     $userName: String
-    $targetedDate: [ComponentTaskInfoTaskDateInput]
+    $targetedDate: [ComponentSingleTaskTaskDateInput]
     $taskTitle: String!
     $taskDescription: String!
     $publishedAt: DateTime

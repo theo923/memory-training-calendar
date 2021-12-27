@@ -27,7 +27,7 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.Element => {
-  const currentYear: Date = new Date(targetYear)
+  const currentYear: Date = new Date()
   const currentUser: UserProps = user || initializeUser
   const [target, setTarget] = useState<Date>(
     isSameMonth(currentYear, new Date()) ?
@@ -137,25 +137,25 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       id, username
     }
 
-    const { data: { tasks: { data } } } =
+    const { data: { userTask: { data: { attributes: { tasks: { data } } } } } } =
       await client.query({
         query: CALENDAR_QUERY,
         variables: {
-          userID: id,
-          userName: username,
+          id,
           t_date_gte: getFullDate(startYear),
           t_date_lte: getFullDate(endYear),
         },
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
 
-    const sortedDateTask: UserTasksProps = {}
+    const sortedDateTask: UserTasksProps  = {}
+
     if (data) {
-      const tasks = data.filter((task: Server_TaskProps) => task?.attributes!['targetedDate'].length > 0)
-      tasks.forEach((task: Server_TaskProps) => {
-        task.attributes.targetedDate.forEach((date: Server_TaskDateProps) => {
+      const tasks = data.filter((task: Server_TaskProps) => task?.attributes['targetedDate'].length > 0)
+      tasks.forEach((task: any) => {
+        task?.attributes!['targetedDate'].forEach((date: Server_TaskDateProps) => {
           const { t_date } = date
-          const returnObject = { id: task.id, ...task?.attributes }
+          const returnObject = { ...task?.attributes, id: task.id, userID: id as string, userName: username as string }
           if (sortedDateTask![t_date as string])
             sortedDateTask[t_date as string].push(returnObject)
           else sortedDateTask[t_date as string] = [returnObject]
