@@ -14,18 +14,19 @@ import { TaskProps, UserProps, UserTasksProps } from "lib/interface";
 import { initializeTask, initializeUser } from "lib/initialize";
 import { startOfWeek, startOfYear, endOfYear, addDays, isSameMonth } from "date-fns";
 import { getFullDate, getYearMonth } from "lib/get/getDate";
-import { NextRouter, useRouter } from "next/router";
 import { USER_INFO_QUERY } from "lib/queries/user-info";
 import { Server_TaskDateProps, Server_TaskProps } from "lib/interface/server";
+import { NextRouter } from "next/router";
 
 interface Props {
+  router: NextRouter
   status: boolean
   tasks: UserTasksProps
   targetYear: Date
   user: UserProps
 }
 
-const App: React.FC<Props> = ({ user, targetYear, status, tasks }): JSX.Element => {
+const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.Element => {
   const currentYear: Date = new Date(targetYear)
   const currentUser: UserProps = user || initializeUser
   const [target, setTarget] = useState<Date>(
@@ -37,7 +38,6 @@ const App: React.FC<Props> = ({ user, targetYear, status, tasks }): JSX.Element 
   const [userTasks, setUserTasks] = useState<UserTasksProps>(tasks || {})
   const [targetedTask, setTargetedTask] = useState<TaskProps>(initializeTask)
 
-  const router: NextRouter = useRouter()
   useEffect(() => {
     if (!isSameMonth(currentYear, target)) {
       router.replace(`/year/${getYearMonth(addDays(target, 1))}`)
@@ -77,6 +77,7 @@ const App: React.FC<Props> = ({ user, targetYear, status, tasks }): JSX.Element 
           }
           <Board title={'Create Task Board'}>
             <JobCreationBoard
+              router={router}
               currentUser={currentUser}
               userTasks={userTasks}
               setUserTasks={setUserTasks}
@@ -91,8 +92,8 @@ const App: React.FC<Props> = ({ user, targetYear, status, tasks }): JSX.Element 
           </Board>
           <Board title={'Modify Board'}>
             <ModifyBoard
+              router={router}
               targetedTask={targetedTask}
-              setTargetedTask={setTargetedTask}
               target={target}
             />
           </Board>

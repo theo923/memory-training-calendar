@@ -1,11 +1,14 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { addDays } from "date-fns";
-import { NextRouter, useRouter } from "next/router";
+import { NextRouter } from "next/router";
 import { getYearMonth } from "lib/get/getDate";
 
-const App = (): JSX.Element => {
-  const router: NextRouter = useRouter()
+interface IndexProps {
+  router: NextRouter
+}
+
+const App: React.FC<IndexProps> = ({ router }): JSX.Element => {
   useEffect(() => {
     router.push({
       pathname: `/year/${getYearMonth(addDays(new Date(), 1))}`,

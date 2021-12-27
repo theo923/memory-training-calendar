@@ -2,9 +2,13 @@ import Head from "next/head";
 import React from "react";
 import Layout from "../../components/Layout";
 import LoginPanel from "components/LoginPanel";
+import { NextRouter } from "next/router";
 
+interface Props {
+  router: NextRouter
+}
 
-const Login = (): JSX.Element => {
+const Login: React.FC<Props> = ({ router }): JSX.Element => {
   return (
     <>
       <Head>
@@ -12,7 +16,7 @@ const Login = (): JSX.Element => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <LoginPanel />
+        <LoginPanel router={router} />
       </Layout>
     </>
   );

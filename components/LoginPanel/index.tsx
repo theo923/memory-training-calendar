@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { initializeLoginInfo } from 'lib/initialize';
 import { LoginInfoProps } from 'lib/interface';
-import { NextRouter, useRouter } from 'next/router';
+import { NextRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { BsFillArrowLeftSquareFill } from 'react-icons/bs'
@@ -20,8 +20,11 @@ const ContentBox = styled(Box)`
   ${tw`border-2 border-black shadow-md rounded-md mb-5`}
 `
 
-const LoginPanel = () => {
-  const router: NextRouter = useRouter()
+interface Props {
+  router: NextRouter
+}
+
+const LoginPanel: React.FC<Props> = ({ router }) => {
   const [_cT, setTokenCookie, _rTC] = useCookies(['calendar-user-token']);
   const [_cI, setIDCookie, _rIC] = useCookies(['calendar-user-id']);
   const [_cN, setNameCookie, _rNC] = useCookies(['calendar-user-name']);
