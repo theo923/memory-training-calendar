@@ -23,8 +23,12 @@ export const initializeRegisterInfo: RegisterInfoProps = {
 }
 
 export const initializeTask: TaskProps = {
+  id: '',
   taskTitle: '',
   taskDescription: '',
+  targetedDate: [],
+  userID: '',
+  userName: ''
 }
 
 export const initializeUser: UserProps = {

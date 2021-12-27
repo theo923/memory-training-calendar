@@ -7,8 +7,12 @@ export interface UserTasksProps {
 }
 
 export interface TaskProps {
+  id: string
   taskTitle: string
   taskDescription: string
+  targetedDate: TaskDateProps[]
+  userID: string
+  userName: string
 }
 
 export interface childNode {
