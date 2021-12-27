@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Calendar from "../../components/Calendar";
 import JobBoard from "../../components/JobBoard";
-import TaskBoard from "../../components/Tasks";
+import TaskBoard from "../../components/TaskBoard";
 import Board from "../../components/Board";
 import JobCreationBoard from "../../components/JobCreationBoard";
 import ModifyBoard from "../../components/ModifyBoard";
@@ -86,6 +86,7 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
           </Board>
           <Board title={'Task Board'}>
             <TaskBoard
+              router={router}
               userTasks={userTasks}
               target={target}
             />

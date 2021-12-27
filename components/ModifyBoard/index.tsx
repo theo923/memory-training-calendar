@@ -58,37 +58,43 @@ const JobCreationBoard: React.FC<Props> = ({
 
   return (
     <Box data-test="component-modifyBoard">
-      <Grid
-        gridTemplateColumns={['0.7fr 1.3fr']}
-        verticalAlign={['center']}
-        m={['10px']}
-      >
-        <InputText
-          fontSize={['20px', null, '20px']}
-          lineHeight={['20px', null, '28px']}
+      {targetedTask?.id ?
+        <Grid
+          gridTemplateColumns={['0.7fr 1.3fr']}
+          verticalAlign={['center']}
+          m={['10px']}
         >
-          Title:
-        </InputText>
-        <Input
-          value={inputVal?.taskTitle}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskTitle(setInputVal, e)}
-        />
-        <InputText
-          fontSize={['20px', null, '20px']}
-          lineHeight={['20px', null, '28px']}
-        >
-          Description:
-        </InputText>
-        <TextArea
-          value={inputVal?.taskDescription}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskDescription(setInputVal, e)}
-        />
-        <Box />
-        <Flex justifyContent='space-around'>
-          <Button onClick={() => handleSubmit()}>Submit</Button>
-          <Button onClick={() => setInputVal(targetedTask)}>Reset</Button>
-        </Flex>
-      </Grid>
+          <InputText
+            fontSize={['20px', null, '20px']}
+            lineHeight={['20px', null, '28px']}
+          >
+            Title:
+          </InputText>
+          <Input
+            value={inputVal?.taskTitle}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskTitle(setInputVal, e)}
+          />
+          <InputText
+            fontSize={['20px', null, '20px']}
+            lineHeight={['20px', null, '28px']}
+          >
+            Description:
+          </InputText>
+          <TextArea
+            value={inputVal?.taskDescription}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskDescription(setInputVal, e)}
+          />
+          <Box />
+          <Flex justifyContent='space-around'>
+            <Button onClick={() => handleSubmit()}>Submit</Button>
+            <Button onClick={() => setInputVal(targetedTask)}>Reset</Button>
+          </Flex>
+        </Grid>
+        :
+        <Box>
+          No Tasks is founded. You must select one first.
+        </Box>
+      }
     </Box>
   )
 }

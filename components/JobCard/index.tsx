@@ -1,7 +1,11 @@
+import axios from 'axios'
 import { setTextColor } from 'lib/controller/controlColor'
+import { NextRouter } from 'next/router'
 import React from 'react'
+import { RiDeleteBin5Line } from 'react-icons/ri'
 import styled, { css } from 'styled-components'
 import Box from 'styled/Box'
+import Button from 'styled/Button'
 import Flex from 'styled/Flex'
 import Text from 'styled/Text'
 import tw from 'twin.macro'
@@ -18,14 +22,29 @@ const FullTaskContent = styled(Box) <{ setTaskColor: string }>`
 `
 
 interface Props {
+  router: NextRouter
+  taskID: string
   taskTitle: string
   taskDescription: string
 }
 
 const JobCard: React.FC<Props> = ({
+  router,
+  taskID,
   taskTitle,
   taskDescription
 }): JSX.Element => {
+
+  const handleSubmit = async () => {
+    await axios.post('/api/deleteTask', {
+      id: taskID
+    }).then(({ data: { success } }) => {
+      if (success) {
+        router.reload()
+      }
+    })
+  }
+
   return (
     <FullTaskContent
       data-test="component-jobCard"
@@ -39,13 +58,18 @@ const JobCard: React.FC<Props> = ({
         overflowX='hidden'
         width='100%'
       >
-        <Text
-          fontSize={['20px', null, '20px']}
-          lineHeight={['20px', null, '28px']}
-          color={setTextColor(6)}
-        >
-          {taskTitle}
-        </Text>
+        <Flex justifyContent='space-between'>
+          <Text
+            fontSize={['20px', null, '20px']}
+            lineHeight={['20px', null, '28px']}
+            color={setTextColor(6)}
+          >
+            {taskTitle}
+          </Text>
+          <Button onClick={() => handleSubmit()}>
+            <RiDeleteBin5Line />
+          </Button>
+        </Flex>
         <Text
           fontSize={['15px', null, '15px']}
           lineHeight={['20px', null, '28px']}
