@@ -1,15 +1,18 @@
 import JobCard from 'components/JobCard'
 import { getFullDate } from 'lib/get/getDate'
 import { TaskProps } from 'lib/interface'
+import { NextRouter } from 'next/router'
 import React from 'react'
 import Box from 'styled/Box'
 
 interface Props {
+  router: NextRouter
   userTasks: any,
   target: Date,
 }
 
-const Tasks: React.FC<Props> = ({
+const TaskBoard: React.FC<Props> = ({
+  router,
   userTasks,
   target,
 }): JSX.Element => {
@@ -20,6 +23,8 @@ const Tasks: React.FC<Props> = ({
           (task: TaskProps, idx: number) => (
             <JobCard
               key={idx}
+              router={router}
+              taskID={task.id}
               taskTitle={task.taskTitle}
               taskDescription={task.taskDescription}
             />))
@@ -30,4 +35,4 @@ const Tasks: React.FC<Props> = ({
   )
 }
 
-export default Tasks
+export default TaskBoard
