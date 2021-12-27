@@ -34,14 +34,16 @@ const JobCard: React.FC<Props> = ({
   taskTitle,
   taskDescription
 }): JSX.Element => {
+  console.log(router)
 
   const handleSubmit = async () => {
     await axios.post('/api/deleteTask', {
       id: taskID
     }).then(({ data: { success } }) => {
-      if (success) {
-        router.reload()
-      }
+      if (success)
+        router.push({
+          pathname: `/year/${router.query['year']}`,
+        })
     })
   }
 
