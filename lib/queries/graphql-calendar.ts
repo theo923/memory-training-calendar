@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const CALENDAR_QUERY = gql`
-  query UserTask($id: ID!, $t_date_gte: Date, $t_date_lte: Date) {
-    userTask(id: $id) {
+  query UserTask($id: String!, $t_date_gte: Date, $t_date_lte: Date) {
+    userTasks(filters: { userID: { eq: $id } }) {
       data {
         id
         attributes {

@@ -13,16 +13,17 @@ const createTask = async (req: any, res: any) => {
       taskDescription
     } = req.body
 
-    const { data: { userTask: { data: { id, attributes: { tasks: { data: ids } } } } } } =
+    const { data: { userTasks: { data: userData } } } =
       await client.query({
         query: READ_USER_TASK_IDs,
         variables: {
-          id: userID
+          userID
         },
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
 
-    const idArr = ids.map((id: any) => id.id)
+    const { id, attributes: { tasks: { data: idData } } } = userData[0]
+    const idArr = idData.length > 0 ? idData.map((id: any) => id.id) : []
 
     const { data: { createTask: { data: { id: newID } } } } =
       await client.mutate({

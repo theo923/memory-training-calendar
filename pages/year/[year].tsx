@@ -1,15 +1,15 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import Layout from "../../components/Layout";
-import Calendar from "../../components/Calendar";
-import JobBoard from "../../components/JobBoard";
-import TaskBoard from "../../components/TaskBoard";
-import Board from "../../components/Board";
-import JobCreationBoard from "../../components/JobCreationBoard";
-import ModifyBoard from "../../components/ModifyBoard";
-import { client, DEFAULT_HEADERS } from "../../lib/apollo";
-import { CALENDAR_QUERY } from "../../lib/queries/graphql-calendar";
+import Board from "components/Board";
+import Calendar from "components/Calendar";
+import JobBoard from "components/JobBoard";
+import JobCreationBoard from "components/JobCreationBoard";
+import Layout from "components/Layout";
+import ModifyBoard from "components/ModifyBoard";
+import TaskBoard from "components/TaskBoard";
+import { client, DEFAULT_HEADERS } from "lib/apollo";
+import { CALENDAR_QUERY } from "lib/queries/graphql-calendar";
 import { TaskProps, UserProps, UserTasksProps } from "lib/interface";
 import { initializeTask, initializeUser } from "lib/initialize";
 import { startOfWeek, startOfYear, endOfYear, addDays, isSameMonth } from "date-fns";
@@ -112,8 +112,8 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
-  const targetYear = new Date((query!['year'] + '-01') as string)
   try {
+    const targetYear = new Date((query!['year'] + '-01') as string)
     const startYear = startOfWeek(startOfYear(targetYear))
     const endYear = endOfYear(targetYear)
 
@@ -137,7 +137,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       id, username
     }
 
-    const { data: { userTask: { data: { attributes: { tasks: { data } } } } } } =
+    const { data: { userTasks: { data: userData } } } =
       await client.query({
         query: CALENDAR_QUERY,
         variables: {
@@ -148,11 +148,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
 
+    const { attributes: { tasks: { data: tasksData } } } = userData[0]
     const sortedDateTask: UserTasksProps = {}
 
-    if (data) {
-      const tasks = data.filter((task: Server_TaskProps) => task?.attributes['targetedDate'].length > 0)
-      tasks.forEach((task: any) => {
+    if (tasksData.length > 0) {
+      const tasks = tasksData.filter((task: Server_TaskProps) => task?.attributes['targetedDate'].length > 0)
+      tasks.forEach((task: Server_TaskProps) => {
         task?.attributes!['targetedDate'].forEach((date: Server_TaskDateProps) => {
           const { t_date } = date
           const returnObject = { ...task?.attributes, id: task.id, userID: id as string, userName: username as string }
