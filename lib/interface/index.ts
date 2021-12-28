@@ -13,6 +13,8 @@ export interface TaskProps {
   targetedDate: TaskDateProps[]
   userID: string
   userName: string
+  t_date: string
+  t_finished: boolean
 }
 
 export interface childNode {

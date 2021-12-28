@@ -1,5 +1,11 @@
 import { getFullDate } from 'lib/get/getDate'
-import { LoginInfoProps, RegisterInfoProps, TaskDateProps, TaskProps, UserProps } from 'lib/interface'
+import {
+  LoginInfoProps,
+  RegisterInfoProps,
+  TaskDateProps,
+  TaskProps,
+  UserProps,
+} from 'lib/interface'
 
 export const initializeUserTask = (
   setUserTasks: React.Dispatch<React.SetStateAction<{}>>,
@@ -19,7 +25,7 @@ export const initializeRegisterInfo: RegisterInfoProps = {
   email: '',
   username: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
 }
 
 export const initializeTask: TaskProps = {
@@ -28,16 +34,18 @@ export const initializeTask: TaskProps = {
   taskDescription: '',
   targetedDate: [],
   userID: '',
-  userName: ''
+  userName: '',
+  t_date: '',
+  t_finished: false,
 }
 
 export const initializeUser: UserProps = {
   id: '',
-  username: ''
+  username: '',
 }
 
 export const initializeTaskDate: TaskDateProps = {
   t_date: new Date(),
   t_period: '',
-  t_finished: false
+  t_finished: false,
 }

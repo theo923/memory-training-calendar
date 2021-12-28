@@ -3,7 +3,7 @@ export interface Server_TaskProps {
   attributes: {
     taskTitle: string
     taskDescription: string
-    targetedDate: any
+    targetedDate: Server_TaskDateProps[]
     userID: string
     userName: string
     __typename: string
