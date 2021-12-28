@@ -4,7 +4,8 @@ import { NextRouter, useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
 import { client } from "../lib/apollo";
 import { theme } from "../lib/theme";
-import "../styles/globals.css";
+import "styles/globals.css";
+import "assets/fonts.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router: NextRouter = useRouter()

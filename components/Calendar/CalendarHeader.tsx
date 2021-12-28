@@ -8,12 +8,11 @@ import Button from "styled/Button";
 import Flex from "styled/Flex";
 import Text from "styled/Text";
 
-
 const Header = styled(Box)`
   background-color: #FAFAFA;
   border: .5px solid #808080;
   border-radius: 50px 50px 0 0;
-  `;
+`;
 
 interface Props {
   target: Date

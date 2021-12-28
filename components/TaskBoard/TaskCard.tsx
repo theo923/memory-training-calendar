@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { setTextColor } from 'lib/controller/controlColor'
+import { setBooleanColor, setTextColor } from 'lib/controller/controlColor'
 import { refreshData } from 'lib/utils/refresh_data'
 import { NextRouter } from 'next/router'
 import React from 'react'
@@ -27,13 +27,15 @@ interface Props {
   taskID: string
   taskTitle: string
   taskDescription: string
+  finished: boolean
 }
 
-const JobCard: React.FC<Props> = ({
+const TaskCard: React.FC<Props> = ({
   router,
   taskID,
   taskTitle,
-  taskDescription
+  taskDescription,
+  finished
 }): JSX.Element => {
   const handleSubmit = async () => {
     await axios.post('/api/deleteTask', {
@@ -46,10 +48,10 @@ const JobCard: React.FC<Props> = ({
 
   return (
     <FullTaskContent
-      data-test="component-jobCard"
+      data-test="taskBoard-taskCard"
       padding={['3px']}
       my={['5px']}
-      setTaskColor={"#2563eb"}
+      setTaskColor={"#fff"}
     >
       <Flex
         flexDirection='column'
@@ -61,7 +63,7 @@ const JobCard: React.FC<Props> = ({
           <Text
             fontSize={['20px', null, '20px']}
             lineHeight={['20px', null, '28px']}
-            color={setTextColor(6)}
+            color={setBooleanColor(finished)}
           >
             {taskTitle}
           </Text>
@@ -72,7 +74,7 @@ const JobCard: React.FC<Props> = ({
         <Text
           fontSize={['15px', null, '15px']}
           lineHeight={['20px', null, '28px']}
-          color={setTextColor(6)}
+          color={setTextColor(2)}
         >
           {taskDescription}
         </Text>
@@ -81,4 +83,4 @@ const JobCard: React.FC<Props> = ({
   )
 }
 
-export default JobCard
+export default TaskCard

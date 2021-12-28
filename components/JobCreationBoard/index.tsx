@@ -9,6 +9,7 @@ import Button from 'styled/Button'
 import Flex from 'styled/Flex'
 import Grid from 'styled/Grid'
 import Input from 'styled/Input'
+import Text from 'styled/Text'
 import TextArea from 'styled/TextArea'
 import default_schedule from 'lib/utils/default_schedule'
 import axios from 'axios'
@@ -35,6 +36,7 @@ const JobCreationBoard: React.FC<Props> = ({
   currentUser
 }): JSX.Element => {
   const [inputVal, setInputVal] = useState<TaskProps>(initializeTask)
+  const [status, setStatus] = useState<string>('')
 
   useEffect(() => {
     if (!userTasks![getFullDate(target)])
@@ -52,10 +54,13 @@ const JobCreationBoard: React.FC<Props> = ({
       }).then(({ data: { success } }) => {
         if (success)
           refreshData(router)
+        else
+          setStatus('Failed to add task, please try again...')
       })
     }
     catch (err) {
       console.log('Failed to add task...')
+      setStatus('Failed to add task, please try again...')
     }
   }
 
@@ -92,6 +97,7 @@ const JobCreationBoard: React.FC<Props> = ({
           <Button onClick={() => setInputVal(initializeTask)}>Reset</Button>
         </Flex>
       </Grid>
+      {status.length > 0 && <Text color='red'>{status}</Text>}
     </Box>
   )
 }
