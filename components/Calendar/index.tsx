@@ -79,12 +79,15 @@ const Calendar: React.FC<Props> = ({
                 minWidth={["20px", '70px', "100px", "120px"]}
                 minHeight={['0', "150px"]}
               >
-                {<Text
-                  fontSize='20px'
-                  color={setTextColor(dayIdentifier(day, target))}
-                >
-                  {day.getDate()}
-                </Text>}
+                {<Box width='25px'>
+                  <Text
+                    fontSize='20px'
+                    color={setTextColor(dayIdentifier(day, target))}
+                  >
+                    {day.getDate()}
+                  </Text>
+                </Box>
+                }
                 {userTasks![getFullDate(day)] && userTasks![getFullDate(day)].map(
                   (task: TaskProps, tidx: number) => {
                     if (tidx >= 3 && width >= 540) return null
@@ -106,7 +109,7 @@ const Calendar: React.FC<Props> = ({
         </Grid>
       )
       )}
-    </Box>
+    </Box >
   );
 };
 

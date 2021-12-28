@@ -17,6 +17,7 @@ import { getFullDate, getYearMonth } from "lib/get/getDate";
 import { USER_INFO_QUERY } from "lib/queries/user-info";
 import { Server_TaskDateProps, Server_TaskProps } from "lib/interface/server";
 import { NextRouter } from "next/router";
+import NavigationBar from "components/NavigationBar";
 // import NavigationBar from "components/NavigationBar";
 
 interface Props {
@@ -56,7 +57,7 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        {/* <NavigationBar /> */}
+        <NavigationBar router={router} />
         <Calendar
           router={router}
           target={target}

@@ -29,11 +29,17 @@ const JobBoard: React.FC<Props> = ({ children }): JSX.Element => {
       top={['auto', null, '0']}
       bottom={['0', null, 'auto']}
     >
-      {!open && <MdOpenInFull
-        tw='cursor-pointer my-2'
-        onClick={() => setOpen(true)}
-        size="25px"
-      />
+      {!open &&
+        <Flex
+          my='5px'
+          justifyContent='flex-end'
+        >
+          <MdOpenInFull
+            tw='cursor-pointer'
+            onClick={() => setOpen(true)}
+            size="25px"
+          />
+        </Flex>
       }
       {open &&
         <Flex
