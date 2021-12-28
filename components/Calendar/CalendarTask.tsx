@@ -26,7 +26,7 @@ const FinishedIdentifier = styled(Flex) <FinishedIdentifier>`
   `}
 `;
 
-const TaskBoxWrapper = styled(Flex) <{ setTaskColor: string }>`
+const CalendarTaskWrapper = styled(Flex) <{ setTaskColor: string }>`
   font-weight: 700;
     ${tw`border-2 border-black shadow-lg rounded-md`}
 
@@ -51,7 +51,7 @@ interface Props {
   setTargetedTask: React.Dispatch<React.SetStateAction<TaskProps>>
 }
 
-const TaskBox: React.FC<Props> = ({
+const CalendarTask: React.FC<Props> = ({
   router,
   task,
   day,
@@ -94,17 +94,18 @@ const TaskBox: React.FC<Props> = ({
   }
 
   return (
-    <TaskBoxWrapper
+    <CalendarTaskWrapper
+      data-test="calendar-calendarTask"
       onClick={() => setTargetedTask(task)}
       my={['5px']}
       mx={['10px', '0px']}
       setTaskColor={setTextColor(targetIdentifier(task, targetedTask)) || "#2563eb"}
     >
       <FinishedIdentifier
-        finished={task.t_finished}
+        finished={task?.t_finished}
         onClick={() => handleFinished(task)}
       >
-        {task.t_finished ?
+        {task?.t_finished ?
           <Symbol>
             <AiOutlineClose size='20px' />
           </Symbol>
@@ -124,15 +125,15 @@ const TaskBox: React.FC<Props> = ({
         >
           {
             textlimit ?
-              task.taskTitle.length > textlimit ?
-                task.taskTitle.substring(0, textlimit) + '...'
-                : task.taskTitle.substring(0, textlimit)
-              : task.taskTitle
+              task?.taskTitle.length > textlimit ?
+                task?.taskTitle.substring(0, textlimit) + '...'
+                : task?.taskTitle.substring(0, textlimit)
+              : task?.taskTitle
           }
         </Text>
       </Box>
-    </TaskBoxWrapper>
+    </CalendarTaskWrapper>
   )
 }
 
-export default TaskBox
+export default CalendarTask

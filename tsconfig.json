@@ -24,8 +24,7 @@
     "**/*.ts",
     "**/*.tsx",
     "__test__/setupTests.js",
-    "pages/_app.tsx",
-    "__test__/Calendar/Calendar.test.js"
+    "pages/_app.tsx"
   ],
   "exclude": ["node_modules", "__test__"]
 }

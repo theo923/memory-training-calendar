@@ -48,7 +48,7 @@ const TaskCard: React.FC<Props> = ({
 
   return (
     <FullTaskContent
-      data-test="component-TaskCard"
+      data-test="taskBoard-taskCard"
       padding={['3px']}
       my={['5px']}
       setTaskColor={"#fff"}

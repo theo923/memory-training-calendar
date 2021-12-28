@@ -11,7 +11,7 @@ import Text from "styled/Text";
 import Grid from "styled/Grid";
 import CalendarHeader from "./CalendarHeader";
 import { NextRouter } from "next/router";
-import TaskBox from "./TaskBox";
+import TaskBox from "./CalendarTask";
 
 type CalendarColumnProps = {
   setColor: string
