@@ -26,7 +26,6 @@ type FinishedIdentifier = {
 }
 
 const TaskBox = styled(Flex) <{ setTaskColor: string }>`
-  width: 100%;
   font-weight: 700;
     ${tw`border-2 border-black shadow-lg rounded-md`}
 
@@ -84,9 +83,9 @@ const Calendar: React.FC<Props> = ({
   const [textlimit, setTextlimit] = useState(0);
 
   useEffect(() => {
-    if (width >= 1012) setTextlimit(9 + 1)
-    else if (width >= 768) setTextlimit(6 + 1)
-    else if (width >= 540) setTextlimit(3 + 1)
+    if (width >= 1012) setTextlimit(8 + 1)
+    else if (width >= 768) setTextlimit(4 + 1)
+    else if (width >= 540) setTextlimit(1 + 1)
     else setTextlimit(0)
   }, [width])
 
@@ -135,7 +134,8 @@ const Calendar: React.FC<Props> = ({
               onClick={() => setTarget(day)}
             >
               <Flex
-                flexDirection='column'
+                flexWrap={['wrap', 'unset',]}
+                flexDirection={['row', 'column']}
                 my='5px'
                 mx='5px'
                 minWidth={["20px", '70px', "100px", "120px"]}
@@ -149,11 +149,12 @@ const Calendar: React.FC<Props> = ({
                 </Text>}
                 {userTasks![getFullDate(day)] && userTasks![getFullDate(day)].map(
                   (task: TaskProps, tidx: number) => {
-                    if (tidx >= 3) return <></>
+                    if (tidx >= 3 && width >= 540) return <></>
                     return <TaskBox
                       key={tidx}
                       onClick={() => setTargetedTask(task)}
                       my={['5px']}
+                      mx={['10px', '0px']}
                       setTaskColor={setTextColor(targetIdentifier(task, targetedTask)) || "#2563eb"}
                     >
                       <FinishedIdentifier
