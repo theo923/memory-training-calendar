@@ -35,8 +35,6 @@ const JobCard: React.FC<Props> = ({
   taskTitle,
   taskDescription
 }): JSX.Element => {
-  console.log(router)
-
   const handleSubmit = async () => {
     await axios.post('/api/deleteTask', {
       id: taskID
