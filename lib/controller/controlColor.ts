@@ -49,6 +49,12 @@ export const setBgColor = (result: number) => {
   }
 }
 
+export const setBooleanColor = (result: any) => {
+  if (result) {
+    return '#66d4a0'
+  } else return '#ef4444'
+}
+
 export const dayIdentifier = (date: Date, target: Date) => {
   if (isSameDay(date, target)) return 5
   if (date < target) {

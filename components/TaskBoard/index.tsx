@@ -1,4 +1,4 @@
-import JobCard from 'components/JobCard'
+import TaskCard from 'components/TaskBoard/TaskCard'
 import { getFullDate } from 'lib/get/getDate'
 import { TaskProps } from 'lib/interface'
 import { NextRouter } from 'next/router'
@@ -21,12 +21,13 @@ const TaskBoard: React.FC<Props> = ({
       {userTasks![getFullDate(target)] ?
         userTasks![getFullDate(target)]?.map(
           (task: TaskProps, idx: number) => (
-            <JobCard
+            <TaskCard
               key={idx}
               router={router}
               taskID={task.id}
               taskTitle={task.taskTitle}
               taskDescription={task.taskDescription}
+              finished={task.t_finished}
             />))
         : <Box>
           No Tasks is founded. You must create one first.
