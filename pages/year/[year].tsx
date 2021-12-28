@@ -56,6 +56,7 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
       </Head>
       <Layout>
         <Calendar
+          router={router}
           target={target}
           setTarget={setTarget}
           userTasks={userTasks}
@@ -155,8 +156,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       const tasks = tasksData.filter((task: Server_TaskProps) => task?.attributes['targetedDate'].length > 0)
       tasks.forEach((task: Server_TaskProps) => {
         task?.attributes!['targetedDate'].forEach((date: Server_TaskDateProps) => {
-          const { t_date } = date
-          const returnObject = { ...task?.attributes, id: task.id, userID: id as string, userName: username as string }
+          const { t_date, t_finished } = date
+          const returnObject = {
+            ...task?.attributes,
+            id: task.id,
+            userID: id as string,
+            userName: username as string,
+            t_date,
+            t_finished
+          }
           if (sortedDateTask![t_date as string])
             sortedDateTask[t_date as string].push(returnObject)
           else sortedDateTask[t_date as string] = [returnObject]

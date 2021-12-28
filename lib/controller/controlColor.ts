@@ -16,7 +16,7 @@ export const setTextColor = (result: number) => {
     case 'curDay':
       return '#ef4444'
     case 'targetDay':
-      return '#171717'
+      return '#18263d'
     case 'beforeDay':
       return '#171717'
     case 'afterDay':
@@ -71,6 +71,6 @@ export const dayIdentifier = (date: Date, target: Date) => {
 }
 
 export const targetIdentifier = (task: any, targetedTask: any) => {
-  if (task == targetedTask) return 6
-  return 0
+  if (task == targetedTask) return 5
+  return 6
 }

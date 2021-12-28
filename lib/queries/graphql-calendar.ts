@@ -20,6 +20,7 @@ export const CALENDAR_QUERY = gql`
                 ) {
                   t_date
                   t_period
+                  t_finished
                 }
               }
             }
