@@ -11,7 +11,6 @@ import Text from "styled/Text";
 const Header = styled(Box)`
   background-color: #FAFAFA;
   border: .5px solid #808080;
-  border-radius: 50px 50px 0 0;
 `;
 
 interface Props {
@@ -26,7 +25,6 @@ const CalendarHeader: React.FC<Props> = ({ target, setTarget }) => {
     >
       <Flex
         justifyContent='space-evenly'
-        my='30px'
         fontSize={'30px'}
       >
         <Button onClick={() => setSubMonthFirstDay(setTarget)}><BsArrowLeftSquareFill size='20px' /></Button>
