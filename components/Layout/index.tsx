@@ -15,14 +15,20 @@ const Layout: React.FC<Props> = ({ children }): JSX.Element => {
       height='100%'
       gridTemplateColumns={['0.5fr 1fr 0.5fr']}
     >
+
       <Box />
-      <Flex width={["400px", "600px", '800px', "1000px"]}
-        height='100%'
-        flexDirection={['column', null, 'row']}
+      <Flex flexDirection={['column', null, 'row']}
         justifyContent='center'
         alignItems='center'
       >
-        {children}
+        <Flex width={["400px", "600px", '800px', "1000px"]}
+          flexDirection={['column', null, 'row']}
+          justifyContent='center'
+          alignItems='center'
+          height={['auto', 'auto', '800px']}
+        >
+          {children}
+        </Flex>
       </Flex>
       <Box />
     </Grid>

@@ -11,7 +11,6 @@ const default_schedule = (target: Date) => {
   let cTarget: Date = target
   const returnVal: TaskDateProps[] = []
 
-
   for (let i = 0; i < 7; i++) {
     returnVal.push({
       t_date: getFullDate(cTarget),
