@@ -3,6 +3,14 @@ import React from "react";
 import Box from "styled/Box";
 import Flex from "styled/Flex";
 import Grid from "styled/Grid";
+import styled from "styled-components";
+import tw from 'twin.macro';
+
+const LayoutWrapper = styled(Flex)`
+  border: 2px solid #000;
+  ${tw`rounded-md shadow-2xl`}
+
+`
 
 interface Props {
   children?: childNode;
@@ -21,14 +29,14 @@ const Layout: React.FC<Props> = ({ children }): JSX.Element => {
         justifyContent='center'
         alignItems='center'
       >
-        <Flex width={["400px", "600px", '800px', "1000px"]}
+        <LayoutWrapper
           flexDirection={['column', null, 'row']}
           justifyContent='center'
           alignItems='center'
-          height={['auto', 'auto', '800px']}
+          height={['auto', 'auto', '857px']}
         >
           {children}
-        </Flex>
+        </LayoutWrapper>
       </Flex>
       <Box />
     </Grid>
