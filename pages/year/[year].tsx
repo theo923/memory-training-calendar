@@ -56,7 +56,7 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
         <title>Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
+      <Layout main>
         <NavigationBar router={router} />
         <Calendar
           router={router}
