@@ -18,7 +18,6 @@ import { USER_INFO_QUERY } from "lib/queries/user-info";
 import { Server_TaskDateProps, Server_TaskProps } from "lib/interface/server";
 import { NextRouter } from "next/router";
 import NavigationBar from "components/NavigationBar";
-// import NavigationBar from "components/NavigationBar";
 
 interface Props {
   router: NextRouter
@@ -79,29 +78,35 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
               type='register'
             />
           }
-          <Board title={'Create Task Board'}>
-            <JobCreationBoard
-              router={router}
-              currentUser={currentUser}
-              userTasks={userTasks}
-              setUserTasks={setUserTasks}
-              target={target}
-            />
-          </Board>
-          <Board title={'Task Board'}>
-            <TaskBoard
-              router={router}
-              userTasks={userTasks}
-              target={target}
-            />
-          </Board>
-          <Board title={'Modify Board'}>
-            <ModifyBoard
-              router={router}
-              targetedTask={targetedTask}
-              target={target}
-            />
-          </Board>
+          {user?.id && user?.username &&
+            <Board title={'Create Task Board'}>
+              <JobCreationBoard
+                router={router}
+                currentUser={currentUser}
+                userTasks={userTasks}
+                setUserTasks={setUserTasks}
+                target={target}
+              />
+            </Board>
+          }
+          {user?.id && user?.username &&
+            <Board title={'Task Board'}>
+              <TaskBoard
+                router={router}
+                userTasks={userTasks}
+                target={target}
+              />
+            </Board>
+          }
+          {user?.id && user?.username &&
+            <Board title={'Modify Board'}>
+              <ModifyBoard
+                router={router}
+                targetedTask={targetedTask}
+                target={target}
+              />
+            </Board>
+          }
           {status === true &&
             <Board
               title={'Logout'}
