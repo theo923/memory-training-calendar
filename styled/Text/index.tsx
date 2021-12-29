@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { color } from "styled-system";
+import Box from "styled/Box";
 import { typography, TypographyProps } from "../styled-system";
 
-const Text = styled.p<TypographyProps>`
+const Text = styled(Box)<TypographyProps>`
     font-family: Mukta;
     word-wrap: break-word;
     ${typography}

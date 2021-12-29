@@ -28,7 +28,7 @@ const CalendarHeader: React.FC<Props> = ({ target, setTarget }) => {
         fontSize={'30px'}
       >
         <Button onClick={() => setSubMonthFirstDay(setTarget)}><BsArrowLeftSquareFill size='20px' /></Button>
-        <Text>{`${months![target?.getMonth()]} ${target?.getFullYear()}`}</Text>
+        <Text width={['150px','250px']}>{`${months![target?.getMonth()]} ${target?.getFullYear()}`}</Text>
         <Button onClick={() => setToday(setTarget)}><CgCalendarDates size='20px' /></Button>
         <Button onClick={() => setAddMonthFirstDay(setTarget)}><BsArrowRightSquareFill size='20px' /></Button>
       </Flex>

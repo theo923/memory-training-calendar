@@ -20,7 +20,6 @@ type CalendarColumnProps = {
 const CalendarColumn = styled(Flex) <CalendarColumnProps>`
   border: .5px solid #808080;
   cursor: pointer;
-  box-sizing: content-box;
 
   ${({ setColor }) => css`
     background-color: ${setColor}
