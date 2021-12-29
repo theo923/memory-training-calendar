@@ -4,19 +4,22 @@ import Text from 'styled/Text';
 import Box from 'styled/Box';
 import CircleProgress from './CircleProgress';
 import Grid from 'styled/Grid';
+import { UserProps } from 'lib/interface';
 
+interface Props {
+  user: UserProps
+}
 
-const Dashboard = () => {
+const Dashboard: React.FC<Props> = ({ user }) => {
   return (
     <Box textAlign='center'>
       <Flex
-        
         flexDirection='column'
         justifyContent='center'
         alignItems='center'
       >
         <Flex my='50px' fontSize="50px">
-          Welcome back! username
+          {`Welcome back! ${user.username}`}
         </Flex>
         <Flex my='50px' fontSize="30px">
           Here is Your Progress
