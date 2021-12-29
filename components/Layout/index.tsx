@@ -14,9 +14,10 @@ const LayoutWrapper = styled(Flex)`
 
 interface Props {
   children?: childNode;
+  main?: boolean;
 }
 
-const Layout: React.FC<Props> = ({ children }): JSX.Element => {
+const Layout: React.FC<Props> = ({ children, main }): JSX.Element => {
   return (
     <Grid
       data-test="component-layout"
@@ -33,7 +34,7 @@ const Layout: React.FC<Props> = ({ children }): JSX.Element => {
           flexDirection={['column', null, 'row']}
           justifyContent='center'
           alignItems='center'
-          height={['auto', 'auto', '857px']}
+          height={main ? ['auto', 'auto', '1019px'] : 'auto'}
         >
           {children}
         </LayoutWrapper>

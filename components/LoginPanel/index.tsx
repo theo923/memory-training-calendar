@@ -13,12 +13,10 @@ import Flex from 'styled/Flex';
 import Grid from 'styled/Grid';
 import Input from 'styled/Input';
 import Text from 'styled/Text';
-import tw from 'twin.macro';
 
 const ContentBox = styled(Box)`
   padding: 50px 10px;
-  background: white;
-  ${tw`border-2 border-black shadow-md rounded-md mb-5`}
+  background: transparent;
 `
 
 interface Props {
