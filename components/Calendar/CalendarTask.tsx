@@ -18,7 +18,6 @@ type FinishedIdentifier = {
 
 const FinishedIdentifier = styled(Flex) <FinishedIdentifier>`
   width: 20px;
-  box-sizing: content-box;
    ${tw`rounded-sm`}
 
   ${({ finished }) => css`

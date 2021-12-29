@@ -41,16 +41,6 @@ const NavigationBar: React.FC<Props> = ({ router }): JSX.Element => {
           width='90%'
         />
         <Box
-          onClick={() => router.push("/")}
-          my={['0', null, '20px']}
-        >
-          <Text
-            className='cursor-pointer'
-            fontSize='20px'
-          >
-            Calendar</Text>
-        </Box>
-        <Box
           onClick={() => router.push("/dashboard")}
           my={['0', null, '20px']}
         >
@@ -60,6 +50,16 @@ const NavigationBar: React.FC<Props> = ({ router }): JSX.Element => {
           >
             Dashboard
           </Text>
+        </Box>
+        <Box
+          onClick={() => router.push("/")}
+          my={['0', null, '20px']}
+        >
+          <Text
+            className='cursor-pointer'
+            fontSize='20px'
+          >
+            Calendar</Text>
         </Box>
       </Flex>
     </NavigationBarWrapper >
