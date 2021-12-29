@@ -37,18 +37,29 @@ const NavigationBar: React.FC<Props> = ({ router }): JSX.Element => {
           M-T-C
         </Logo>
         <Box
-          className='border-t-8 border-gray-300 rounded-lg shadow-xl'
+          className='border-t-8 border-gray-300 rounded-lg shadow-xl mb-10'
           width='90%'
         />
         <Box
           onClick={() => router.push("/")}
-          my={['0', null, '30px']}
+          my={['0', null, '20px']}
         >
           <Text
             className='cursor-pointer'
             fontSize='20px'
           >
             Calendar</Text>
+        </Box>
+        <Box
+          onClick={() => router.push("/dashboard")}
+          my={['0', null, '20px']}
+        >
+          <Text
+            className='cursor-pointer'
+            fontSize='20px'
+          >
+            Dashboard
+          </Text>
         </Box>
       </Flex>
     </NavigationBarWrapper >
