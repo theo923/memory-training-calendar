@@ -18,6 +18,7 @@ import { USER_INFO_QUERY } from "lib/queries/user-info";
 import { Server_TaskDateProps, Server_TaskProps } from "lib/interface/server";
 import { NextRouter } from "next/router";
 import NavigationBar from "components/NavigationBar";
+import MainComponent from "components/MainComponent";
 
 interface Props {
   router: NextRouter
@@ -52,19 +53,21 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
   return (
     <>
       <Head>
-        <title>Memory Training Calendar</title>
+        <title>Calendar | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout main>
+      <Layout>
         <NavigationBar router={router} />
-        <Calendar
-          router={router}
-          target={target}
-          setTarget={setTarget}
-          userTasks={userTasks}
-          targetedTask={targetedTask}
-          setTargetedTask={setTargetedTask}
-        />
+        <MainComponent>
+          <Calendar
+            router={router}
+            target={target}
+            setTarget={setTarget}
+            userTasks={userTasks}
+            targetedTask={targetedTask}
+            setTargetedTask={setTargetedTask}
+          />
+        </MainComponent>
         <JobBoard>
           {status === false &&
             <Board
