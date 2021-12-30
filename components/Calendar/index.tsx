@@ -1,4 +1,7 @@
-import { setBgColor, dayIdentifier, setTextColor } from "lib/controller/controlColor";
+import {
+  // setBgColor,
+  dayIdentifier, setTextColor
+} from "lib/controller/controlColor";
 import { getCalendar } from "lib/get/getCalendar";
 import { getFullDate } from "lib/get/getDate";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
@@ -12,6 +15,7 @@ import Grid from "styled/Grid";
 import CalendarHeader from "./CalendarHeader";
 import { NextRouter } from "next/router";
 import TaskBox from "./CalendarTask";
+// import GlassBox from "styled/GlassBox";
 
 type CalendarColumnProps = {
   setColor: string
@@ -67,7 +71,8 @@ const Calendar: React.FC<Props> = ({
           {week.map((day: any, didx: number) => (
             <CalendarColumn
               key={didx}
-              setColor={setBgColor(dayIdentifier(day, target)) || '#fff'}
+              // setColor={setBgColor(dayIdentifier(day, target)) || '#fff'}
+              setColor='transparent'
               onClick={() => setTarget(day)}
             >
               <Flex
@@ -108,7 +113,7 @@ const Calendar: React.FC<Props> = ({
         </Grid>
       )
       )}
-    </Box >
+    </Box>
   );
 };
 

@@ -6,11 +6,12 @@ import styled from "styled-components";
 import Box from "styled/Box";
 import Button from "styled/Button";
 import Flex from "styled/Flex";
+// import GlassBox from "styled/GlassBox";
 import Text from "styled/Text";
 
 const Header = styled(Box)`
-  background-color: #FAFAFA;
-  border: .5px solid #808080;
+  /* background-color: #FAFAFA; */
+  /* border: .5px solid #808080; */
 `;
 
 interface Props {
