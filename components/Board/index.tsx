@@ -7,11 +7,12 @@ import styled from 'styled-components'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
+import GlassBox from 'styled/GlassBox'
 import Text from 'styled/Text'
 import tw from 'twin.macro'
 
-const Wrapper = styled(Box)`
-  background-color: white;
+const Wrapper = styled(GlassBox)`
+  /* background-color: white; */
   ${tw`border-2 border-black shadow-md rounded-md px-2 py-1 mb-5`}
 `
 

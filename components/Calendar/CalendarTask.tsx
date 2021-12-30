@@ -9,6 +9,7 @@ import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 import styled, { css } from "styled-components";
 import Box from "styled/Box";
 import Flex from "styled/Flex";
+import GlassBox from "styled/GlassBox";
 import Text from "styled/Text";
 import tw from "twin.macro";
 
@@ -25,9 +26,10 @@ const FinishedIdentifier = styled(Flex) <FinishedIdentifier>`
   `}
 `;
 
-const CalendarTaskWrapper = styled(Flex) <{ setTaskColor: string }>`
+const CalendarTaskWrapper = styled(GlassBox) <{ setTaskColor: string }>`
+  display: flex;
+  border-radius: 5px;
   font-weight: 700;
-    ${tw`border-2 border-black shadow-lg rounded-md`}
 
   ${({ setTaskColor }) => css`
     background-color: ${setTaskColor || ''}

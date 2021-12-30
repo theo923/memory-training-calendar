@@ -28,9 +28,9 @@ const dashboard: React.FC<Props> = ({ router, user, status }): JSX.Element => {
       </Head>
       <Layout>
         <NavigationBar router={router} />
-        <MainComponent>
-          <Dashboard user={user} />
-        </MainComponent>
+          <MainComponent>
+            <Dashboard user={user} />
+          </MainComponent>
         <JobBoard>
           {status === false &&
             <Board

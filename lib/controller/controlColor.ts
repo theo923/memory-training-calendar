@@ -9,6 +9,7 @@ const identifyDay: numberIndex = {
   4: 'dayNextMonth',
   5: 'targetDay',
   6: 'white',
+  7: 'glass',
 }
 
 export const setTextColor = (result: number) => {
@@ -27,6 +28,8 @@ export const setTextColor = (result: number) => {
       return '#78716c'
     case 'white':
       return '#fff'
+    case 'glass':
+      return 'trasparent'
   }
 }
 
@@ -46,6 +49,8 @@ export const setBgColor = (result: number) => {
       return '#d1d5db'
     case 'white':
       return '#fff'
+    case 'glass':
+      return 'trasparent'
   }
 }
 
@@ -78,5 +83,5 @@ export const dayIdentifier = (date: Date, target: Date) => {
 
 export const targetIdentifier = (task: any, targetedTask: any) => {
   if (task == targetedTask) return 5
-  return 6
+  return 7
 }
