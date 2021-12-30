@@ -8,10 +8,9 @@ import Dashboard from "components/Dashboard";
 import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
-import { client, DEFAULT_HEADERS } from "lib/apollo";
 import { initializeUser } from "lib/initialize";
-import { USER_INFO_QUERY } from "lib/queries/user-info";
 import { UserProps } from "lib/interface";
+import { getUserInfo } from "lib/get/getUserInfo";
 
 interface Props {
   router: NextRouter
@@ -68,15 +67,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         }
       }
 
-    const { data: { me: { id, username } } } =
-      await client.query({
-        query: USER_INFO_QUERY,
-        context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
-      })
-
-    const user = {
-      id, username
-    }
+    const { user } = await getUserInfo(req)
 
     return {
       props: {

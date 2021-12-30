@@ -47,7 +47,6 @@ const Dashboard: React.FC<Props> = ({ user }) => {
           </Text>
         </Flex>
       </Grid>
-
     </Box>
   )
 }
