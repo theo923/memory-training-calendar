@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 import Board from "components/Board";
 import Calendar from "components/Calendar";
 import JobBoard from "components/JobBoard";
-import JobCreationBoard from "components/JobCreationBoard";
+import CreateTaskBoard from "components/CreateTaskBoard";
 import Layout from "components/Layout";
 import ModifyBoard from "components/ModifyBoard";
 import TaskBoard from "components/TaskBoard";
-import { TaskProps, UserProps, UserTasksProps } from "lib/interface";
+import { ServerSettingsProps, TaskProps, UserProps, UserTasksProps } from "lib/interface";
 import { initializeTask, initializeUser } from "lib/initialize";
 import { addDays, endOfYear, isSameMonth, startOfWeek, startOfYear } from "date-fns";
 import { getYearMonth } from "lib/get/getDate";
@@ -17,16 +17,18 @@ import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getSortedDateTask } from "lib/get/getSortedDateTask";
+import { getServerSettings } from "lib/get/getServerSettings";
 
 interface Props {
   router: NextRouter
+  serverSettings: ServerSettingsProps
   status: boolean
   tasks: UserTasksProps
   targetYear: Date
   user: UserProps
 }
 
-const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.Element => {
+const App: React.FC<Props> = ({ router, user, targetYear, status, tasks, serverSettings }): JSX.Element => {
   const currentYear: Date = targetYear ? new Date(targetYear) : new Date()
   const currentUser: UserProps = user || initializeUser
   const [target, setTarget] = useState<Date>(
@@ -81,12 +83,13 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
           }
           {user?.id && user?.username &&
             <Board title={'Create Task Board'}>
-              <JobCreationBoard
+              <CreateTaskBoard
                 router={router}
                 currentUser={currentUser}
                 userTasks={userTasks}
                 setUserTasks={setUserTasks}
                 target={target}
+                colorPalette={serverSettings.taskColor}
               />
             </Board>
           }
@@ -105,6 +108,7 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
                 router={router}
                 targetedTask={targetedTask}
                 target={target}
+                colorPalette={serverSettings.taskColor}
               />
             </Board>
           }
@@ -124,17 +128,19 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks }): JSX.
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   try {
     const targetYear = new Date((query!['year'] + '-01') as string)
+    const serverSettings = await getServerSettings()
 
     if (!req.cookies['calendar-user-token'])
       return {
         props: {
+          serverSettings,
           user: initializeUser,
           targetYear: targetYear.toString(),
           status: false,
           tasks: {}
         }
       }
-    
+
     const startYear = startOfWeek(startOfYear(targetYear))
     const endYear = endOfYear(targetYear)
 
@@ -143,6 +149,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
     return {
       props: {
+        serverSettings,
         user,
         targetYear: targetYear.toString(),
         status: true,
@@ -153,6 +160,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
     console.log(err)
     return {
       props: {
+        serverSettings: {},
         user: initializeUser,
         targetYear: '',
         status: false,

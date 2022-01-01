@@ -1,5 +1,6 @@
 // import { getFullDate } from 'lib/get/getDate'
 import {
+  ColorProps,
   TaskProps,
   // UserTasksProps
 } from 'lib/interface'
@@ -33,5 +34,14 @@ export const controlTaskDescription = (
 ) => {
   setInputVal((prev) => {
     return { ...prev, taskDescription: e.target.value }
+  })
+}
+
+export const controlTaskColor = (
+  setInputVal: React.Dispatch<React.SetStateAction<TaskProps>>,
+  color: ColorProps
+) => {
+  setInputVal((prev) => {
+    return { ...prev, taskColor: color.colorValue }
   })
 }
