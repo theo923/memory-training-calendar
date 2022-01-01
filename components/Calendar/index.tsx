@@ -1,7 +1,4 @@
-import {
-  // setBgColor,
-  dayIdentifier, setTextColor
-} from "lib/controller/controlColor";
+import { setBgColor, dayIdentifier, setTextColor } from "lib/controller/controlColor";
 import { getCalendar } from "lib/get/getCalendar";
 import { getFullDate } from "lib/get/getDate";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
@@ -71,8 +68,7 @@ const Calendar: React.FC<Props> = ({
           {week.map((day: any, didx: number) => (
             <CalendarColumn
               key={didx}
-              // setColor={setBgColor(dayIdentifier(day, target)) || '#fff'}
-              setColor='transparent'
+              setColor={setBgColor(dayIdentifier(day, target)) || 'transparent'}
               onClick={() => setTarget(day)}
             >
               <Flex
