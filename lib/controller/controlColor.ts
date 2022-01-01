@@ -10,6 +10,7 @@ const identifyDay: numberIndex = {
   5: 'targetDay',
   6: 'white',
   7: 'glass',
+  8: 'glassX2',
 }
 
 export const setTextColor = (result: number) => {
@@ -30,6 +31,8 @@ export const setTextColor = (result: number) => {
       return '#fff'
     case 'glass':
       return 'trasparent'
+    case 'glassX2':
+      return 'rgba(0,0,0,0.2)'
   }
 }
 
@@ -51,6 +54,8 @@ export const setBgColor = (result: number) => {
       return '#fff'
     case 'glass':
       return 'trasparent'
+    case 'glassX2':
+      return 'rgba(0,0,0,0.05)'
   }
 }
 
@@ -67,16 +72,16 @@ export const dayIdentifier = (date: Date, target: Date) => {
       date.getFullYear() < target.getFullYear() ||
       date.getMonth() < target.getMonth()
     )
-      return 3
-    return 1
+      return 8
+    return 7
   }
   if (date > target) {
     if (
       date.getFullYear() > target.getFullYear() ||
       date.getMonth() > target.getMonth()
     )
-      return 4
-    return 2
+      return 8
+    return 7
   }
   return 0
 }
