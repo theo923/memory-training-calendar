@@ -64,8 +64,8 @@ const CalendarTask: React.FC<Props> = ({
   const [textlimit, setTextlimit] = useState<number>(0);
 
   useEffect(() => {
-    if (width >= 1012) setTextlimit(8 + 1)
-    else if (width >= 768) setTextlimit(4 + 1)
+    if (width >= 1012) setTextlimit(7 + 1)
+    else if (width >= 768) setTextlimit(3 + 1)
     else if (width >= 540) setTextlimit(1 + 1)
     else setTextlimit(0)
   }, [width])
