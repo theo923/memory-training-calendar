@@ -52,8 +52,6 @@ const Calendar: React.FC<Props> = ({
     setCalendar(getCalendar(target))
   }, [target])
 
-  console.log(days[0])
-
   return (
     <Box
       data-test="component-calendar"
