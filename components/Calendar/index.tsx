@@ -12,6 +12,7 @@ import Grid from "styled/Grid";
 import CalendarHeader from "./CalendarHeader";
 import { NextRouter } from "next/router";
 import TaskBox from "./CalendarTask";
+import { days } from "lib/data/dates";
 // import GlassBox from "styled/GlassBox";
 
 type CalendarColumnProps = {
@@ -51,6 +52,8 @@ const Calendar: React.FC<Props> = ({
     setCalendar(getCalendar(target))
   }, [target])
 
+  console.log(days[0])
+
   return (
     <Box
       data-test="component-calendar"
@@ -60,6 +63,13 @@ const Calendar: React.FC<Props> = ({
         setTarget={setTarget}
         target={target}
       />
+      <Grid
+        gridTemplateColumns={["1fr", "1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
+      >
+        {[...Array(7)].map((_, dnidx: number) =>
+          <Text textAlign='center'>{days[dnidx]}</Text>
+        )}
+      </Grid>
       {calendar.map((week: any, cidx: number) => (
         <Grid
           key={cidx}

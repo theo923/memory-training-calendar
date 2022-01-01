@@ -1,5 +1,5 @@
 import React from 'react'
-import { ColorProps, TaskProps } from 'lib/interface'
+import { ColorProps } from 'lib/interface'
 import { controlTaskColor } from 'lib/controller/controlTask'
 import styled, { css } from 'styled-components'
 import Box from 'styled/Box'
@@ -20,27 +20,32 @@ const ColorCircle = styled(Box) <{ bgColor: string, selected: boolean }>`
 `
 
 interface Props {
-  colors: ColorProps[],
-  inputVal: TaskProps,
-  setInputVal: React.Dispatch<React.SetStateAction<TaskProps>>,
+  colors?: ColorProps[],
+  currentValue?: string
+  setInputVal: React.Dispatch<React.SetStateAction<any>>,
+  inputProperties: string
 }
 
 const ColorPanel: React.FC<Props> = ({
   colors,
-  inputVal,
+  currentValue,
   setInputVal,
+  inputProperties
 }): JSX.Element => {
   return (
     <Flex
       data-test="ServerSettings-colorPalette"
+      flexWrap='wrap'
       mb='20px'
     >
       {colors && colors?.map(
         (color: ColorProps, idx: number) =>
           <ColorCircle
             key={idx}
-            onClick={() => controlTaskColor(setInputVal, color)}
-            selected={inputVal?.taskColor === color?.colorValue}
+            my='10px'
+            mx='10px'
+            onClick={() => controlTaskColor(setInputVal, color, inputProperties)}
+            selected={currentValue === color?.colorValue}
             bgColor={color?.colorValue}
           />)
       }

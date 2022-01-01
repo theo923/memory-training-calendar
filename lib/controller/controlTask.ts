@@ -1,23 +1,5 @@
-// import { getFullDate } from 'lib/get/getDate'
-import {
-  ColorProps,
-  TaskProps,
-  // UserTasksProps
-} from 'lib/interface'
+import { ColorProps, TaskProps } from 'lib/interface'
 import { ChangeEvent } from 'react'
-
-// export const addTask = (
-//   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
-//   target: Date,
-//   inputVal: TaskProps
-// ) => {
-//   setUserTasks((prev: UserTasksProps) => {
-//     return {
-//       ...prev,
-//       [getFullDate(target)]: [...prev[getFullDate(target)], inputVal],
-//     }
-//   })
-// }
 
 export const controlTaskTitle = (
   setInputVal: React.Dispatch<React.SetStateAction<TaskProps>>,
@@ -39,9 +21,10 @@ export const controlTaskDescription = (
 
 export const controlTaskColor = (
   setInputVal: React.Dispatch<React.SetStateAction<TaskProps>>,
-  color: ColorProps
+  color: ColorProps,
+  inputProperties: string
 ) => {
   setInputVal((prev) => {
-    return { ...prev, taskColor: color.colorValue }
+    return { ...prev, [inputProperties]: color.colorValue }
   })
 }

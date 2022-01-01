@@ -50,6 +50,7 @@ export interface TaskDateProps {
 
 export interface ServerSettingsProps {
   taskColor: TaskColorProps
+  bgColor: BgColorProps
 }
 
 export interface TaskColorProps {
@@ -57,7 +58,16 @@ export interface TaskColorProps {
   color_gradient: ColorProps[]
 }
 
+export interface BgColorProps {
+  color_static?: ColorProps[]
+  color_gradient: ColorProps[]
+}
+
 export interface ColorProps {
   colorName: string
   colorValue: string
+}
+
+export interface UserSettingsProps {
+  bgColor: string
 }
