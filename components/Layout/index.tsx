@@ -24,12 +24,14 @@ const Layout: React.FC<Props> = ({ main, children, userSettings }): JSX.Element 
   return (
     <LayoutWrapper
       data-test="component-layout"
-      height='100%'
+      height={['auto', null, '100%']}
       gridTemplateColumns={['0.5fr 1fr 0.5fr']}
       bColor={userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);'}
     >
       <Box />
-      <Flex flexDirection={['column', null, 'row']}
+      <Flex
+        height='100%'
+        flexDirection={['column', null, 'row']}
         justifyContent='center'
         alignItems='center'
       >
@@ -38,7 +40,6 @@ const Layout: React.FC<Props> = ({ main, children, userSettings }): JSX.Element 
           flexDirection={['column', null, 'row']}
           justifyContent='center'
           height={main ? '100%' : 'auto'}
-
         >
           {children}
         </GlassBox>
