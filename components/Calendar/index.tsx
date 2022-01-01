@@ -61,13 +61,15 @@ const Calendar: React.FC<Props> = ({
         setTarget={setTarget}
         target={target}
       />
-      <Grid
-        gridTemplateColumns={["1fr", "1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
-      >
-        {[...Array(7)].map((_, dnidx: number) =>
-          <Text textAlign='center'>{days[dnidx]}</Text>
-        )}
-      </Grid>
+      {width >= 540 &&
+        <Grid
+          gridTemplateColumns={["1fr", "1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
+        >
+          {[...Array(7)].map((_, dnidx: number) =>
+            <Text textAlign='center'>{days[dnidx]}</Text>
+          )}
+        </Grid>
+      }
       {calendar.map((week: any, cidx: number) => (
         <Grid
           key={cidx}
@@ -87,14 +89,23 @@ const Calendar: React.FC<Props> = ({
                 minWidth={["20px", '70px', "100px", "120px"]}
                 minHeight={['0', "150px"]}
               >
-                {<Box width='25px'>
+                {<Grid gridTemplateColumns='1fr 1fr' width='80px'>
                   <Text
                     fontSize='20px'
                     color={setTextColor(dayIdentifier(day, target))}
                   >
                     {day.getDate()}
                   </Text>
-                </Box>
+                  {
+                    width <= 540 &&
+                    <Text
+                      fontSize='20px'
+                      color={setTextColor(dayIdentifier(day, target))}
+                    >
+                      {days[didx % 7]}
+                    </Text>
+                  }
+                </Grid>
                 }
                 {userTasks![getFullDate(day)] && userTasks![getFullDate(day)].map(
                   (task: TaskProps, tidx: number) => {
