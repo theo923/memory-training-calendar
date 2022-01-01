@@ -9,16 +9,20 @@ import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
 import { initializeUser } from "lib/initialize";
-import { UserProps } from "lib/interface";
+import { ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
 import { getUserInfo } from "lib/get/getUserInfo";
+import { getUserSettings } from "lib/get/getUserSettings";
+import { getServerSettings } from "lib/get/getServerSettings";
 
 interface Props {
   router: NextRouter
+  serverSettings: ServerSettingsProps
   user: UserProps
+  userSettings: UserSettingsProps
   status: boolean
 }
 
-const dashboard: React.FC<Props> = ({ router, user, status }): JSX.Element => {
+const dashboard: React.FC<Props> = ({ router, serverSettings, user, userSettings, status }): JSX.Element => {
 
   return (
     <>
@@ -26,11 +30,16 @@ const dashboard: React.FC<Props> = ({ router, user, status }): JSX.Element => {
         <title>Dashboard | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <NavigationBar router={router} />
-          <MainComponent>
-            <Dashboard user={user} />
-          </MainComponent>
+      <Layout main userSettings={userSettings}>
+        <NavigationBar
+          router={router}
+          user={user}
+          userSettings={userSettings}
+          colorPalette={serverSettings?.bgColor}
+        />
+        <MainComponent>
+          <Dashboard user={user} />
+        </MainComponent>
         <JobBoard>
           {status === false &&
             <Board
@@ -58,20 +67,26 @@ const dashboard: React.FC<Props> = ({ router, user, status }): JSX.Element => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
+    const serverSettings = await getServerSettings()
 
     if (!req.cookies['calendar-user-token'])
       return {
         props: {
+          serverSettings,
           user: initializeUser,
+          userSettings: {},
           status: false
         }
       }
 
     const { user } = await getUserInfo(req)
+    const userSettings = await getUserSettings(user?.id, req)
 
     return {
       props: {
+        serverSettings,
         user,
+        userSettings,
         status: true
       }
     }
@@ -79,7 +94,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   } catch (err) {
     return {
       props: {
+        serverSettings: {},
         user: initializeUser,
+        userSettings: {},
         status: false
       }
     }

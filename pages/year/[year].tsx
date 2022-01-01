@@ -8,7 +8,7 @@ import CreateTaskBoard from "components/CreateTaskBoard";
 import Layout from "components/Layout";
 import ModifyBoard from "components/ModifyBoard";
 import TaskBoard from "components/TaskBoard";
-import { ServerSettingsProps, TaskProps, UserProps, UserTasksProps } from "lib/interface";
+import { ServerSettingsProps, TaskProps, UserProps, UserSettingsProps, UserTasksProps } from "lib/interface";
 import { initializeTask, initializeUser } from "lib/initialize";
 import { addDays, endOfYear, isSameMonth, startOfWeek, startOfYear } from "date-fns";
 import { getYearMonth } from "lib/get/getDate";
@@ -18,6 +18,7 @@ import MainComponent from "components/MainComponent";
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getSortedDateTask } from "lib/get/getSortedDateTask";
 import { getServerSettings } from "lib/get/getServerSettings";
+import { getUserSettings } from "lib/get/getUserSettings";
 
 interface Props {
   router: NextRouter
@@ -26,9 +27,18 @@ interface Props {
   tasks: UserTasksProps
   targetYear: Date
   user: UserProps
+  userSettings: UserSettingsProps
 }
 
-const App: React.FC<Props> = ({ router, user, targetYear, status, tasks, serverSettings }): JSX.Element => {
+const App: React.FC<Props> = ({
+  router,
+  user,
+  targetYear,
+  status,
+  tasks,
+  serverSettings,
+  userSettings
+}): JSX.Element => {
   const currentYear: Date = targetYear ? new Date(targetYear) : new Date()
   const currentUser: UserProps = user || initializeUser
   const [target, setTarget] = useState<Date>(
@@ -56,8 +66,13 @@ const App: React.FC<Props> = ({ router, user, targetYear, status, tasks, serverS
         <title>Calendar | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <NavigationBar router={router} />
+      <Layout main userSettings={userSettings}>
+        <NavigationBar
+          router={router}
+          user={user}
+          userSettings={userSettings}
+          colorPalette={serverSettings?.bgColor}
+        />
         <MainComponent>
           <Calendar
             router={router}
@@ -134,6 +149,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       return {
         props: {
           serverSettings,
+          userSettings: {},
           user: initializeUser,
           targetYear: targetYear.toString(),
           status: false,
@@ -141,15 +157,18 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
         }
       }
 
+
     const startYear = startOfWeek(startOfYear(targetYear))
     const endYear = endOfYear(targetYear)
 
     const { user } = await getUserInfo(req)
+    const userSettings = await getUserSettings(user?.id, req)
     const tasks = await getSortedDateTask(user, startYear, endYear, req)
 
     return {
       props: {
         serverSettings,
+        userSettings,
         user,
         targetYear: targetYear.toString(),
         status: true,
@@ -161,6 +180,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
     return {
       props: {
         serverSettings: {},
+        userSettings: {},
         user: initializeUser,
         targetYear: '',
         status: false,

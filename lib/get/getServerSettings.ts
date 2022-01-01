@@ -19,5 +19,8 @@ export const getServerSettings = async () => {
       color_static,
       color_gradient,
     },
+    bgColor: {
+      color_gradient,
+    },
   }
 }

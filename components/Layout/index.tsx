@@ -1,4 +1,4 @@
-import { childNode } from "lib/interface";
+import { childNode, UserSettingsProps } from "lib/interface";
 import React from "react";
 import Box from "styled/Box";
 import Flex from "styled/Flex";
@@ -6,26 +6,32 @@ import Grid from "styled/Grid";
 // import styled from "styled-components";
 // import tw from 'twin.macro';
 import GlassBox from "styled/GlassBox";
+import styled, { css } from "styled-components";
 
-// const LayoutWrapper = styled(Flex)`
-//   border: 2px solid #000;
-//   ${tw`rounded-md shadow-2xl`}
-
-// `
+const LayoutWrapper = styled(Grid) <any>`
+  ${({ bColor }) => css`
+    background: ${bColor}
+  `}
+`
 
 interface Props {
+  main?: boolean
   children?: childNode;
+  userSettings?: UserSettingsProps;
 }
 
-const Layout: React.FC<Props> = ({ children }): JSX.Element => {
+const Layout: React.FC<Props> = ({ main, children, userSettings }): JSX.Element => {
   return (
-    <Grid
+    <LayoutWrapper
       data-test="component-layout"
-      height='100%'
+      height={['auto', null, '100%']}
       gridTemplateColumns={['0.5fr 1fr 0.5fr']}
+      bColor={userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);'}
     >
       <Box />
-      <Flex flexDirection={['column', null, 'row']}
+      <Flex
+        height='100%'
+        flexDirection={['column', null, 'row']}
         justifyContent='center'
         alignItems='center'
       >
@@ -33,17 +39,13 @@ const Layout: React.FC<Props> = ({ children }): JSX.Element => {
           display='flex'
           flexDirection={['column', null, 'row']}
           justifyContent='center'
+          height={main ? '100%' : 'auto'}
         >
-          {/* <LayoutWrapper
-          flexDirection={['column', null, 'row']}
-          justifyContent='center'
-        > */}
           {children}
-          {/* </LayoutWrapper> */}
         </GlassBox>
       </Flex>
       <Box />
-    </Grid>
+    </LayoutWrapper>
   );
 };
 

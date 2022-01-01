@@ -15,8 +15,8 @@ export const REGISTRATION_USER_QUERY = gql`
   }
 `
 
-export const REGISTRATION_USER_TASK_QUERY = gql`
-  mutation createUserTask(
+export const REGISTRATION_USER_INFO_QUERY = gql`
+  mutation createUserInfo(
     $userID: String!
     $userName: String!
     $publishedAt: DateTime
@@ -39,6 +39,23 @@ export const REGISTRATION_USER_TASK_QUERY = gql`
               id
             }
           }
+          createdAt
+        }
+      }
+    }
+    createUserSetting(
+      data: {
+        userID: $userID
+        userName: $userName
+        publishedAt: $publishedAt
+      }
+    ) {
+      data {
+        id
+        attributes {
+          userName
+          userID
+          bgColor
           createdAt
         }
       }

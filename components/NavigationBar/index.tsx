@@ -1,5 +1,9 @@
+import axios from 'axios';
+import ColorPanel from 'components/ServerSettings/ColorPalette';
+import { UserSettingsProps, BgColorProps, UserProps } from 'lib/interface';
+import { refreshData } from 'lib/utils/refresh_data';
 import { NextRouter } from 'next/router';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import Box from 'styled/Box';
 import Flex from 'styled/Flex';
@@ -11,14 +15,42 @@ const NavigationBarWrapper = styled(Box)`
   ${tw`rounded-md`}
 `
 
-const Logo = styled(Text)`
-`
+interface InputValProp {
+  bgColor: string
+}
+
 
 interface Props {
   router: NextRouter
+  user: UserProps
+  userSettings?: UserSettingsProps
+  colorPalette?: BgColorProps
 }
 
-const NavigationBar: React.FC<Props> = ({ router }): JSX.Element => {
+const NavigationBar: React.FC<Props> = ({ router, user, userSettings, colorPalette }): JSX.Element => {
+  const initializeInputVal = {
+    bgColor: userSettings?.bgColor || '#fff'
+  }
+
+  const [inputVal, setInputVal] = useState<InputValProp>(initializeInputVal)
+
+  useEffect(() => {
+    if (userSettings?.bgColor !== inputVal?.bgColor) {
+      console.log(userSettings?.bgColor, inputVal?.bgColor)
+      updateSettings(inputVal)
+    }
+  }, [inputVal?.bgColor])
+
+  const updateSettings = async (inputVal: InputValProp) => {
+    await axios.post('/api/updateUserSettings', {
+      userID: user?.id,
+      bgColor: inputVal?.bgColor
+    }).then(({ data }) => {
+      if (data.success)
+        refreshData(router)
+    })
+  }
+
   return (
     <NavigationBarWrapper
       data-test="component-NavigationBar"
@@ -26,41 +58,66 @@ const NavigationBar: React.FC<Props> = ({ router }): JSX.Element => {
       height="100%"
     >
       <Flex
-        flexDirection={['column', null, 'column']}
-        justifyContent="center"
+        flexDirection={['row', null, 'column']}
+        justifyContent='space-between'
         alignItems="center"
-        my={['5px']}
+        height="100%"
+        flexWrap='wrap'
       >
-        <Logo
-          fontSize={['30px', null, null, null, '50px']}
-        >
-          M-T-C
-        </Logo>
-        <Box
-          className='border-t-8 border-gray-300 rounded-lg shadow-xl mb-10'
-          width='90%'
-        />
-        <Box
-          onClick={() => router.push("/dashboard")}
-          my={['0', null, '20px']}
-        >
+        <Box>
           <Text
-            className='cursor-pointer'
-            fontSize='20px'
+            fontSize={['30px', null, null, null, '50px']}
+            mr={['20px', null, '0']}
           >
-            Dashboard
+            M-T-C
           </Text>
+          <Box
+            className='border-t-8 border-gray-300 rounded-lg shadow-xl mb-10'
+            width='90%'
+          />
         </Box>
-        <Box
-          onClick={() => router.push("/")}
-          my={['0', null, '20px']}
+        <Flex
+          flexDirection={['row', null, 'column']}
+          justifyContent="center"
+          alignItems="center"
+          my={['5px']}
         >
-          <Text
-            className='cursor-pointer'
-            fontSize='20px'
+          <Box
+            onClick={() => router.push("/dashboard")}
+            my={['0', null, '20px']}
           >
-            Calendar</Text>
-        </Box>
+            <Text
+              className='cursor-pointer'
+              fontSize='20px'
+              mr={['20px', null, '0']}
+            >
+              Dashboard
+            </Text>
+          </Box>
+          <Box
+            onClick={() => router.push("/")}
+            my={['0', null, '20px']}
+          >
+            <Text
+              className='cursor-pointer'
+              fontSize='20px'
+              mr={['20px', null, '0']}
+            >
+              Calendar</Text>
+          </Box>
+        </Flex>
+        {
+          user?.id ?
+            <Flex mb='10px'>
+              <ColorPanel
+                currentValue={inputVal?.bgColor}
+                setInputVal={setInputVal}
+                colors={colorPalette?.color_gradient}
+                inputProperties='bgColor'
+              />
+            </Flex> :
+            <Box />
+        }
       </Flex>
     </NavigationBarWrapper >
   )

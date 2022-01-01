@@ -26,10 +26,10 @@ const CalendarHeader: React.FC<Props> = ({ target, setTarget }) => {
     >
       <Flex
         justifyContent='space-evenly'
-        fontSize={'30px'}
+        fontSize={['25px', '30px']}
       >
         <Button onClick={() => setSubMonthFirstDay(setTarget)}><BsArrowLeftSquareFill size='20px' /></Button>
-        <Text width={['150px','250px']}>{`${months![target?.getMonth()]} ${target?.getFullYear()}`}</Text>
+        <Text width={['200px', '250px']}>{`${months![target?.getMonth()]} ${target?.getFullYear()}`}</Text>
         <Button onClick={() => setToday(setTarget)}><CgCalendarDates size='20px' /></Button>
         <Button onClick={() => setAddMonthFirstDay(setTarget)}><BsArrowRightSquareFill size='20px' /></Button>
       </Flex>

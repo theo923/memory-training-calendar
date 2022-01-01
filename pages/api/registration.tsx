@@ -1,5 +1,5 @@
 import { client } from "lib/apollo"
-import { REGISTRATION_USER_QUERY, REGISTRATION_USER_TASK_QUERY } from "lib/queries/registration"
+import { REGISTRATION_USER_QUERY, REGISTRATION_USER_INFO_QUERY } from "lib/queries/registration"
 
 const registration = async (req: any, res: any) => {
   try {
@@ -15,7 +15,7 @@ const registration = async (req: any, res: any) => {
       })
 
     await client.query({
-      query: REGISTRATION_USER_TASK_QUERY,
+      query: REGISTRATION_USER_INFO_QUERY,
       variables: {
         userID: id,
         userName: username,

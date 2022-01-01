@@ -90,9 +90,10 @@ const JobCreationBoard: React.FC<Props> = ({
             Static Colors:
           </InputText>
           <ColorPanel
-            inputVal={inputVal}
+            currentValue={inputVal?.taskColor}
             setInputVal={setInputVal}
             colors={colorPalette?.color_static}
+            inputProperties='taskColor'
           />
           <InputText
             fontSize={['20px', null, '20px']}
@@ -102,9 +103,10 @@ const JobCreationBoard: React.FC<Props> = ({
             Gradient Colors:
           </InputText>
           <ColorPanel
-            inputVal={inputVal}
+            currentValue={inputVal?.taskColor}
             setInputVal={setInputVal}
             colors={colorPalette?.color_gradient}
+            inputProperties='taskColor'
           />
           <Box />
           <Flex justifyContent='space-around'>
