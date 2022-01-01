@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import { normal } from "../styled-system";
 
 const StyledTextArea = styled.textarea`
-    font-family: Mukta;
+    font-family: MPLUSRounded1c;
     outline: none;
     max-width: 100%;
     ${tw`border-2 border-black shadow-md rounded-md px-2 my-2`}

@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import { normal } from "../styled-system";
 
 const StyledInput = styled.input`
-    font-family: Mukta;
+    font-family: MPLUSRounded1c;
     outline: none;
     width: 100%;
     height: 40px;

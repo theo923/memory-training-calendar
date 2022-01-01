@@ -4,7 +4,7 @@ import Box from "styled/Box";
 import { typography, TypographyProps } from "../styled-system";
 
 const Text = styled(Box)<TypographyProps>`
-    font-family: Mukta;
+    font-family: MPLUSRounded1c;
     word-wrap: break-word;
     ${typography}
     ${color}

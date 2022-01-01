@@ -5,7 +5,7 @@ import { buttonVariant } from "../../assets/animationVariant";
 import Box from "../Box";
 
 const StyledButton = styled(Box)`
-    font-family: Mukta;
+    font-family: MPLUSRounded1c;
     outline: none;
     ${tw`text-base m-2`}
 `;
