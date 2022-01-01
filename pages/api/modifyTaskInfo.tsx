@@ -6,7 +6,8 @@ const modifyTaskInfo = async (req: any, res: any) => {
     const {
       id,
       taskTitle,
-      taskDescription
+      taskDescription,
+      taskColor
     } = req.body
     const { data } =
       await client.mutate({
@@ -14,7 +15,8 @@ const modifyTaskInfo = async (req: any, res: any) => {
         variables: {
           id,
           taskTitle,
-          taskDescription
+          taskDescription,
+          taskColor
         },
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })

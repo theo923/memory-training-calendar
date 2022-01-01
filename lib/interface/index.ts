@@ -11,6 +11,7 @@ export interface TaskProps {
   taskTitle: string
   taskDescription: string
   targetedDate: TaskDateProps[]
+  taskColor: string
   userID: string
   userName: string
   t_date: string
@@ -45,4 +46,18 @@ export interface TaskDateProps {
   t_date: Date | string
   t_period: string
   t_finished: boolean
+}
+
+export interface ServerSettingsProps {
+  taskColor: TaskColorProps
+}
+
+export interface TaskColorProps {
+  color_static: ColorProps[]
+  color_gradient: ColorProps[]
+}
+
+export interface ColorProps {
+  colorName: string
+  colorValue: string
 }

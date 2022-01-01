@@ -7,6 +7,7 @@ export const CREATE_TASK_MUTATION = gql`
     $targetedDate: [ComponentSingleTaskTaskDateInput]
     $taskTitle: String!
     $taskDescription: String!
+    $taskColor: String!
     $publishedAt: DateTime
   ) {
     createTask(
@@ -16,6 +17,7 @@ export const CREATE_TASK_MUTATION = gql`
         targetedDate: $targetedDate
         taskTitle: $taskTitle
         taskDescription: $taskDescription
+        taskColor: $taskColor
         publishedAt: $publishedAt
       }
     ) {
@@ -30,6 +32,7 @@ export const CREATE_TASK_MUTATION = gql`
           }
           taskTitle
           taskDescription
+          taskColor
           publishedAt
         }
       }

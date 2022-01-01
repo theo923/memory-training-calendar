@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { TaskProps, UserProps, UserTasksProps } from 'lib/interface'
+import { TaskColorProps, TaskProps, UserProps, UserTasksProps } from 'lib/interface'
 import { controlTaskTitle, controlTaskDescription } from 'lib/controller/controlTask'
 import { initializeUserTask, initializeTask } from 'lib/initialize'
 import { getFullDate } from 'lib/get/getDate'
@@ -7,7 +7,6 @@ import styled from 'styled-components'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
-import Grid from 'styled/Grid'
 import Input from 'styled/Input'
 import Text from 'styled/Text'
 import TextArea from 'styled/TextArea'
@@ -15,6 +14,7 @@ import default_schedule from 'lib/utils/default_schedule'
 import axios from 'axios'
 import { NextRouter } from 'next/router'
 import { refreshData } from 'lib/utils/refresh_data'
+import ColorPanel from 'components/ServerSettings/ColorPalette'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -25,15 +25,17 @@ interface Props {
   userTasks: UserTasksProps,
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
-  currentUser: UserProps
+  currentUser: UserProps,
+  colorPalette: TaskColorProps,
 }
 
-const JobCreationBoard: React.FC<Props> = ({
+const CreateTaskBoard: React.FC<Props> = ({
   router,
   userTasks,
   setUserTasks,
   target,
-  currentUser
+  currentUser,
+  colorPalette,
 }): JSX.Element => {
   const [inputVal, setInputVal] = useState<TaskProps>(initializeTask)
   const [status, setStatus] = useState<string>('')
@@ -50,7 +52,8 @@ const JobCreationBoard: React.FC<Props> = ({
         userName: currentUser.username,
         taskTitle: inputVal.taskTitle,
         taskDescription: inputVal.taskDescription,
-        targetedDate: default_schedule(target)
+        targetedDate: default_schedule(target),
+        taskColor: inputVal.taskColor
       }).then(({ data: { success } }) => {
         if (success)
           refreshData(router)
@@ -65,12 +68,8 @@ const JobCreationBoard: React.FC<Props> = ({
   }
 
   return (
-    <Box data-test="component-jobCreationBoard">
-      <Grid
-        gridTemplateColumns={['0.7fr 1.3fr']}
-        verticalAlign={['center']}
-        m={['10px']}
-      >
+    <Box data-test="component-createTaskBoard">
+      <>
         <InputText
           fontSize={['20px', null, '20px']}
           lineHeight={['20px', null, '28px']}
@@ -91,15 +90,39 @@ const JobCreationBoard: React.FC<Props> = ({
           value={inputVal.taskDescription}
           onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskDescription(setInputVal, e)}
         />
+        <InputText
+          fontSize={['20px', null, '20px']}
+          lineHeight={['20px', null, '28px']}
+          mr='2'
+        >
+          Static Colors:
+        </InputText>
+        <ColorPanel
+          inputVal={inputVal}
+          setInputVal={setInputVal}
+          colors={colorPalette?.color_static}
+        />
+        <InputText
+          fontSize={['20px', null, '20px']}
+          lineHeight={['20px', null, '28px']}
+          mr='2'
+        >
+          Gradient Colors:
+        </InputText>
+        <ColorPanel
+          inputVal={inputVal}
+          setInputVal={setInputVal}
+          colors={colorPalette?.color_gradient}
+        />
         <Box />
         <Flex justifyContent='space-around'>
           <Button onClick={() => handleSubmit()}>Submit</Button>
           <Button onClick={() => setInputVal(initializeTask)}>Reset</Button>
         </Flex>
-      </Grid>
+      </>
       {status.length > 0 && <Text color='red'>{status}</Text>}
     </Box>
   )
 }
 
-export default JobCreationBoard
+export default CreateTaskBoard

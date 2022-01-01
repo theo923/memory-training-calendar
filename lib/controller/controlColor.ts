@@ -30,7 +30,7 @@ export const setTextColor = (result: number) => {
     case 'white':
       return '#fff'
     case 'glass':
-      return 'trasparent'
+      return ''
     case 'glassX2':
       return 'rgba(0,0,0,0.2)'
   }

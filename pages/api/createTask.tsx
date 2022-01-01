@@ -10,7 +10,8 @@ const createTask = async (req: any, res: any) => {
       userName,
       targetedDate,
       taskTitle,
-      taskDescription
+      taskDescription,
+      taskColor
     } = req.body
 
     const { data: { userTasks: { data: userData } } } =
@@ -34,6 +35,7 @@ const createTask = async (req: any, res: any) => {
           targetedDate,
           taskTitle,
           taskDescription,
+          taskColor,
           publishedAt: new Date()
         },
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])

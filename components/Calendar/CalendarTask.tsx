@@ -32,7 +32,7 @@ const CalendarTaskWrapper = styled(GlassBox) <{ setTaskColor: string }>`
   font-weight: 700;
 
   ${({ setTaskColor }) => css`
-    background-color: ${setTaskColor || ''}
+    background: ${setTaskColor || ''}
   `}
 `
 
@@ -62,6 +62,7 @@ const CalendarTask: React.FC<Props> = ({
 }) => {
   const width = useWindowDimensions()?.width
   const [textlimit, setTextlimit] = useState<number>(0);
+  const taskColor = (targetedTask === task ? setTextColor(targetIdentifier(task, targetedTask)) : task?.taskColor) || '#fff'
 
   useEffect(() => {
     if (width >= 1012) setTextlimit(7 + 1)
@@ -100,7 +101,7 @@ const CalendarTask: React.FC<Props> = ({
       onClick={() => setTargetedTask(task)}
       my={['5px']}
       mx={['10px', '0px']}
-      setTaskColor={setTextColor(targetIdentifier(task, targetedTask)) || "#2563eb"}
+      setTaskColor={taskColor}
     >
       <FinishedIdentifier
         finished={task?.t_finished}

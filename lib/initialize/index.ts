@@ -32,6 +32,7 @@ export const initializeTask: TaskProps = {
   id: '',
   taskTitle: '',
   taskDescription: '',
+  taskColor: '#fff',
   targetedDate: [],
   userID: '',
   userName: '',
