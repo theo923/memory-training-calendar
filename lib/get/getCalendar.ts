@@ -1,6 +1,6 @@
 import { startOfMonth, addDays, startOfWeek } from 'date-fns'
 
-export const getCalendar = (target: Date): any[] => {
+export const getCalendar = (target: Date): Date[][] => {
   const startMonth = startOfWeek(startOfMonth(target))
   let pointer = startMonth
   const a = []

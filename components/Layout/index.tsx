@@ -8,7 +8,7 @@ import Grid from "styled/Grid";
 import GlassBox from "styled/GlassBox";
 import styled, { css } from "styled-components";
 
-const LayoutWrapper = styled(Grid) <any>`
+const LayoutWrapper = styled(Grid) <{ bColor: string }>`
   ${({ bColor }) => css`
     background: ${bColor}
   `}
