@@ -72,7 +72,7 @@ const Calendar: React.FC<Props> = ({
           gridTemplateColumns={["1fr", "1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
         >
           {[...Array(7)].map((_, dnidx: number) =>
-            <Text textAlign='center'>{days[dnidx]}</Text>
+            <Text key={dnidx} textAlign='center'>{days[dnidx]}</Text>
           )}
         </Grid>
       }

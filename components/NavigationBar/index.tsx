@@ -36,7 +36,6 @@ const NavigationBar: React.FC<Props> = ({ router, user, userSettings, colorPalet
 
   useEffect(() => {
     if (userSettings?.bgColor !== inputVal?.bgColor) {
-      console.log(userSettings?.bgColor, inputVal?.bgColor)
       updateSettings(inputVal)
     }
   }, [inputVal?.bgColor])

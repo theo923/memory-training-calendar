@@ -4,13 +4,40 @@ import Text from 'styled/Text';
 import Box from 'styled/Box';
 import CircleProgress from './CircleProgress';
 import Grid from 'styled/Grid';
-import { UserProps } from 'lib/interface';
+import { UserProps, UserTasksProps } from 'lib/interface';
+import { getFullDate } from 'lib/get/getDate';
+import { checkNum } from 'lib/utils/check_valid_num';
 
 interface Props {
   user: UserProps
+  tasks: UserTasksProps
+  unsorted: any
 }
 
-const Dashboard: React.FC<Props> = ({ user }) => {
+const Dashboard: React.FC<Props> = ({
+  user,
+  tasks,
+  // unsorted
+}) => {
+  const today = new Date()
+  let numOfTasks = 0
+  let monthDone = 0
+  for (const [_, val] of Object.entries(tasks)) {
+    val.forEach((task) => {
+      numOfTasks++
+      if (task.t_finished)
+        monthDone++
+    })
+  }
+
+  let percentageDay = 0
+  if (tasks![getFullDate(today)]) {
+    const totalTasks = tasks![getFullDate(today)].length
+    const successfulTask = tasks![getFullDate(today)].filter(task => task?.t_finished === true).length
+    percentageDay = Math.ceil(Math.abs(successfulTask / totalTasks * 100))
+  }
+  const percentageMonth = Math.ceil(Math.abs(monthDone / numOfTasks * 100))
+
   return (
     <Box textAlign='center'>
       <Flex
@@ -31,9 +58,9 @@ const Dashboard: React.FC<Props> = ({ user }) => {
           justifyContent='center'
           alignItems='center'
         >
-          <CircleProgress percents={80} />
+          <CircleProgress percents={checkNum(percentageDay)} />
           <Text fontSize={['20px', '30px']}>
-            80% Tasks Finished (Day)
+            {`${checkNum(percentageDay)}% Tasks Finished (Day)`}
           </Text>
         </Flex>
         <Flex
@@ -41,9 +68,9 @@ const Dashboard: React.FC<Props> = ({ user }) => {
           justifyContent='center'
           alignItems='center'
         >
-          <CircleProgress percents={60} />
+          <CircleProgress percents={checkNum(percentageMonth)} />
           <Text fontSize={['20px', '30px']}>
-            60% Tasks Finished (Month)
+            {`${checkNum(percentageMonth)}% Tasks Finished (Month)`}
           </Text>
         </Flex>
       </Grid>

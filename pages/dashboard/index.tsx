@@ -9,20 +9,31 @@ import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
 import { initializeUser } from "lib/initialize";
-import { ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
+import { ServerSettingsProps, UserProps, UserSettingsProps, UserTasksProps } from "lib/interface";
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
+import { getStartMonthEndMonth } from "lib/get/getDate";
+import { getSortedDateTask } from "lib/get/getSortedDateTask";
 
 interface Props {
   router: NextRouter
   serverSettings: ServerSettingsProps
   user: UserProps
   userSettings: UserSettingsProps
+  tasks: UserTasksProps
+  unsorted: any
   status: boolean
 }
 
-const dashboard: React.FC<Props> = ({ router, serverSettings, user, userSettings, status }): JSX.Element => {
+const dashboard: React.FC<Props> = ({
+  router,
+  serverSettings,
+  user,
+  userSettings,
+  tasks,
+  unsorted,
+  status }): JSX.Element => {
 
   return (
     <>
@@ -38,7 +49,11 @@ const dashboard: React.FC<Props> = ({ router, serverSettings, user, userSettings
           colorPalette={serverSettings?.bgColor}
         />
         <MainComponent>
-          <Dashboard user={user} />
+          <Dashboard
+            user={user}
+            tasks={tasks}
+            unsorted={unsorted}
+          />
         </MainComponent>
         <JobBoard>
           {status === false &&
@@ -74,18 +89,24 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         props: {
           serverSettings,
           user: initializeUser,
+          tasks: {},
+          unsorted: {},
           userSettings: {},
           status: false
         }
       }
 
     const { user } = await getUserInfo(req)
+    const { startMonth, endMonth } = getStartMonthEndMonth(new Date())
+    const { sortedDateTask, unsortedDateTask } = await getSortedDateTask(user, startMonth, endMonth, req, false)
     const userSettings = await getUserSettings(user?.id, req)
 
     return {
       props: {
         serverSettings,
         user,
+        tasks: sortedDateTask,
+        unsorted: unsortedDateTask,
         userSettings,
         status: true
       }
@@ -96,6 +117,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       props: {
         serverSettings: {},
         user: initializeUser,
+        tasks: {},
+        unsorted: {},
         userSettings: {},
         status: false
       }
