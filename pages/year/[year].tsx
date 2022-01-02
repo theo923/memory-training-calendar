@@ -11,11 +11,7 @@ import TaskBoard from "components/TaskBoard";
 import { ServerSettingsProps, TaskProps, UserProps, UserSettingsProps, UserTasksProps } from "lib/interface";
 import { initializeTask, initializeUser } from "lib/initialize";
 import { addDays, isSameMonth, startOfWeek } from "date-fns";
-import {
-  getStartMonthEndMonth,
-  // getStartYearEndYear, 
-  getYearMonth
-} from "lib/get/getDate";
+import { getStartYearEndYear, getYearMonth } from "lib/get/getDate";
 import { NextRouter } from "next/router";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
@@ -161,11 +157,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
         }
       }
 
-    const { startMonth, endMonth } = getStartMonthEndMonth(targetYear)
-    // const { startYear, endYear } = getStartYearEndYear(targetYear)
+    const { startYear, endYear } = getStartYearEndYear(targetYear)
     const { user } = await getUserInfo(req)
     const userSettings = await getUserSettings(user?.id, req)
-    const tasks = await getSortedDateTask(user, startOfWeek(startMonth), endMonth, req)
+    const tasks = await getSortedDateTask(user, startOfWeek(startYear), endYear, req)
 
     return {
       props: {
