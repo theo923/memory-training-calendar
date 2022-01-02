@@ -8,7 +8,8 @@ export const getSortedDateTask = async (
   user: UserProps,
   startDate: Date,
   endDate: Date,
-  req: any
+  req: any,
+  sorted: boolean = true
 ) => {
   const {
     data: {
@@ -29,8 +30,8 @@ export const getSortedDateTask = async (
       tasks: { data: tasksData },
     },
   } = userData[0]
-  const sortedDateTask: UserTasksProps = {}
 
+  const dateTask: UserTasksProps = {}
   if (tasksData.length > 0) {
     const tasks = tasksData.filter(
       (task: Server_TaskProps) => task?.attributes['targetedDate'].length > 0
@@ -47,12 +48,31 @@ export const getSortedDateTask = async (
             t_date,
             t_finished,
           }
-          if (sortedDateTask![t_date as string])
-            sortedDateTask[t_date as string].push(returnObject)
-          else sortedDateTask[t_date as string] = [returnObject]
+          if (dateTask![t_date as string])
+            dateTask[t_date as string].push(returnObject)
+          else dateTask[t_date as string] = [returnObject]
         }
       )
     })
+
+    const sortedDateTask: UserTasksProps = {}
+
+    for (const [key, val] of Object.entries(dateTask)) {
+      sortedDateTask[key] = val.sort((a, b) =>
+        a.t_finished === b.t_finished ? 0 : a.t_finished ? 1 : -1
+      )
+    }
+
+    if (sorted) return sortedDateTask
+    return {
+      sortedDateTask,
+      unsortedDateTask: tasks,
+    }
   }
-  return sortedDateTask
+
+  if (sorted) return {}
+  return {
+    sortedDateTask: {},
+    unsortedDateTask: {},
+  }
 }
