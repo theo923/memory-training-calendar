@@ -16,6 +16,8 @@ export interface TaskProps {
   userName: string
   t_date: string
   t_finished: boolean
+  successTasks?: number
+  totalTasks?: number
 }
 
 export interface childNode {

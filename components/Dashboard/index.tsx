@@ -2,11 +2,13 @@ import React from 'react'
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
 import Box from 'styled/Box';
-import CircleProgress from './CircleProgress';
+import CircleProgress from '../Progress/CircleProgress';
 import Grid from 'styled/Grid';
 import { UserProps, UserTasksProps } from 'lib/interface';
 import { getFullDate } from 'lib/get/getDate';
 import { checkNum } from 'lib/utils/check_valid_num';
+import DashboardTask from './DashboardTask';
+import TodayTask from './TodayTask';
 
 interface Props {
   user: UserProps
@@ -17,7 +19,7 @@ interface Props {
 const Dashboard: React.FC<Props> = ({
   user,
   tasks,
-  // unsorted
+  unsorted
 }) => {
   const today = new Date()
   let numOfTasks = 0
@@ -48,11 +50,11 @@ const Dashboard: React.FC<Props> = ({
         <Flex my='50px' fontSize="50px">
           {`Welcome back! ${user.username}`}
         </Flex>
-        <Flex my='50px' fontSize="30px">
+        <Flex my='20px' fontSize="30px">
           Here is Your Progress
         </Flex>
       </Flex>
-      <Grid gridTemplateColumns={['1fr 1fr']}>
+      <Grid gridTemplateColumns={['1fr 1fr']} my='20px'>
         <Flex
           flexDirection='column'
           justifyContent='center'
@@ -72,6 +74,49 @@ const Dashboard: React.FC<Props> = ({
           <Text fontSize={['20px', '30px']}>
             {`${checkNum(percentageMonth)}% Tasks Finished (Month)`}
           </Text>
+        </Flex>
+      </Grid>
+      <Grid
+        mt='50px'
+        gridTemplateColumns={['1fr', null, '1fr 1fr']}
+      >
+        <Flex
+          flexDirection='column'
+          alignItems='center'
+        >
+          <Text fontSize={['20px', '30px']}>Today's Task</Text>
+          <Flex
+            flexDirection='column'
+            my='20px'
+            width='100%'
+          >
+            {tasks![getFullDate(today)] &&
+              <TodayTask
+                task={tasks![getFullDate(today)][Math.floor(Math.random() * tasks![getFullDate(today)].length)]}
+              />
+            }
+          </Flex>
+        </Flex>
+        <Flex
+          flexDirection='column'
+          alignItems='center'
+        >
+          <Text fontSize={['20px', '30px']}>Task's Progress</Text>
+          <Flex
+            flexDirection='column'
+            my='20px'
+            mx={['0', '50px', '20px']}
+            width={['100%', '80%', '80%']}
+          >
+            {unsorted.length > 0 && unsorted.filter((_: any, idx: number) => idx < 5).map((task: any, idx: number) =>
+              <DashboardTask
+                key={idx}
+                task={task}
+                successTasks={task?.successTasks || 0}
+                totalTasks={task?.totalTasks || 0}
+              />
+            )}
+          </Flex>
         </Flex>
       </Grid>
     </Box>
