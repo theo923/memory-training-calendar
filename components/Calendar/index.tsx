@@ -13,7 +13,8 @@ import CalendarHeader from "./CalendarHeader";
 import { NextRouter } from "next/router";
 import TaskBox from "./CalendarTask";
 import { days } from "lib/data/dates";
-// import GlassBox from "styled/GlassBox";
+import ProgressBar from "components/Progress/ProgressBar";
+import { MdAutoAwesome } from "react-icons/md";
 
 type CalendarColumnProps = {
   setColor: string
@@ -26,6 +27,11 @@ const CalendarColumn = styled(Flex) <CalendarColumnProps>`
   ${({ setColor }) => css`
     background-color: ${setColor}
   `}
+`;
+
+const DoneAll = styled(Box)`
+  justify-self: flex-end;
+  align-self: center;
 `;
 
 interface Props {
@@ -89,23 +95,33 @@ const Calendar: React.FC<Props> = ({
                 minWidth={["20px", '70px', "100px", "120px"]}
                 minHeight={['0', "150px"]}
               >
-                {<Grid gridTemplateColumns='1fr 1fr' width='80px'>
+                {<Grid gridTemplateColumns='1fr 1fr 1fr' width={['110px', null, '100%']}>
                   <Text
                     fontSize='20px'
                     color={setTextColor(dayIdentifier(day, target))}
                   >
                     {day.getDate()}
                   </Text>
-                  {
-                    width <= 540 &&
+                  {width <= 540 ?
                     <Text
                       fontSize='20px'
                       color={setTextColor(dayIdentifier(day, target))}
                     >
                       {days[didx % 7]}
                     </Text>
+                    :
+                    <Box></Box>
+                  }
+                  {userTasks![getFullDate(day)] &&
+                    userTasks![getFullDate(day)].length === userTasks![getFullDate(day)].filter(task => task?.t_finished === true).length &&
+                    <DoneAll>
+                      <MdAutoAwesome color='green' size='20px' />
+                    </DoneAll>
                   }
                 </Grid>
+                }
+                {userTasks![getFullDate(day)] &&
+                  <ProgressBar userTasks={userTasks![getFullDate(day)]} />
                 }
                 {userTasks![getFullDate(day)] && userTasks![getFullDate(day)].map(
                   (task: TaskProps, tidx: number) => {
