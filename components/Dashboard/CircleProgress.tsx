@@ -80,6 +80,7 @@ const CircleProgress = ({
             fill="transparent"
             stroke={stroke || "url(#lgrad)"}
             strokeWidth={strokeWidth}
+            strokeLinecap='round'
             variants={progressVariants}
             strokeDasharray={circumference}
           />
