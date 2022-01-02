@@ -13,21 +13,15 @@ export const getYearMonth = (date: Date): string =>
   format(date, 'yyyy-MM') || '1970-01'
 
 export const getStartYearEndYear = (date: Date) => {
-  const startYear = startOfYear(date)
-  const endYear = endOfYear(date)
-
   return {
-    startYear,
-    endYear,
+    startYear: startOfYear(date),
+    endYear: endOfYear(date),
   }
 }
 
 export const getStartMonthEndMonth = (date: Date) => {
-  const startMonth = startOfMonth(date)
-  const endMonth = endOfMonth(date)
-
   return {
-    startMonth,
-    endMonth,
+    startMonth: startOfMonth(date),
+    endMonth: endOfMonth(date),
   }
 }
