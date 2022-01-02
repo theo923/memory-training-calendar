@@ -1,5 +1,5 @@
 import { isSameDay } from 'date-fns'
-import { numberIndex } from 'lib/interface'
+import { numberIndex, TaskProps } from 'lib/interface'
 
 const identifyDay: numberIndex = {
   0: 'curDay',
@@ -59,7 +59,7 @@ export const setBgColor = (result: number) => {
   }
 }
 
-export const setBooleanColor = (result: any) => {
+export const setBooleanColor = (result: boolean) => {
   if (result) {
     return '#66d4a0'
   } else return '#ef4444'
@@ -86,7 +86,7 @@ export const dayIdentifier = (date: Date, target: Date) => {
   return 0
 }
 
-export const targetIdentifier = (task: any, targetedTask: any) => {
+export const targetIdentifier = (task: TaskProps, targetedTask: TaskProps) => {
   if (task == targetedTask) return 5
   return 7
 }

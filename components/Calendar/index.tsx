@@ -51,7 +51,7 @@ const Calendar: React.FC<Props> = ({
   targetedTask,
   setTargetedTask
 }) => {
-  const [calendar, setCalendar] = useState<any>([]);
+  const [calendar, setCalendar] = useState<Date[][]>([]);
   const width = useWindowDimensions()?.width
 
   useEffect(() => {
@@ -76,75 +76,88 @@ const Calendar: React.FC<Props> = ({
           )}
         </Grid>
       }
-      {calendar.map((week: any, cidx: number) => (
+      {calendar.map((week: Date[], cidx: number) => (
         <Grid
           key={cidx}
           gridTemplateColumns={["1fr", "1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
         >
-          {week.map((day: any, didx: number) => (
-            <CalendarColumn
-              key={didx}
-              setColor={setBgColor(dayIdentifier(day, target)) || 'transparent'}
-              onClick={() => setTarget(day)}
-            >
-              <Flex
-                flexWrap={['wrap', 'unset',]}
-                flexDirection={['row', 'column']}
-                my='5px'
-                mx='5px'
-                minWidth={["20px", '70px', "100px", "120px"]}
-                minHeight={['0', "150px"]}
+          {week.map((day: Date, didx: number) => {
+            let successRate = ''
+            if (userTasks![getFullDate(day)]) {
+              const totalTasks = userTasks![getFullDate(day)].length
+              const successfulTask = userTasks![getFullDate(day)].filter(task => task?.t_finished === true).length
+              successRate = `${Math.abs(successfulTask / totalTasks * 100)}%`
+            }
+            return (
+              <CalendarColumn
+                key={didx}
+                setColor={setBgColor(dayIdentifier(day, target)) || 'transparent'}
+                onClick={() => setTarget(day)}
               >
-                {<Grid gridTemplateColumns='1fr 1fr 1fr' width={['110px', null, '100%']}>
-                  <Text
-                    fontSize='20px'
-                    color={setTextColor(dayIdentifier(day, target))}
-                  >
-                    {day.getDate()}
-                  </Text>
-                  {width <= 540 ?
+                <Flex
+                  flexWrap={['wrap', 'unset',]}
+                  flexDirection={['row', 'column']}
+                  my='5px'
+                  mx='5px'
+                  minWidth={["20px", '70px', "100px", "120px"]}
+                  minHeight={['0', "150px"]}
+                >
+                  {<Grid gridTemplateColumns='1fr 1fr 1fr' width={['110px', null, '100%']}>
                     <Text
                       fontSize='20px'
                       color={setTextColor(dayIdentifier(day, target))}
                     >
-                      {days[didx % 7]}
+                      {day.getDate()}
                     </Text>
-                    :
-                    <Box></Box>
+
+                    {width <= 540 ?
+                      <Text
+                        fontSize='20px'
+                        color={setTextColor(dayIdentifier(day, target))}
+                      >
+                        {days[didx % 7]}
+                      </Text>
+                      :
+                      <Box></Box>
+                    }
+
+                    {successRate === '100%' &&
+                      <DoneAll>
+                        <MdAutoAwesome color='green' size='20px' />
+                      </DoneAll>
+                    }
+
+                  </Grid>
                   }
-                  {userTasks![getFullDate(day)] &&
-                    userTasks![getFullDate(day)].length === userTasks![getFullDate(day)].filter(task => task?.t_finished === true).length &&
-                    <DoneAll>
-                      <MdAutoAwesome color='green' size='20px' />
-                    </DoneAll>
+
+                  {successRate.length > 0 &&
+                    <ProgressBar successRate={successRate} />
                   }
-                </Grid>
-                }
-                {userTasks![getFullDate(day)] &&
-                  <ProgressBar userTasks={userTasks![getFullDate(day)]} />
-                }
-                {userTasks![getFullDate(day)] && userTasks![getFullDate(day)].map(
-                  (task: TaskProps, tidx: number) => {
-                    if (tidx >= 3 && width >= 540) return null
-                    return (
-                      <TaskBox
-                        key={tidx}
-                        router={router}
-                        task={task}
-                        day={day}
-                        target={target}
-                        targetedTask={targetedTask}
-                        setTargetedTask={setTargetedTask}
-                      />
-                    )
-                  })}
-              </Flex>
-            </CalendarColumn>
-          ))}
+
+                  {userTasks![getFullDate(day)] && userTasks![getFullDate(day)].map(
+                    (task: TaskProps, tidx: number) => {
+                      if (tidx >= 3 && width >= 540) return null
+                      return (
+                        <TaskBox
+                          key={tidx}
+                          router={router}
+                          task={task}
+                          day={day}
+                          target={target}
+                          targetedTask={targetedTask}
+                          setTargetedTask={setTargetedTask}
+                        />
+                      )
+                    })
+                  }
+                </Flex>
+              </CalendarColumn>
+            )
+          })}
         </Grid>
       )
       )}
-    </Box>
+    </Box >
   );
 };
 
