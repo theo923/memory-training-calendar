@@ -4,7 +4,6 @@ import Box from "styled/Box";
 
 const Bar = styled(motion.div) <{ cl: string, pst: string }>`
   width: 100%;
-  height: 10px;
   border: 0px solid transparent;
   border-radius: 5px;
 
@@ -17,6 +16,7 @@ ${({ cl, pst }) => css`
 
 interface Props {
   successRate: string;
+  height?: string;
   delay?: number
   duration?: number
   easeInOut?: number[]
@@ -24,6 +24,7 @@ interface Props {
 
 const ProgressBar: React.FC<Props> = ({
   successRate,
+  height = '10px',
   delay = 0.5,
   duration = 2,
   easeInOut = [0.12, 0.23, 0.5, 1]
@@ -36,14 +37,17 @@ const ProgressBar: React.FC<Props> = ({
 
   const progressVariants = {
     noshow: {
+      height,
       width: '0%',
       transition
     },
     show: {
+      height,
       width: successRate,
       transition
     },
     origin: {
+      height,
       width: '100%'
     }
   };

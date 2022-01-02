@@ -2,6 +2,7 @@ import { client, DEFAULT_HEADERS } from 'lib/apollo'
 import { UserProps, UserTasksProps } from 'lib/interface'
 import { Server_TaskProps, Server_TaskDateProps } from 'lib/interface/server'
 import { CALENDAR_QUERY } from 'lib/queries/graphql-calendar'
+import { analyze_tasks } from 'lib/utils/analyze_tasks'
 import { getFullDate } from './getDate'
 
 export const getSortedDateTask = async (
@@ -66,7 +67,7 @@ export const getSortedDateTask = async (
     if (sorted) return sortedDateTask
     return {
       sortedDateTask,
-      unsortedDateTask: tasks,
+      unsortedDateTask: analyze_tasks(tasks),
     }
   }
 

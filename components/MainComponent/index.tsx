@@ -11,7 +11,7 @@ const MainComponent: React.FC<Props> = ({
 }) => {
   return (
     <Box
-      height={['auto', 'auto', '1019px']}
+      height={['auto', 'auto', '1119px']}
       minWidth={["20px", '573px', "780px", "921px"]}
     >
       {children}
