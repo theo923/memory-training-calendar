@@ -4,6 +4,12 @@ import { findJSXByAttr } from '__test__/testUtils'
 
 import LoginPanel from 'components/LoginPanel'
 
+jest.mock('lib/firebase', () => {
+  return {
+    auth: jest.fn(),
+  }
+})
+
 const setup = (props = {}, state = null) => {
   return shallow(<LoginPanel {...props} />)
 }

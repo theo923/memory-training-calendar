@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { auth } from 'lib/firebase';
 import { initializeLoginInfo } from 'lib/initialize';
 import { LoginInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
@@ -41,19 +42,21 @@ const LoginPanel: React.FC<Props> = ({ router }) => {
       const { data: { jwt, user: { id, username } } } = response.data
       setTokenCookie('calendar-user-token', jwt, {
         path: "/",
-        maxAge: 3600,
+        maxAge: 3600 * 10 * 365 * 24 * 60 * 60,
         sameSite: true,
       })
       setIDCookie('calendar-user-id', id, {
         path: "/",
-        maxAge: 3600,
+        maxAge: 3600 * 10 * 365 * 24 * 60 * 60,
         sameSite: true,
       })
       setNameCookie('calendar-user-name', username, {
         path: "/",
-        maxAge: 3600,
+        maxAge: 3600 * 10 * 365 * 24 * 60 * 60,
         sameSite: true,
       })
+      await auth.signInWithEmailAndPassword(loginInfo.email, loginInfo.password)
+
       refreshData(router, '/')
     }
     else {

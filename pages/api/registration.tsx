@@ -4,6 +4,10 @@ import { REGISTRATION_USER_QUERY, REGISTRATION_USER_INFO_QUERY } from "lib/queri
 const registration = async (req: any, res: any) => {
   try {
     const { email, username, password } = req.body
+
+    if (!email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/g))
+      throw 'error'
+
     const { data: { register: { jwt, user: { id } } } } =
       await client.query({
         query: REGISTRATION_USER_QUERY,

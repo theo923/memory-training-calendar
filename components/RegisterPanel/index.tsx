@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { auth } from 'lib/firebase';
 import { initializeRegisterInfo } from 'lib/initialize';
 import { RegisterInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
@@ -58,6 +59,9 @@ const RegisterPanel: React.FC<Props> = ({ router }) => {
         maxAge: 3600,
         sameSite: true,
       })
+
+      await auth.createUserWithEmailAndPassword(registerInfo.email, registerInfo.password)
+
       refreshData(router, '/')
     }
     else {

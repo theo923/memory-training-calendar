@@ -19,6 +19,8 @@ import { getUserInfo } from "lib/get/getUserInfo";
 import { getSortedDateTask } from "lib/get/getSortedDateTask";
 import { getServerSettings } from "lib/get/getServerSettings";
 import { getUserSettings } from "lib/get/getUserSettings";
+import UtilsBoard from "components/UtilsBoard";
+import ChatBoard from "components/ChatBoard";
 
 interface Props {
   router: NextRouter
@@ -134,6 +136,15 @@ const App: React.FC<Props> = ({
             />
           }
         </JobBoard>
+        <UtilsBoard>
+          <Board
+            title={'Chat Room'}
+          >
+            {status === true &&
+              <ChatBoard />
+            }
+          </Board>
+        </UtilsBoard>
       </Layout>
     </>
   );
