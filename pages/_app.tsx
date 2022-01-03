@@ -6,13 +6,27 @@ import { client } from "../lib/apollo";
 import { theme } from "../lib/theme";
 import "styles/globals.css";
 import "assets/fonts.css";
+import { ModalContext } from "components/Modal/ModalContext";
+import { ReactNode, useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router: NextRouter = useRouter()
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const [modalContent, setModalContent] = useState<ReactNode | null>(null)
+
+    const VALUES = {
+        modalIsOpen,
+        setModalIsOpen,
+        modalContent,
+        setModalContent
+    }
+
     return (
         <ApolloProvider client={client}>
             <ThemeProvider theme={theme}>
-                <Component router={router} {...pageProps} />
+                <ModalContext.Provider value={VALUES}>
+                    <Component router={router} {...pageProps} />
+                </ModalContext.Provider>
             </ThemeProvider>
         </ApolloProvider>
     )
