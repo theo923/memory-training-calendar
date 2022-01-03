@@ -4,6 +4,12 @@ import { findJSXByAttr } from '__test__/testUtils'
 
 import Board from 'components/Board'
 
+jest.mock('lib/firebase', () => {
+  return {
+    auth: jest.fn(),
+  }
+})
+
 const setup = (props = {}, state = null) => {
   return shallow(<Board {...props} />)
 }

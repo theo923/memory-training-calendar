@@ -1,8 +1,13 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { findJSXByAttr } from '__test__/testUtils'
-
 import RegisterPanel from 'components/RegisterPanel'
+
+jest.mock('lib/firebase', () => {
+  return {
+    auth: jest.fn(),
+  }
+})
 
 const setup = (props = {}, state = null) => {
   return shallow(<RegisterPanel {...props} />)
