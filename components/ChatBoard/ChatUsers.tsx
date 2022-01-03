@@ -4,12 +4,10 @@ import Box from "styled/Box"
 import Text from "styled/Text"
 import GlassBox from "styled/GlassBox"
 import { getRecipientEmail } from "lib/firebase/utils"
-import {
-  auth,
-  // db
-} from "lib/firebase"
+import { auth } from "lib/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
-// import { useCollection } from "react-firebase-hooks/firestore"
+import Flex from "styled/Flex"
+import Avatar from "./Avatar"
 
 const DashboardTaskWrapper = styled(GlassBox)`
   cursor: pointer;
@@ -28,12 +26,6 @@ const ChatUser = ({
 }: any) => {
   // @ts-ignore
   const [user] = useAuthState(auth)
-  // const [recipientSnapshot] = useCollection(
-  //   // @ts-ignore
-  //   db.collection('users')
-  //     .where('email', '==', getRecipientEmail(chat, user?.email || ''))
-  // )
-  // const recipient = recipientSnapshot?.docs?.[0]?.data();
   const recipientEmail = getRecipientEmail(chat.data().users, user?.email || '') || ''
   return (
     <DashboardTaskWrapper
@@ -41,18 +33,25 @@ const ChatUser = ({
       my={['10px']}
       mx={['10px', '0px']}
     >
-      <Box
+      <Flex
+        justifyContent='center'
+        alignItems='center'
         mx='3px'
         my='8px'
         p={['3px']}
       >
-        <Text
-          fontSize='18px'
-          color={setTextColor(7)}
-        >
-          {recipientEmail}
-        </Text>
-      </Box>
+        <Box ml='5px' mr='10px'>
+          <Avatar user={recipientEmail} />
+        </Box>
+        <Box>
+          <Text
+            fontSize='14px'
+            color={setTextColor(7)}
+          >
+            {recipientEmail}
+          </Text>
+        </Box>
+      </Flex>
     </DashboardTaskWrapper>
   )
 }

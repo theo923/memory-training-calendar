@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { auth, db } from 'lib/firebase'
 import { getRecipientEmail } from 'lib/firebase/utils'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { BiMailSend } from 'react-icons/bi'
@@ -11,6 +11,8 @@ import Flex from 'styled/Flex'
 import Input from 'styled/Input'
 import ChatMessageBox from './ChatMessageBox'
 import { serverTimestamp } from "firebase/firestore";
+import Text from 'styled/Text'
+import Avatar from './Avatar'
 
 interface Props {
   startChat: string
@@ -30,6 +32,14 @@ const Chat: React.FC<Props> = ({ startChat }) => {
       .orderBy('timestamp', 'asc')
   )
   const [messageToSend, setMessageToSend] = useState<string>('')
+  const endRef = useRef<null | HTMLDivElement>(null)
+
+  const scrolling = () => {
+    endRef?.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end"
+    })
+  }
 
   const showMessages = () => {
     if (messageSnapshot) {
@@ -57,9 +67,9 @@ const Chat: React.FC<Props> = ({ startChat }) => {
     }
   }
 
-  const sendMessages = () => {
+  const sendMessages = async () => {
     if (user && messageToSend.length > 0) {
-      db.collection('chats').doc(startChat).collection('messages').add({
+      await db.collection('chats').doc(startChat).collection('messages').add({
         timestamp: serverTimestamp(),
         message: messageToSend,
         user: user.email
@@ -67,6 +77,7 @@ const Chat: React.FC<Props> = ({ startChat }) => {
     }
 
     setMessageToSend('')
+    scrolling()
   }
 
   useEffect(() => {
@@ -81,31 +92,31 @@ const Chat: React.FC<Props> = ({ startChat }) => {
   }, [])
 
   return (
-    <Box height='300px'>
+    <Box height='500px'>
       <Flex
         height='100%'
         flexDirection='column'
         justifyContent='space-between'
-        overflowY='auto'
       >
         <Flex
           flexDirection='column'
           justifyContent='center'
           mb='10px'
         >
-          <Flex
-            mb='10px'
-            overflowY='auto'
-          >
-            {recipient}
+          <Flex alignItems='center'>
+            <Avatar width={['20px']} height={['20px']} radius='20px' user={recipient} />
+            <Text ml='5px'>
+              {recipient}
+            </Text>
           </Flex>
-          <Flex
-            flexDirection='column'
+          <Box
             mb='10px'
+            height='400px'
             overflowY='auto'
           >
             {showMessages()}
-          </Flex>
+            <Box mb='20px' ref={endRef} />
+          </Box>
         </Flex>
         <Flex
           justifyContent='center'
