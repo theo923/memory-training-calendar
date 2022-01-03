@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { auth, db } from 'lib/firebase'
 import { getRecipientEmail } from 'lib/firebase/utils'
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, Dispatch, useEffect, useRef, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { BiMailSend } from 'react-icons/bi'
+import { BsArrowLeftSquare } from 'react-icons/bs'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
@@ -16,9 +17,13 @@ import Avatar from './Avatar'
 
 interface Props {
   startChat: string
+  setStartChat: Dispatch<React.SetStateAction<string>>
 }
 
-const Chat: React.FC<Props> = ({ startChat }) => {
+const Chat: React.FC<Props> = ({
+  startChat,
+  setStartChat
+}) => {
   // @ts-ignore
   const [user] = useAuthState(auth)
   const [recipient, setRecipient] = useState<string>('')
@@ -85,6 +90,7 @@ const Chat: React.FC<Props> = ({ startChat }) => {
       startChat
     }).then(({ data: { data, success } }) => {
       if (success) {
+        console.log('getChatMessages', data)
         setMessages(data?.messages)
         setRecipient(getRecipientEmail(data?.chat?.users, user?.email || ''))
       }
@@ -104,6 +110,9 @@ const Chat: React.FC<Props> = ({ startChat }) => {
           mb='10px'
         >
           <Flex alignItems='center'>
+            <Flex alignItems='center' mr='10px'>
+              <Button onClick={() => setStartChat('')}><BsArrowLeftSquare size='15px' /></Button>
+            </Flex>
             <Avatar width={['20px']} height={['20px']} radius='20px' user={recipient} />
             <Text ml='5px'>
               {recipient}
