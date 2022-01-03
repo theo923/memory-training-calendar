@@ -83,7 +83,7 @@ const Calendar: React.FC<Props> = ({
         >
           {week.map((day: Date, didx: number) => {
             let successRate = ''
-            if (userTasks![getFullDate(day)]) {
+            if (userTasks![getFullDate(day)]?.length > 0) {
               const totalTasks = userTasks![getFullDate(day)].length
               const successfulTask = userTasks![getFullDate(day)].filter(task => task?.t_finished === true).length
               successRate = `${Math.abs(successfulTask / totalTasks * 100)}%`

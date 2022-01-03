@@ -63,7 +63,11 @@ const ChatBoard = () => {
       )}
       <Flex flexDirection='column'>
         {startChat &&
-          <Chat key={startChat} startChat={startChat} />
+          <Chat
+            key={startChat}
+            startChat={startChat}
+            setStartChat={setStartChat}
+          />
         }
       </Flex>
     </Box>
