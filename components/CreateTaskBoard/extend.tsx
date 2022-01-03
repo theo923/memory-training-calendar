@@ -15,12 +15,12 @@ import axios from 'axios'
 import { NextRouter } from 'next/router'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
+import { RiCloseCircleFill } from 'react-icons/ri'
 import { ModalContext } from 'components/Modal/ModalContext'
-import CreateTaskBoardExtend from './extend'
 
 const InputText = styled(Box)`
   align-self: center;
-`
+  `
 
 interface Props {
   router: NextRouter,
@@ -31,7 +31,7 @@ interface Props {
   colorPalette: TaskColorProps,
 }
 
-const CreateTaskBoard: React.FC<Props> = ({
+const CreateTaskBoardExtend: React.FC<Props> = ({
   router,
   userTasks,
   setUserTasks,
@@ -70,29 +70,11 @@ const CreateTaskBoard: React.FC<Props> = ({
     }
   }
 
-  useEffect(() => {
-    if (modalContext.modalIsOpen) {
-      modalContext.setModalContent(
-        <Box width='50vw'>
-          <CreateTaskBoardExtend
-            router={router}
-            currentUser={currentUser}
-            userTasks={userTasks}
-            setUserTasks={setUserTasks}
-            target={target}
-            colorPalette={colorPalette}
-          />
-        </Box>
-      )
-    }
-    else {
-      modalContext.setModalContent(null)
-    }
-  }, [modalContext.modalIsOpen])
-
   return (
-    <Box data-test="component-createTaskBoard">
-      <Button onClick={() => modalContext.setModalIsOpen(true)}>Extend</Button>
+    <Box data-test="component-createTaskBoardExtend">
+      <Flex justifyContent='flex-end'>
+        <Button onClick={() => modalContext.setModalIsOpen(false)}><RiCloseCircleFill size='20px' /></Button>
+      </Flex>
       <>
         <InputText
           fontSize={['20px', null, '20px']}
@@ -151,4 +133,5 @@ const CreateTaskBoard: React.FC<Props> = ({
   )
 }
 
-export default CreateTaskBoard
+export default CreateTaskBoardExtend
+
