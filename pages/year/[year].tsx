@@ -21,6 +21,7 @@ import { getServerSettings } from "lib/get/getServerSettings";
 import { getUserSettings } from "lib/get/getUserSettings";
 import UtilsBoard from "components/UtilsBoard";
 import ChatBoard from "components/ChatBoard";
+import Modal from "components/Modal";
 
 interface Props {
   router: NextRouter
@@ -68,6 +69,7 @@ const App: React.FC<Props> = ({
         <title>Calendar | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Modal />
       <Layout main userSettings={userSettings}>
         <NavigationBar
           router={router}
