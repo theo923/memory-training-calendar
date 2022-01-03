@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import Text from 'styled/Text'
 import GlassBox from 'styled/GlassBox'
 import Flex from 'styled/Flex'
+import { formatRelative } from 'date-fns'
+import Avatar from './Avatar'
+import Box from 'styled/Box'
 
 const DashboardTaskWrapper = styled(GlassBox)`
   display: flex;
@@ -29,26 +32,39 @@ const ChatMessageBox = ({
         mx='2px'
         p={['3px']}
       >
-        <Text
-          fontSize='10px'
-          color={setTextColor(7)}
-        >
-          {me === user ? 'me' : user}
-        </Text>
+        {user !== me && <Avatar width={['20px']} height={['20px']} radius='20px' user={user} />}
+        <Box mx='5px'>
+          <Text
+            fontSize='10px'
+            color={setTextColor(7)}
+          >
+            {me === user ? 'me' : user}
+          </Text>
+        </Box>
+        {user === me && <Avatar width={['20px']} height={['20px']} user={user} />}
       </Flex>
       <Flex
         mx='2px'
-        my='5px'
         p={['3px']}
       >
         <Text
           fontSize='18px'
           color={setTextColor(7)}
         >
-          {message.message}
+          {message?.message}
         </Text>
       </Flex>
-    </DashboardTaskWrapper>
+      <Flex
+        mx='2px'
+        p={['3px']}
+      >
+        <Text fontSize='10px'>
+          {message?.timestamp && formatRelative(
+            message?.timestamp?.toDate(), new Date()
+          )}
+        </Text>
+      </Flex>
+    </DashboardTaskWrapper >
   )
 }
 
