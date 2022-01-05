@@ -40,10 +40,10 @@ const Modal = () => {
     >
       <ModalWrapper>
         <ContentWrapper
-          minHeight={['auto', null, '70vh']}
-          minWidth={['auto', null, '70vw']}
-          maxHeight={['auto', null, '70vh']}
-          maxWidth={['auto', null, '70vw']}
+          minHeight={['auto', null, '70%']}
+          minWidth={['auto', null, '70%']}
+          mx={['auto', null, '70px', '150px']}
+          my={['auto', null, '70px', '150px']}
         >
           <Box>
             {
