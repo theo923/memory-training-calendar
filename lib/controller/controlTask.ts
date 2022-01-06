@@ -12,11 +12,19 @@ export const controlTaskTitle = (
 
 export const controlTaskDescription = (
   setInputVal: React.Dispatch<React.SetStateAction<TaskProps>>,
-  e: ChangeEvent<HTMLInputElement>
+  e?: ChangeEvent<HTMLInputElement>,
+  value?: string
 ) => {
-  setInputVal((prev) => {
-    return { ...prev, taskDescription: e.target.value }
-  })
+  console.log('1122', value)
+  if (!e && value) {
+    setInputVal((prev) => {
+      return { ...prev, taskDescription: value }
+    })
+  } else if (e) {
+    setInputVal((prev) => {
+      return { ...prev, taskDescription: e.target.value }
+    })
+  }
 }
 
 export const controlTaskColor = (
