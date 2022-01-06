@@ -1,16 +1,16 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { TaskColorProps, TaskProps } from 'lib/interface'
-import { controlTaskTitle, controlTaskDescription } from 'lib/controller/controlTask'
+import { controlTaskDescription, controlTaskTitle } from 'lib/controller/controlTask'
 import styled from 'styled-components'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
 import Input from 'styled/Input'
-import TextArea from 'styled/TextArea'
 import axios from 'axios'
 import { NextRouter } from 'next/router'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
+import SlateTextBox from 'styled/SlateTextBox'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -78,9 +78,10 @@ const JobCreationBoard: React.FC<Props> = ({
           >
             Description:
           </InputText>
-          <TextArea
-            value={inputVal?.taskDescription}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskDescription(setInputVal, e)}
+          <SlateTextBox
+            values={JSON.parse(inputVal.taskDescription)}
+            onChange={controlTaskDescription}
+            changeObject={setInputVal}
           />
           <InputText
             fontSize={['20px', null, '20px']}

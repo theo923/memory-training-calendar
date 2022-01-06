@@ -22,7 +22,6 @@ import ColorPanel from 'components/ServerSettings/ColorPalette'
 import { RiCloseCircleFill } from 'react-icons/ri'
 import { ModalContext } from 'components/Modal/ModalContext'
 import SlateTextBox from 'styled/SlateTextBox/'
-import SlateContent from 'styled/SlateTextBox/SlateContent'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -101,16 +100,6 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
           Description:
         </InputText>
         <SlateTextBox onChange={controlTaskDescription} changeObject={setInputVal} />
-        <InputText
-          fontSize={['20px', null, '20px']}
-          lineHeight={['20px', null, '28px']}
-          mr='2'
-        >
-          Perviews:
-        </InputText>
-        {inputVal?.taskDescription &&
-          <SlateContent httpString={inputVal?.taskDescription} />
-        }
         <InputText
           fontSize={['20px', null, '20px']}
           lineHeight={['20px', null, '28px']}

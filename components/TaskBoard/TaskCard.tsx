@@ -8,6 +8,7 @@ import styled, { css } from 'styled-components'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
+import ReadSlateText from 'styled/ReadSlateText'
 import Text from 'styled/Text'
 import tw from 'twin.macro'
 
@@ -76,7 +77,11 @@ const TaskCard: React.FC<Props> = ({
           lineHeight={['20px', null, '28px']}
           color={setTextColor(2)}
         >
-          {taskDescription}
+          {taskDescription &&
+            <ReadSlateText
+              values={JSON.parse(taskDescription)}
+            />
+          }
         </Text>
       </Flex>
     </FullTaskContent>
