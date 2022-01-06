@@ -9,7 +9,6 @@ import Button from 'styled/Button'
 import Flex from 'styled/Flex'
 import Input from 'styled/Input'
 import Text from 'styled/Text'
-import TextArea from 'styled/TextArea'
 import default_schedule from 'lib/utils/default_schedule'
 import axios from 'axios'
 import { NextRouter } from 'next/router'
@@ -17,6 +16,7 @@ import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import { ModalContext } from 'components/Modal/ModalContext'
 import CreateTaskBoardExtend from './extend'
+import SlateTextBox from 'styled/SlateTextBox'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -110,10 +110,7 @@ const CreateTaskBoard: React.FC<Props> = ({
         >
           Description:
         </InputText>
-        <TextArea
-          value={inputVal.taskDescription}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskDescription(setInputVal, e)}
-        />
+        <SlateTextBox onChange={controlTaskDescription} changeObject={setInputVal} />
         <InputText
           fontSize={['20px', null, '20px']}
           lineHeight={['20px', null, '28px']}
