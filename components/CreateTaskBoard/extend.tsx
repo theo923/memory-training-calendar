@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
 import { TaskColorProps, TaskProps, UserProps, UserTasksProps } from 'lib/interface'
 import {
+  controlTaskDescription,
   controlTaskTitle,
   // controlTaskDescription
 } from 'lib/controller/controlTask'
@@ -20,7 +21,8 @@ import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import { RiCloseCircleFill } from 'react-icons/ri'
 import { ModalContext } from 'components/Modal/ModalContext'
-import SlateTextBox from 'styled/SlateTextBox'
+import SlateTextBox from 'styled/SlateTextBox/'
+import SlateContent from 'styled/SlateTextBox/SlateContent'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -51,6 +53,8 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
     if (!userTasks![getFullDate(target)])
       initializeUserTask(setUserTasks, target)
   }, [target])
+
+
 
   const handleSubmit = async () => {
     try {
@@ -96,11 +100,17 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
         >
           Description:
         </InputText>
-        <SlateTextBox />
-        {/* <TextArea
-          value={inputVal.taskDescription}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskDescription(setInputVal, e)}
-        /> */}
+        <SlateTextBox onChange={controlTaskDescription} changeObject={setInputVal} />
+        <InputText
+          fontSize={['20px', null, '20px']}
+          lineHeight={['20px', null, '28px']}
+          mr='2'
+        >
+          Perviews:
+        </InputText>
+        {inputVal?.taskDescription &&
+          <SlateContent httpString={inputVal?.taskDescription} />
+        }
         <InputText
           fontSize={['20px', null, '20px']}
           lineHeight={['20px', null, '28px']}
