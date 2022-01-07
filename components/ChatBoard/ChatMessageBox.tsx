@@ -2,13 +2,14 @@ import { setTextColor } from 'lib/controller/controlColor'
 import React from 'react'
 import styled from 'styled-components'
 import Text from 'styled/Text'
-import GlassBox from 'styled/GlassBox'
+import GlassBoxX2 from 'styled/GlassBoxX2'
 import Flex from 'styled/Flex'
 import { formatRelative } from 'date-fns'
 import Avatar from './Avatar'
 import Box from 'styled/Box'
+import ReadSlateText from 'styled/ReadSlateText'
 
-const DashboardTaskWrapper = styled(GlassBox)`
+const DashboardTaskWrapper = styled(GlassBoxX2)`
   display: flex;
   position: relative;
   border-radius: 5px;
@@ -51,7 +52,9 @@ const ChatMessageBox = ({
           fontSize='18px'
           color={setTextColor(7)}
         >
-          {message?.message}
+          <ReadSlateText
+            values={JSON.parse(message?.message)}
+          />
         </Text>
       </Flex>
       <Flex

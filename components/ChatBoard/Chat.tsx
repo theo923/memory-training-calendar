@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { auth, db } from 'lib/firebase'
 import { getRecipientEmail } from 'lib/firebase/utils'
-import React, { ChangeEvent, Dispatch, useEffect, useRef, useState } from 'react'
+import React, { Dispatch, useEffect, useRef, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollection } from 'react-firebase-hooks/firestore'
 import { BiMailSend } from 'react-icons/bi'
@@ -9,11 +9,12 @@ import { BsArrowLeftSquare } from 'react-icons/bs'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
-import Input from 'styled/Input'
 import ChatMessageBox from './ChatMessageBox'
 import { serverTimestamp } from "firebase/firestore";
 import Text from 'styled/Text'
 import Avatar from './Avatar'
+import SlateTextBox from 'styled/SlateTextBox'
+import { controlTaskDescription } from 'lib/controller/controlTask'
 
 interface Props {
   startChat: string
@@ -90,7 +91,6 @@ const Chat: React.FC<Props> = ({
       startChat
     }).then(({ data: { data, success } }) => {
       if (success) {
-        console.log('getChatMessages', data)
         setMessages(data?.messages)
         setRecipient(getRecipientEmail(data?.chat?.users, user?.email || ''))
       }
@@ -98,16 +98,19 @@ const Chat: React.FC<Props> = ({
   }, [])
 
   return (
-    <Box height='500px'>
+    <Box
+      height='100%'
+      width='100%'
+    >
       <Flex
         height='100%'
+        width='100%'
         flexDirection='column'
         justifyContent='space-between'
       >
         <Flex
           flexDirection='column'
           justifyContent='center'
-          mb='10px'
         >
           <Flex alignItems='center'>
             <Flex alignItems='center' mr='10px'>
@@ -132,7 +135,12 @@ const Chat: React.FC<Props> = ({
           alignItems='center'
           mb='10px'
         >
-          <Input onChange={(e: ChangeEvent<HTMLInputElement>) => setMessageToSend(e.target.value)} />
+          <SlateTextBox
+            insideObject
+            callChangeFunction={controlTaskDescription}
+            changeHook={setMessageToSend}
+            height='100px'
+          />
           <Flex
             justifyContent='center'
             alignItems='center'

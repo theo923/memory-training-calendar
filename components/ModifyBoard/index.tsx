@@ -79,9 +79,10 @@ const JobCreationBoard: React.FC<Props> = ({
             Description:
           </InputText>
           <SlateTextBox
+            insideObject
             values={JSON.parse(inputVal.taskDescription)}
-            onChange={controlTaskDescription}
-            changeObject={setInputVal}
+            callChangeFunction={controlTaskDescription}
+            changeHook={setInputVal}
           />
           <InputText
             fontSize={['20px', null, '20px']}
