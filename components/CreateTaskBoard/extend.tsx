@@ -25,7 +25,7 @@ import SlateTextBox from 'styled/SlateTextBox/'
 
 const InputText = styled(Box)`
   align-self: center;
-  `
+`
 
 interface Props {
   router: NextRouter,
@@ -99,7 +99,7 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
         >
           Description:
         </InputText>
-        <SlateTextBox onChange={controlTaskDescription} changeObject={setInputVal} />
+        <SlateTextBox callChangeFunction={controlTaskDescription} insideObject changeHook={setInputVal} />
         <InputText
           fontSize={['20px', null, '20px']}
           lineHeight={['20px', null, '28px']}

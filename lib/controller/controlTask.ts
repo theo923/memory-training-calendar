@@ -11,19 +11,16 @@ export const controlTaskTitle = (
 }
 
 export const controlTaskDescription = (
-  setInputVal: React.Dispatch<React.SetStateAction<TaskProps>>,
-  e?: ChangeEvent<HTMLInputElement>,
+  changeHook: React.Dispatch<React.SetStateAction<any>>,
+  insideObject: boolean,
   value?: string
 ) => {
-  console.log('1122', value)
-  if (!e && value) {
-    setInputVal((prev) => {
+  if (insideObject) {
+    changeHook((prev: any) => {
       return { ...prev, taskDescription: value }
     })
-  } else if (e) {
-    setInputVal((prev) => {
-      return { ...prev, taskDescription: e.target.value }
-    })
+  } else {
+    changeHook(value)
   }
 }
 

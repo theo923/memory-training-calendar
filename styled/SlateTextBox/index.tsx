@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import isHotkey from 'is-hotkey'
 import { Editable, withReact, Slate } from 'slate-react'
 import { createEditor, Descendant } from 'slate'
@@ -8,17 +8,26 @@ import { AiOutlineBold, AiOutlineItalic, AiOutlineUnderline, AiFillYoutube } fro
 import { BsCode } from 'react-icons/bs'
 import { MdFormatQuote, MdLooksOne, MdLooksTwo, MdImage } from 'react-icons/md'
 import { ImListNumbered, ImList } from 'react-icons/im'
-import { TaskProps } from 'lib/interface'
 import { Element } from './utils'
 import { Leaf, withEmbeds, HOTKEYS, toggleMark, SlateWrapper, MarkButton, YoutubeButton, ImageButton, BlockButton } from './utils'
+import Flex from 'styled/Flex'
 
 interface Props {
   values?: Descendant[]
-  onChange: (setInputVal: React.Dispatch<React.SetStateAction<TaskProps>>, e?: ChangeEvent<HTMLInputElement> | undefined, value?: string | undefined) => void;
-  changeObject: React.Dispatch<React.SetStateAction<TaskProps>>;
+  callChangeFunction:
+  (changeHook: React.Dispatch<React.SetStateAction<any>>, insideObject: boolean, value?: string | undefined) => void;
+  insideObject: boolean
+  changeHook: React.Dispatch<React.SetStateAction<any>>;
+  height?: string
 }
 
-const RichTextExample: React.FC<Props> = ({ values, onChange, changeObject }) => {
+const SlateTextBox: React.FC<Props> = ({
+  values,
+  callChangeFunction,
+  insideObject,
+  changeHook,
+  height = '300px'
+}) => {
   try {
     const [value, setValue] = useState<Descendant[]>(values || initialValue)
     const renderElement = useCallback(props => <Element {...props} />, [])
@@ -26,12 +35,14 @@ const RichTextExample: React.FC<Props> = ({ values, onChange, changeObject }) =>
     const editor = useMemo(() => withEmbeds(withHistory(withReact(createEditor()))), [])
 
     useEffect(() => {
-      onChange(changeObject, undefined, JSON.stringify(value))
+      if (insideObject) callChangeFunction(changeHook, true, JSON.stringify(value))
+      if (changeHook) callChangeFunction(changeHook, false, JSON.stringify(value))
+
     }, [value])
 
     return (
       <Slate editor={editor} value={value} onChange={value => setValue(value)}>
-        <SlateWrapper>
+        <Flex flexDirection='column'>
           <Toolbar>
             <MarkButton format="bold" icon={<AiOutlineBold size='20px' />} />
             <MarkButton format="italic" icon={<AiOutlineItalic size='20px' />} />
@@ -45,23 +56,25 @@ const RichTextExample: React.FC<Props> = ({ values, onChange, changeObject }) =>
             <BlockButton format="numbered-list" icon={<ImListNumbered size='20px' />} />
             <BlockButton format="bulleted-list" icon={<ImList size='20px' />} />
           </Toolbar>
-          <Editable
-            renderElement={renderElement}
-            renderLeaf={renderLeaf}
-            placeholder="Enter some text…"
-            spellCheck
-            autoFocus
-            onKeyDown={event => {
-              for (const hotkey in HOTKEYS) {
-                if (isHotkey(hotkey, event)) {
-                  event.preventDefault()
-                  const mark = HOTKEYS[hotkey]
-                  toggleMark(editor, mark)
+          <SlateWrapper height={height}>
+            <Editable
+              renderElement={renderElement}
+              renderLeaf={renderLeaf}
+              placeholder="Enter some text…"
+              spellCheck
+              autoFocus
+              onKeyDown={event => {
+                for (const hotkey in HOTKEYS) {
+                  if (isHotkey(hotkey, event)) {
+                    event.preventDefault()
+                    const mark = HOTKEYS[hotkey]
+                    toggleMark(editor, mark)
+                  }
                 }
-              }
-            }}
-          />
-        </SlateWrapper>
+              }}
+            />
+          </SlateWrapper>
+        </Flex>
       </Slate>
     )
   } catch (err) {
@@ -77,4 +90,4 @@ const initialValue: Descendant[] = [
   }
 ]
 
-export default RichTextExample
+export default SlateTextBox

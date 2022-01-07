@@ -34,10 +34,10 @@ export const Button = React.forwardRef(
           color: ${reversed
             ? active
               ? 'white'
-              : '#aaa'
+              : '#17a31d'
             : active
               ? 'black'
-              : '#ccc'};
+              : '#862d2d'};
         `
       )}
     />
@@ -64,7 +64,7 @@ export const EditorValue = React.forwardRef(
       .join('\n')
     return (
       <div
-      //@ts-ignore
+        //@ts-ignore
         ref={ref}
         {...props}
         className={cx(
@@ -184,9 +184,7 @@ export const Toolbar = React.forwardRef(
         className,
         css`
           position: relative;
-          padding: 18px 18px 17px;
           border-bottom: 2px solid #eee;
-          margin-bottom: 20px;
         `
       )}
     />

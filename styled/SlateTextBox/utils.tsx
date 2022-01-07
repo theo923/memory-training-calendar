@@ -17,7 +17,6 @@ declare module 'slate' {
 export const SlateWrapper = styled(Box)`
   position: 'relative';
   width: 100%;
-  height: 400px;
   overflow-y: auto;
   word-break: break-all;
   white-space: pre-line;
