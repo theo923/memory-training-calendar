@@ -28,6 +28,7 @@ const ChatMessageBox = ({
       flexDirection='column'
       justifyContent='center'
       alignItems={me === user ? 'flex-end' : 'flex-start'}
+      background={me === user ? '#6cf06c' : '#ff6262'}
     >
       <Flex
         mx='2px'
