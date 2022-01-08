@@ -39,11 +39,12 @@ const Chat: React.FC<Props> = ({
   )
   const [messageToSend, setMessageToSend] = useState<string>('')
   const endRef = useRef<null | HTMLDivElement>(null)
-
+  const [regen, setRegen] = useState<number>(0)
+  
   const scrolling = () => {
     endRef?.current?.scrollIntoView({
       behavior: "smooth",
-      block: "end"
+      block: "nearest"
     })
   }
 
@@ -81,9 +82,7 @@ const Chat: React.FC<Props> = ({
         user: user.email
       })
     }
-
-    setMessageToSend('')
-    scrolling()
+    setRegen(prev => prev + 1)
   }
 
   useEffect(() => {
@@ -127,7 +126,7 @@ const Chat: React.FC<Props> = ({
             overflowY='auto'
           >
             {showMessages()}
-            <Box mb='20px' ref={endRef} />
+            <Box ref={endRef} />
           </Box>
         </Flex>
         <Flex
@@ -136,7 +135,7 @@ const Chat: React.FC<Props> = ({
           mb='10px'
         >
           <SlateTextBox
-            insideObject
+            key={regen}
             callChangeFunction={controlTaskDescription}
             changeHook={setMessageToSend}
             height='100px'
@@ -145,7 +144,7 @@ const Chat: React.FC<Props> = ({
             justifyContent='center'
             alignItems='center'
             ml='5px'>
-            <Button onClick={() => sendMessages()}><BiMailSend size='25px' /></Button>
+            <Button onClick={() => { sendMessages(); scrolling(); }}><BiMailSend size='25px' /></Button>
           </Flex>
         </Flex>
       </Flex>

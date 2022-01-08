@@ -16,7 +16,7 @@ interface Props {
   values?: Descendant[]
   callChangeFunction:
   (changeHook: React.Dispatch<React.SetStateAction<any>>, insideObject: boolean, value?: string | undefined) => void;
-  insideObject: boolean
+  insideObject?: boolean
   changeHook: React.Dispatch<React.SetStateAction<any>>;
   height?: string
 }
@@ -37,7 +37,6 @@ const SlateTextBox: React.FC<Props> = ({
     useEffect(() => {
       if (insideObject) callChangeFunction(changeHook, true, JSON.stringify(value))
       if (changeHook) callChangeFunction(changeHook, false, JSON.stringify(value))
-
     }, [value])
 
     return (
@@ -86,7 +85,7 @@ const SlateTextBox: React.FC<Props> = ({
 const initialValue: Descendant[] = [
   {
     type: 'paragraph',
-    children: [{ text: 'Here is you task content.' }],
+    children: [{ text: '' }],
   }
 ]
 
