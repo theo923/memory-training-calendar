@@ -11,7 +11,6 @@ import Input from 'styled/Input'
 import Text from 'styled/Text'
 import default_schedule from 'lib/utils/default_schedule'
 import axios from 'axios'
-import { NextRouter } from 'next/router'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import { ModalContext } from 'components/Modal/ModalContext'
@@ -23,7 +22,6 @@ const InputText = styled(Box)`
 `
 
 interface Props {
-  router: NextRouter,
   userTasks: UserTasksProps,
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
@@ -32,7 +30,6 @@ interface Props {
 }
 
 const CreateTaskBoard: React.FC<Props> = ({
-  router,
   userTasks,
   setUserTasks,
   target,
@@ -59,7 +56,7 @@ const CreateTaskBoard: React.FC<Props> = ({
         taskColor: inputVal.taskColor
       }).then(({ data: { success } }) => {
         if (success)
-          refreshData(router)
+          refreshData()
         else
           setStatus('Failed to add task, please try again...')
       })
@@ -75,7 +72,6 @@ const CreateTaskBoard: React.FC<Props> = ({
       modalContext.setModalContent(
         <Box width='50vw'>
           <CreateTaskBoardExtend
-            router={router}
             currentUser={currentUser}
             userTasks={userTasks}
             setUserTasks={setUserTasks}

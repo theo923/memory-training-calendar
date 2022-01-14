@@ -7,7 +7,6 @@ import Button from 'styled/Button'
 import Flex from 'styled/Flex'
 import Input from 'styled/Input'
 import axios from 'axios'
-import { NextRouter } from 'next/router'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import SlateTextBox from 'styled/SlateTextBox'
@@ -17,14 +16,12 @@ const InputText = styled(Box)`
 `
 
 interface Props {
-  router: NextRouter
   targetedTask: TaskProps,
   target: Date,
   colorPalette: TaskColorProps,
 }
 
 const JobCreationBoard: React.FC<Props> = ({
-  router,
   targetedTask,
   colorPalette,
 }): JSX.Element => {
@@ -50,7 +47,7 @@ const JobCreationBoard: React.FC<Props> = ({
         taskColor: inputVal.taskColor
       }).then(({ data: { success } }) => {
         if (success)
-          refreshData(router)
+          refreshData()
       })
     }
   }

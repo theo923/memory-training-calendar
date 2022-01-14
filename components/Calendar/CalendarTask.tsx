@@ -3,7 +3,6 @@ import { setTextColor, targetIdentifier, dayIdentifier, setBooleanColor } from "
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
 import { TaskProps } from "lib/interface";
 import { refreshData } from "lib/utils/refresh_data";
-import { NextRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 import styled, { css } from "styled-components";
@@ -44,7 +43,6 @@ const Symbol = styled(Flex)`
 `;
 
 interface Props {
-  router: NextRouter
   task: TaskProps
   day: Date
   target: Date
@@ -53,7 +51,6 @@ interface Props {
 }
 
 const CalendarTask: React.FC<Props> = ({
-  router,
   task,
   day,
   target,
@@ -87,7 +84,7 @@ const CalendarTask: React.FC<Props> = ({
         })
       }).then(({ data: { success } }) => {
         if (success) {
-          refreshData(router)
+          refreshData()
         }
       })
     } catch (err) {
@@ -127,9 +124,9 @@ const CalendarTask: React.FC<Props> = ({
         >
           {
             textlimit ?
-              task?.taskTitle.length > textlimit ?
-                task?.taskTitle.substring(0, textlimit) + '...'
-                : task?.taskTitle.substring(0, textlimit)
+              task?.taskTitle?.length > textlimit ?
+                task?.taskTitle?.substring(0, textlimit) + '...'
+                : task?.taskTitle?.substring(0, textlimit)
               : task?.taskTitle
           }
         </Text>

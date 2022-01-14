@@ -16,7 +16,6 @@ import Text from 'styled/Text'
 // import TextArea from 'styled/TextArea'
 import default_schedule from 'lib/utils/default_schedule'
 import axios from 'axios'
-import { NextRouter } from 'next/router'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import { RiCloseCircleFill } from 'react-icons/ri'
@@ -28,7 +27,6 @@ const InputText = styled(Box)`
 `
 
 interface Props {
-  router: NextRouter,
   userTasks: UserTasksProps,
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
@@ -37,7 +35,6 @@ interface Props {
 }
 
 const CreateTaskBoardExtend: React.FC<Props> = ({
-  router,
   userTasks,
   setUserTasks,
   target,
@@ -66,7 +63,7 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
         taskColor: inputVal.taskColor
       }).then(({ data: { success } }) => {
         if (success)
-          refreshData(router)
+          refreshData()
         else
           setStatus('Failed to add task, please try again...')
       })

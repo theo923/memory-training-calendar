@@ -3,7 +3,7 @@ import { auth } from 'lib/firebase';
 import { initializeLoginInfo } from 'lib/initialize';
 import { LoginInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
-import { NextRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { BsFillArrowLeftSquareFill } from 'react-icons/bs'
@@ -20,11 +20,8 @@ const ContentBox = styled(Box)`
   background: transparent;
 `
 
-interface Props {
-  router: NextRouter
-}
-
-const LoginPanel: React.FC<Props> = ({ router }) => {
+const LoginPanel = () => {
+  const router: NextRouter = useRouter()
   const [_cT, setTokenCookie, _rTC] = useCookies(['calendar-user-token']);
   const [_cI, setIDCookie, _rIC] = useCookies(['calendar-user-id']);
   const [_cN, setNameCookie, _rNC] = useCookies(['calendar-user-name']);
@@ -57,7 +54,7 @@ const LoginPanel: React.FC<Props> = ({ router }) => {
       })
       await auth.signInWithEmailAndPassword(loginInfo.email, loginInfo.password)
 
-      refreshData(router, '/')
+      refreshData('/')
     }
     else {
       setLoginInfo(initializeLoginInfo)

@@ -1,7 +1,6 @@
-import { NextRouter } from 'next/router'
+import router from 'next/router'
 
 export const refreshData = (
-  router: NextRouter,
   location: string = `/year/${router.query['year'] as string}`,
   method: string = 'replace'
 ): void => {

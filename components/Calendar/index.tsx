@@ -10,7 +10,6 @@ import Flex from "styled/Flex";
 import Text from "styled/Text";
 import Grid from "styled/Grid";
 import CalendarHeader from "./CalendarHeader";
-import { NextRouter } from "next/router";
 import TaskBox from "./CalendarTask";
 import { days } from "lib/data/dates";
 import ProgressBar from "components/Progress/ProgressBar";
@@ -35,7 +34,6 @@ const DoneAll = styled(Box)`
 `;
 
 interface Props {
-  router: NextRouter
   target: Date
   setTarget: React.Dispatch<React.SetStateAction<Date>>
   userTasks: UserTasksProps
@@ -44,7 +42,6 @@ interface Props {
 }
 
 const Calendar: React.FC<Props> = ({
-  router,
   target,
   setTarget,
   userTasks,
@@ -140,7 +137,6 @@ const Calendar: React.FC<Props> = ({
                       return (
                         <TaskBox
                           key={tidx}
-                          router={router}
                           task={task}
                           day={day}
                           target={target}

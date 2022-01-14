@@ -3,7 +3,7 @@ import { auth } from 'lib/firebase';
 import { initializeRegisterInfo } from 'lib/initialize';
 import { RegisterInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
-import { NextRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { BsFillArrowLeftSquareFill } from 'react-icons/bs'
@@ -20,11 +20,8 @@ const ContentBox = styled(Box)`
   background: transparent;
 `
 
-interface Props {
-  router: NextRouter
-}
-
-const RegisterPanel: React.FC<Props> = ({ router }) => {
+const RegisterPanel = () => {
+  const router: NextRouter = useRouter()
   const [_c, setCookie, _rC] = useCookies(['calendar-user-token']);
   const [registerInfo, setRegisterInfo] = useState<RegisterInfoProps>(initializeRegisterInfo)
   const [status, setStatus] = useState<string>('')
@@ -62,7 +59,7 @@ const RegisterPanel: React.FC<Props> = ({ router }) => {
 
       await auth.createUserWithEmailAndPassword(registerInfo.email, registerInfo.password)
 
-      refreshData(router, '/')
+      refreshData('/')
     }
     else {
       setRegisterInfo(initializeRegisterInfo)

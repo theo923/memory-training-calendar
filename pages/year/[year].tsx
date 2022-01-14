@@ -12,7 +12,7 @@ import { ServerSettingsProps, TaskProps, UserProps, UserSettingsProps, UserTasks
 import { initializeTask, initializeUser } from "lib/initialize";
 import { addDays, isSameMonth, startOfWeek } from "date-fns";
 import { getStartYearEndYear, getYearMonth } from "lib/get/getDate";
-import { NextRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
 import { getUserInfo } from "lib/get/getUserInfo";
@@ -24,7 +24,6 @@ import ChatBoard from "components/ChatBoard";
 import Modal from "components/Modal";
 
 interface Props {
-  router: NextRouter
   serverSettings: ServerSettingsProps
   status: boolean
   tasks: UserTasksProps
@@ -34,7 +33,6 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({
-  router,
   user,
   targetYear,
   status,
@@ -42,6 +40,7 @@ const App: React.FC<Props> = ({
   serverSettings,
   userSettings
 }): JSX.Element => {
+  const router: NextRouter = useRouter()
   const currentYear: Date = targetYear ? new Date(targetYear) : new Date()
   const currentUser: UserProps = user || initializeUser
   const [target, setTarget] = useState<Date>(
@@ -72,14 +71,12 @@ const App: React.FC<Props> = ({
       <Modal />
       <Layout main userSettings={userSettings}>
         <NavigationBar
-          router={router}
           user={user}
           userSettings={userSettings}
           colorPalette={serverSettings?.bgColor}
         />
         <MainComponent>
           <Calendar
-            router={router}
             target={target}
             setTarget={setTarget}
             userTasks={userTasks}
@@ -103,7 +100,6 @@ const App: React.FC<Props> = ({
           {user?.id && user?.username &&
             <Board title={'Create Task Board'}>
               <CreateTaskBoard
-                router={router}
                 currentUser={currentUser}
                 userTasks={userTasks}
                 setUserTasks={setUserTasks}
@@ -115,7 +111,6 @@ const App: React.FC<Props> = ({
           {user?.id && user?.username &&
             <Board title={'Task Board'}>
               <TaskBoard
-                router={router}
                 userTasks={userTasks}
                 target={target}
               />
@@ -124,7 +119,6 @@ const App: React.FC<Props> = ({
           {user?.id && user?.username &&
             <Board title={'Modify Board'}>
               <ModifyBoard
-                router={router}
                 targetedTask={targetedTask}
                 target={target}
                 colorPalette={serverSettings.taskColor}
