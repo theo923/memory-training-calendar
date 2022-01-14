@@ -6,6 +6,7 @@ import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
 import Input from 'styled/Input'
+import Text from 'styled/Text'
 import axios from 'axios'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
@@ -25,6 +26,8 @@ const JobCreationBoard: React.FC<Props> = ({
   targetedTask,
   colorPalette,
 }): JSX.Element => {
+  const [loading, setLoading] = useState<boolean | undefined>()
+  const [status, setStatus] = useState<string>('')
   const [inputVal, setInputVal] = useState<TaskProps>(targetedTask)
 
   useEffect(() => {
@@ -32,6 +35,8 @@ const JobCreationBoard: React.FC<Props> = ({
   }, [targetedTask])
 
   const handleSubmit = async () => {
+    setLoading(true)
+    setStatus('Loading...')
     if (
       targetedTask?.taskTitle !== inputVal?.taskTitle ||
       targetedTask?.taskDescription !== inputVal?.taskDescription ||
@@ -46,10 +51,17 @@ const JobCreationBoard: React.FC<Props> = ({
         taskDescription: inputVal.taskDescription,
         taskColor: inputVal.taskColor
       }).then(({ data: { success } }) => {
-        if (success)
+        if (success) {
           refreshData()
+          setStatus('Done')
+        }
+        else
+          setStatus('Failed to modify the task, please try again...')
       })
     }
+    else
+      setStatus('Failed to modify the task, please try again...')
+    setLoading(false)
   }
 
   return (
@@ -109,9 +121,12 @@ const JobCreationBoard: React.FC<Props> = ({
           />
           <Box />
           <Flex justifyContent='space-around'>
-            <Button onClick={() => handleSubmit()}>Submit</Button>
-            <Button onClick={() => setInputVal(targetedTask)}>Reset</Button>
+            <Button disabled={loading || targetedTask == inputVal} onClick={() => handleSubmit()}>Submit</Button>
+            <Button disabled={loading} onClick={() => setInputVal(targetedTask)}>Reset</Button>
           </Flex>
+          <Box>
+            {status.length > 0 && <Text color='red'>{status}</Text>}
+          </Box>
         </>
         :
         <Box>

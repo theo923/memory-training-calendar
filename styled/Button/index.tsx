@@ -10,12 +10,12 @@ const StyledButton = styled(Box)`
     ${tw`text-base m-2`}
 `;
 
-const Button = ({ ...props }): JSX.Element => {
+const Button = ({ disabled, ...props }: any): JSX.Element => {
     return (
         <motion.button
             variants={buttonVariant}
-            animate="initialCart"
-            whileHover="hoverCart"
+            animate={disabled ? "disabledSearch" : "initialSearch"}
+            whileHover={disabled ? "disabledHoverSearch" : "hoverSearch"}
             {...props}
         >
             <StyledButton>{props.children}</StyledButton>
