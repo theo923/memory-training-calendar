@@ -32,7 +32,7 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
   }, [target])
 
   return (
-    <Box data-test="component-createTaskBoardExtend">
+    <Box data-test="createTaskBoard-extend">
       <Flex justifyContent='flex-end'>
         <Button onClick={() => modalContext.setModalIsOpen(false)}><RiCloseCircleFill size='20px' /></Button>
       </Flex>

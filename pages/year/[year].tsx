@@ -120,7 +120,6 @@ const App: React.FC<Props> = ({
             <Board title={'Modify Board'}>
               <ModifyBoard
                 targetedTask={targetedTask}
-                target={target}
                 colorPalette={serverSettings.taskColor}
               />
             </Board>
