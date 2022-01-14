@@ -74,7 +74,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
   }
 
   return (
-    <>
+    <Box data-test="createTaskBoard-defaultLayout">
       <InputText
         fontSize={['20px', null, '20px']}
         lineHeight={['20px', null, '28px']}
@@ -124,7 +124,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
         <Button disabled={loading} onClick={() => setInputVal(initializeTask)}>Reset</Button>
       </Flex>
       {status.length > 0 && <Text color='red'>{status}</Text>}
-    </>
+    </Box>
   )
 }
 
