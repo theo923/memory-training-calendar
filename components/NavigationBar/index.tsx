@@ -2,7 +2,7 @@ import axios from 'axios';
 import ColorPanel from 'components/ServerSettings/ColorPalette';
 import { UserSettingsProps, BgColorProps, UserProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
-import { NextRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import styled from "styled-components";
 import Box from 'styled/Box';
@@ -21,18 +21,17 @@ interface InputValProp {
 
 
 interface Props {
-  router: NextRouter
   user: UserProps
   userSettings?: UserSettingsProps
   colorPalette?: BgColorProps
 }
 
-const NavigationBar: React.FC<Props> = ({ router, user, userSettings, colorPalette }): JSX.Element => {
+const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): JSX.Element => {
   const initializeInputVal = {
     bgColor: userSettings?.bgColor || '#fff'
   }
-
   const [inputVal, setInputVal] = useState<InputValProp>(initializeInputVal)
+  const router: NextRouter = useRouter()
 
   useEffect(() => {
     if (userSettings?.bgColor !== inputVal?.bgColor) {
@@ -46,7 +45,7 @@ const NavigationBar: React.FC<Props> = ({ router, user, userSettings, colorPalet
       bgColor: inputVal?.bgColor
     }).then(({ data }) => {
       if (data.success)
-        refreshData(router)
+        refreshData()
     })
   }
 

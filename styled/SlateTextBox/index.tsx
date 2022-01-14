@@ -36,7 +36,7 @@ const SlateTextBox: React.FC<Props> = ({
 
     useEffect(() => {
       if (insideObject) callChangeFunction(changeHook, true, JSON.stringify(value))
-      if (changeHook) callChangeFunction(changeHook, false, JSON.stringify(value))
+      else if (changeHook) callChangeFunction(changeHook, false, JSON.stringify(value))
     }, [value])
 
     return (

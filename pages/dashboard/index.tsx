@@ -1,6 +1,5 @@
 import Head from "next/head";
 import React from "react";
-import { NextRouter } from "next/router";
 import Layout from "components/Layout";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
@@ -17,7 +16,6 @@ import { getStartMonthEndMonth } from "lib/get/getDate";
 import { getSortedDateTask } from "lib/get/getSortedDateTask";
 
 interface Props {
-  router: NextRouter
   serverSettings: ServerSettingsProps
   user: UserProps
   userSettings: UserSettingsProps
@@ -27,14 +25,13 @@ interface Props {
 }
 
 const dashboard: React.FC<Props> = ({
-  router,
   serverSettings,
   user,
   userSettings,
   tasks,
   unsorted,
-  status }): JSX.Element => {
-
+  status
+}): JSX.Element => {
   return (
     <>
       <Head>
@@ -43,7 +40,6 @@ const dashboard: React.FC<Props> = ({
       </Head>
       <Layout main userSettings={userSettings}>
         <NavigationBar
-          router={router}
           user={user}
           userSettings={userSettings}
           colorPalette={serverSettings?.bgColor}

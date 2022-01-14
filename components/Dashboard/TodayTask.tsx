@@ -1,6 +1,5 @@
 import { setTextColor, setBooleanColor } from "lib/controller/controlColor";
 import { TaskProps } from "lib/interface";
-import { NextRouter } from "next/router";
 import styled, { css } from "styled-components";
 import Box from "styled/Box";
 import Flex from "styled/Flex";
@@ -45,7 +44,6 @@ const TodayTaskDescription = styled(GlassBox) <{ setTaskColor: string }>`
 `
 
 interface Props {
-  router?: NextRouter
   task: TaskProps
 }
 

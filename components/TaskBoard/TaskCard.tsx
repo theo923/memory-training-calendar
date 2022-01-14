@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { setBooleanColor, setTextColor } from 'lib/controller/controlColor'
 import { refreshData } from 'lib/utils/refresh_data'
-import { NextRouter } from 'next/router'
 import React from 'react'
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import styled, { css } from 'styled-components'
@@ -24,7 +23,6 @@ const FullTaskContent = styled(Box) <{ setTaskColor: string }>`
 `
 
 interface Props {
-  router: NextRouter
   taskID: string
   taskTitle: string
   taskDescription: string
@@ -32,7 +30,6 @@ interface Props {
 }
 
 const TaskCard: React.FC<Props> = ({
-  router,
   taskID,
   taskTitle,
   taskDescription,
@@ -43,7 +40,7 @@ const TaskCard: React.FC<Props> = ({
       id: taskID
     }).then(({ data: { success } }) => {
       if (success)
-        refreshData(router)
+        refreshData()
     })
   }
 
