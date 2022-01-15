@@ -2,7 +2,7 @@ import React from 'react'
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
 import Box from 'styled/Box';
-import CircleProgress from '../Progress/CircleProgress';
+import CircleProgress from '../../Progress/CircleProgress';
 import Grid from 'styled/Grid';
 import { UserProps, UserTasksProps } from 'lib/interface';
 import { getFullDate } from 'lib/get/getDate';
