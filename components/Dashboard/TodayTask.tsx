@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import Box from "styled/Box";
 import Flex from "styled/Flex";
 import GlassBox from "styled/GlassBox";
+import ReadSlateText from "styled/ReadSlateText";
 import Text from "styled/Text";
 import tw from "twin.macro";
 
@@ -94,7 +95,9 @@ const TodayTask: React.FC<Props> = ({
             fontSize='18px'
             color={setTextColor(7)}
           >
-            {task?.taskDescription}
+            <ReadSlateText
+              values={JSON.parse(task?.taskDescription)}
+            />
           </Text>
         </Box>
       </TodayTaskDescription>

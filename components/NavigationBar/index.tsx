@@ -101,7 +101,20 @@ const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): J
               fontSize='20px'
               mr={['20px', null, '0']}
             >
-              Calendar</Text>
+              Calendar
+            </Text>
+          </Box>
+          <Box
+            onClick={() => router.push("/tasks")}
+            my={['0', null, '20px']}
+          >
+            <Text
+              className='cursor-pointer'
+              fontSize='20px'
+              mr={['20px', null, '0']}
+            >
+              Tasks
+            </Text>
           </Box>
         </Flex>
         {
