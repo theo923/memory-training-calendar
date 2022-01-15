@@ -13,7 +13,7 @@ import Text from 'styled/Text'
 import tw from 'twin.macro'
 
 const Wrapper = styled(GlassBox)`
-  /* background-color: white; */
+  background-color: rgba(255,255,255,.5);
   ${tw`border-2 border-black shadow-md rounded-md px-2 py-1 mb-5`}
 `
 

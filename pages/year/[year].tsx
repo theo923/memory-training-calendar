@@ -104,6 +104,7 @@ const App: React.FC<Props> = ({
                 userTasks={userTasks}
                 setUserTasks={setUserTasks}
                 target={target}
+                setTarget={setTarget}
                 colorPalette={serverSettings.taskColor}
               />
             </Board>

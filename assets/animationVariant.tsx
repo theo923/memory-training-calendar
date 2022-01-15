@@ -48,3 +48,16 @@ export const buttonVariant = {
         borderRadius: "10px",
     },
 };
+
+export const motionBoxVariant = {
+    initial: {
+        opacity: 0.5,
+    },
+    animate: {
+        opacity: 1,
+        scale: 0.8,
+    },
+    hover: {
+        scale: 1.5,
+    }
+};

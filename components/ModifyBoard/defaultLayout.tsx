@@ -25,6 +25,7 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
   targetedTask,
   colorPalette,
 }): JSX.Element => {
+  const [colorPicker, setColorPicker] = useState<string>('gradient')
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
   const [inputVal, setInputVal] = useState<TaskProps>(targetedTask)
@@ -65,73 +66,77 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
 
   return (
     <Box data-test="modifyBoard-defaultLayout">
-      {targetedTask?.id ?
-        <
-          >
-          <InputText
+      <InputText
+        fontSize={['20px', null, '20px']}
+        lineHeight={['20px', null, '28px']}
+        mr='2'
+      >
+        Title:
+      </InputText>
+      <Input
+        value={inputVal?.taskTitle}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskTitle(setInputVal, e)}
+      />
+      <InputText
+        fontSize={['20px', null, '20px']}
+        lineHeight={['20px', null, '28px']}
+        mr='2'
+      >
+        Description:
+      </InputText>
+      <SlateTextBox
+        insideObject
+        values={inputVal?.taskDescription ? JSON.parse(inputVal.taskDescription) : ''}
+        callChangeFunction={controlTaskDescription}
+        changeHook={setInputVal}
+      />
+      <Flex>
+        <InputText
+          fontSize={['20px', null, '20px']}
+          lineHeight={['20px', null, '28px']}
+          mr='10px'
+        >
+          Task Color:
+        </InputText>
+        <Box mr='10px'>
+          <Button
             fontSize={['20px', null, '20px']}
             lineHeight={['20px', null, '28px']}
-            mr='2'
+            onClick={() => setColorPicker('gradient')}
           >
-            Title:
-          </InputText>
-          <Input
-            value={inputVal?.taskTitle}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskTitle(setInputVal, e)}
-          />
-          <InputText
-            fontSize={['20px', null, '20px']}
-            lineHeight={['20px', null, '28px']}
-            mr='2'
-          >
-            Description:
-          </InputText>
-          <SlateTextBox
-            insideObject
-            values={JSON.parse(inputVal.taskDescription)}
-            callChangeFunction={controlTaskDescription}
-            changeHook={setInputVal}
-          />
-          <InputText
-            fontSize={['20px', null, '20px']}
-            lineHeight={['20px', null, '28px']}
-            mr='2'
-          >
-            Static Colors:
-          </InputText>
-          <ColorPanel
-            currentValue={inputVal?.taskColor}
-            setInputVal={setInputVal}
-            colors={colorPalette?.color_static}
-            inputProperties='taskColor'
-          />
-          <InputText
-            fontSize={['20px', null, '20px']}
-            lineHeight={['20px', null, '28px']}
-            mr='2'
-          >
-            Gradient Colors:
-          </InputText>
-          <ColorPanel
+            Gradient
+          </Button>
+        </Box>
+        <Button
+          fontSize={['20px', null, '20px']}
+          lineHeight={['20px', null, '28px']}
+          onClick={() => setColorPicker('static')}
+        >
+          Static
+        </Button>
+      </Flex>
+      {colorPicker === 'static'
+        ? <ColorPanel
+          currentValue={inputVal?.taskColor}
+          setInputVal={setInputVal}
+          colors={colorPalette?.color_static}
+          inputProperties='taskColor' />
+        : colorPicker === 'gradient'
+          ? <ColorPanel
             currentValue={inputVal?.taskColor}
             setInputVal={setInputVal}
             colors={colorPalette?.color_gradient}
-            inputProperties='taskColor'
-          />
-          <Box />
-          <Flex justifyContent='space-around'>
-            <Button disabled={loading || targetedTask == inputVal} onClick={() => handleSubmit()}>Submit</Button>
-            <Button disabled={loading} onClick={() => setInputVal(targetedTask)}>Reset</Button>
-          </Flex>
-          <Box>
-            {status.length > 0 && <Text color='red'>{status}</Text>}
-          </Box>
-        </>
-        :
-        <Box>
-          No Tasks is founded. You must select one first.
-        </Box>
+            inputProperties='taskColor' />
+          : null
       }
+      <Box />
+      <Flex justifyContent='space-around'>
+        <Button disabled={loading || targetedTask == inputVal} onClick={() => handleSubmit()}>Submit</Button>
+        <Button disabled={loading} onClick={() => setInputVal(targetedTask)}>Reset</Button>
+      </Flex>
+      <Box>
+        {status.length > 0 && <Text color='red'>{status}</Text>}
+      </Box>
     </Box>
   )
 }
