@@ -3,12 +3,12 @@ import React from "react";
 import Layout from "components/Layout";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
-import Dashboard from "components/Dashboard";
+import Tasks from "components/Tasks";
 import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
 import { initializeUser } from "lib/initialize";
-import { ServerSettingsProps, UserProps, UserSettingsProps, UserTasksProps } from "lib/interface";
+import { ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
@@ -19,7 +19,6 @@ interface Props {
   serverSettings: ServerSettingsProps
   user: UserProps
   userSettings: UserSettingsProps
-  tasks: UserTasksProps
   unsorted: any
   status: boolean
 }
@@ -28,10 +27,10 @@ const tasks: React.FC<Props> = ({
   serverSettings,
   user,
   userSettings,
-  tasks,
   unsorted,
   status
 }): JSX.Element => {
+  console.log(unsorted)
   return (
     <>
       <Head>
@@ -45,9 +44,7 @@ const tasks: React.FC<Props> = ({
           colorPalette={serverSettings?.bgColor}
         />
         <MainComponent>
-          <Dashboard
-            user={user}
-            tasks={tasks}
+          <Tasks
             unsorted={unsorted}
           />
         </MainComponent>
