@@ -167,7 +167,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       }
       <Box />
       <Flex justifyContent='space-around'>
-        <Button disabled={loading || inputVal.taskTitle === ''} onClick={() => handleSubmit()}>Submit</Button>
+        <Button disabled={loading || inputVal?.taskTitle === ''} onClick={() => handleSubmit()}>Submit</Button>
         <Button disabled={loading} onClick={() => setInputVal(initializeTask)}>Reset</Button>
       </Flex>
       {status.length > 0 && <Text color='red'>{status}</Text>}

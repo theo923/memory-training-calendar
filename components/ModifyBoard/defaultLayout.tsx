@@ -86,7 +86,7 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
       </InputText>
       <SlateTextBox
         insideObject
-        values={JSON.parse(inputVal.taskDescription)}
+        values={inputVal?.taskDescription ? JSON.parse(inputVal.taskDescription) : ''}
         callChangeFunction={controlTaskDescription}
         changeHook={setInputVal}
       />

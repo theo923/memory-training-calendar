@@ -22,7 +22,6 @@ const ReadSlateText: React.FC<Props> = ({ values }) => {
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          placeholder="Enter some text…"
           spellCheck
           autoFocus
           readOnly
