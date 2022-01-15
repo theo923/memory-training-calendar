@@ -2,10 +2,11 @@ import React from 'react'
 import { ColorProps } from 'lib/interface'
 import { controlTaskColor } from 'lib/controller/controlTask'
 import styled, { css } from 'styled-components'
-import Box from 'styled/Box'
+import MotionBox from 'styled/MotionBox'
 import Flex from 'styled/Flex'
+import { motionBoxVariant } from 'assets/animationVariant'
 
-const ColorCircle = styled(Box) <{ bgColor: string, selected: boolean }>`
+const ColorCircle = styled(MotionBox) <{ bgColor: string, selected: boolean }>`
   cursor: pointer;
   height: 30px;
   width: 30px;
@@ -42,6 +43,10 @@ const ColorPanel: React.FC<Props> = ({
         (color: ColorProps, idx: number) =>
           <ColorCircle
             key={idx}
+            variants={motionBoxVariant}
+            initial="initial"
+            animate="animate"
+            whileHover='hover'
             my='10px'
             mx='10px'
             onClick={() => controlTaskColor(setInputVal, color, inputProperties)}

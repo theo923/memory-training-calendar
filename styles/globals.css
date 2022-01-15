@@ -57,10 +57,16 @@ ul {
   list-style: disc;
 }
 
+p {
+  font-family: MPLUSRounded1c;
+}
+
 h1 {
+  font-family: MPLUSRounded1c;
   font-size: 30px;
 }
 
 h2 {
+  font-family: MPLUSRounded1c;
   font-size: 20px;
 }

@@ -35,11 +35,19 @@ const ModifyBoard: React.FC<Props> = ({
 
   return (
     <Box data-test="component-modifyBoard">
-      <Button onClick={() => modalContext.setModalIsOpen(true)}>Extend</Button>
-      <ModifyBoardDefaultLayout
-        targetedTask={targetedTask}
-        colorPalette={colorPalette}
-      />
+      {targetedTask?.id ?
+        <>
+          <Button onClick={() => modalContext.setModalIsOpen(true)}>Extend</Button>
+          <ModifyBoardDefaultLayout
+            targetedTask={targetedTask}
+            colorPalette={colorPalette}
+          />
+        </>
+        :
+        <Box>
+          No Tasks is founded. You must select one first.
+        </Box>
+      }
     </Box>
   )
 }

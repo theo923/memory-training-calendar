@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, forwardRef, useEffect, useState } from 'react'
 import { TaskColorProps, TaskProps, UserProps, UserTasksProps } from 'lib/interface'
 import {
   controlTaskDescription,
@@ -47,9 +47,16 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
   currentUser,
   colorPalette,
 }): JSX.Element => {
+  const [colorPicker, setColorPicker] = useState<string>('gradient')
   const [inputVal, setInputVal] = useState<TaskProps>(initializeTask)
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
+  const CustomDatePicker = forwardRef(({ value, onClick }: any, ref) => (
+    // @ts-ignore
+    <Button className="example-custom-input" onClick={onClick} ref={ref}>
+      {value}
+    </Button>
+  ));
 
   useEffect(() => {
     if (!userTasks![getFullDate(target)])
@@ -95,7 +102,11 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
           </InputText>
         </Box>
         <Border>
-          <DatePicker selected={target} onChange={(date: Date) => setTarget(date)} />
+          <DatePicker
+            customInput={<CustomDatePicker />}
+            selected={target}
+            onChange={(date: Date) => setTarget(date)}
+          />
         </Border>
       </Flex>
       <InputText
@@ -115,35 +126,48 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
         Description:
       </InputText>
       <SlateTextBox callChangeFunction={controlTaskDescription} insideObject changeHook={setInputVal} />
-      <InputText
-        fontSize={['20px', null, '20px']}
-        lineHeight={['20px', null, '28px']}
-        mr='2'
-      >
-        Static Colors:
-      </InputText>
-      <ColorPanel
-        currentValue={inputVal?.taskColor}
-        setInputVal={setInputVal}
-        colors={colorPalette?.color_static}
-        inputProperties='taskColor'
-      />
-      <InputText
-        fontSize={['20px', null, '20px']}
-        lineHeight={['20px', null, '28px']}
-        mr='2'
-      >
-        Gradient Colors:
-      </InputText>
-      <ColorPanel
-        currentValue={inputVal?.taskColor}
-        setInputVal={setInputVal}
-        colors={colorPalette?.color_gradient}
-        inputProperties='taskColor'
-      />
+      <Flex>
+        <InputText
+          fontSize={['20px', null, '20px']}
+          lineHeight={['20px', null, '28px']}
+          mr='10px'
+        >
+          Task Color:
+        </InputText>
+        <Box mr='10px'>
+          <Button
+            fontSize={['20px', null, '20px']}
+            lineHeight={['20px', null, '28px']}
+            onClick={() => setColorPicker('gradient')}
+          >
+            Gradient
+          </Button>
+        </Box>
+        <Button
+          fontSize={['20px', null, '20px']}
+          lineHeight={['20px', null, '28px']}
+          onClick={() => setColorPicker('static')}
+        >
+          Static
+        </Button>
+      </Flex>
+      {colorPicker === 'static'
+        ? <ColorPanel
+          currentValue={inputVal?.taskColor}
+          setInputVal={setInputVal}
+          colors={colorPalette?.color_static}
+          inputProperties='taskColor' />
+        : colorPicker === 'gradient'
+          ? <ColorPanel
+            currentValue={inputVal?.taskColor}
+            setInputVal={setInputVal}
+            colors={colorPalette?.color_gradient}
+            inputProperties='taskColor' />
+          : null
+      }
       <Box />
       <Flex justifyContent='space-around'>
-        <Button disabled={loading} onClick={() => handleSubmit()}>Submit</Button>
+        <Button disabled={loading || inputVal.taskTitle === ''} onClick={() => handleSubmit()}>Submit</Button>
         <Button disabled={loading} onClick={() => setInputVal(initializeTask)}>Reset</Button>
       </Flex>
       {status.length > 0 && <Text color='red'>{status}</Text>}
