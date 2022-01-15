@@ -17,15 +17,24 @@ import axios from 'axios'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import SlateTextBox from 'styled/SlateTextBox/'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import tw from 'twin.macro'
+
 
 const InputText = styled(Box)`
   align-self: center;
+`
+
+const Border = styled(Box)`
+  ${tw`border-2 border-black shadow-md rounded-md  mb-5`}
 `
 
 interface Props {
   userTasks: UserTasksProps,
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
+  setTarget: React.Dispatch<React.SetStateAction<Date>>,
   currentUser: UserProps,
   colorPalette: TaskColorProps,
 }
@@ -34,6 +43,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
   userTasks,
   setUserTasks,
   target,
+  setTarget,
   currentUser,
   colorPalette,
 }): JSX.Element => {
@@ -75,6 +85,19 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
 
   return (
     <Box data-test="createTaskBoard-defaultLayout">
+      <Flex justifyContent='center' mt='10px'>
+        <Box width='100%'>
+          <InputText
+            fontSize={['20px', null, '20px']}
+            lineHeight={['20px', null, '28px']}
+          >
+            Modify Selected Date:
+          </InputText>
+        </Box>
+        <Border>
+          <DatePicker selected={target} onChange={(date: Date) => setTarget(date)} />
+        </Border>
+      </Flex>
       <InputText
         fontSize={['20px', null, '20px']}
         lineHeight={['20px', null, '28px']}

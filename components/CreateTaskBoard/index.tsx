@@ -1,4 +1,4 @@
-import React, { useContext, useEffect} from 'react'
+import React, { useContext, useEffect } from 'react'
 import { TaskColorProps, UserProps, UserTasksProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
@@ -10,6 +10,7 @@ interface Props {
   userTasks: UserTasksProps,
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
+  setTarget: React.Dispatch<React.SetStateAction<Date>>,
   currentUser: UserProps,
   colorPalette: TaskColorProps,
 }
@@ -18,6 +19,7 @@ const CreateTaskBoard: React.FC<Props> = ({
   userTasks,
   setUserTasks,
   target,
+  setTarget,
   currentUser,
   colorPalette,
 }): JSX.Element => {
@@ -32,6 +34,7 @@ const CreateTaskBoard: React.FC<Props> = ({
             userTasks={userTasks}
             setUserTasks={setUserTasks}
             target={target}
+            setTarget={setTarget}
             colorPalette={colorPalette}
           />
         </Box>
@@ -50,6 +53,7 @@ const CreateTaskBoard: React.FC<Props> = ({
         userTasks={userTasks}
         setUserTasks={setUserTasks}
         target={target}
+        setTarget={setTarget}
         colorPalette={colorPalette}
       />
     </Box>

@@ -13,6 +13,7 @@ interface Props {
   userTasks: UserTasksProps,
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
+  setTarget: React.Dispatch<React.SetStateAction<Date>>,
   currentUser: UserProps,
   colorPalette: TaskColorProps,
 }
@@ -21,6 +22,7 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
   userTasks,
   setUserTasks,
   target,
+  setTarget,
   currentUser,
   colorPalette,
 }): JSX.Element => {
@@ -41,6 +43,7 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
         userTasks={userTasks}
         setUserTasks={setUserTasks}
         target={target}
+        setTarget={setTarget}
         colorPalette={colorPalette}
       />
     </Box>
