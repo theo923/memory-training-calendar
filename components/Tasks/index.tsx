@@ -1,6 +1,5 @@
 import React from 'react'
 import Flex from 'styled/Flex';
-import Text from 'styled/Text';
 import Box from 'styled/Box';
 import { TaskProps } from 'lib/interface';
 import TaskEntry from './TaskEntry';
