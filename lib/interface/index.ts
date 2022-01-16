@@ -73,3 +73,9 @@ export interface ColorProps {
 export interface UserSettingsProps {
   bgColor: string
 }
+
+export interface TodoProps {
+  title: string
+  description: string
+  finished: boolean
+}

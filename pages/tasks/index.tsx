@@ -8,7 +8,7 @@ import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
 import { initializeUser } from "lib/initialize";
-import { ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
+import { ServerSettingsProps, TaskProps, UserProps, UserSettingsProps } from "lib/interface";
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
@@ -19,7 +19,7 @@ interface Props {
   serverSettings: ServerSettingsProps
   user: UserProps
   userSettings: UserSettingsProps
-  unsorted: any
+  unsorted: TaskProps[]
   status: boolean
 }
 
@@ -30,7 +30,6 @@ const tasks: React.FC<Props> = ({
   unsorted,
   status
 }): JSX.Element => {
-  console.log(unsorted)
   return (
     <>
       <Head>

@@ -1,14 +1,15 @@
 import React from 'react'
 import Flex from 'styled/Flex';
+import Text from 'styled/Text';
 import Box from 'styled/Box';
 import { TaskProps } from 'lib/interface';
 import TaskEntry from './TaskEntry';
 
 interface Props {
-  unsorted: any
+  unsorted: TaskProps[]
 }
 
-const Dashboard: React.FC<Props> = ({
+const Tasks: React.FC<Props> = ({
   unsorted
 }) => {
   return (
@@ -17,10 +18,11 @@ const Dashboard: React.FC<Props> = ({
         flexDirection='column'
         justifyContent='center'
         alignItems='center'
+        my='50px'
       >
-        <Flex my='50px' fontSize="50px">
+        <Text fontSize="50px">
           Your Current Tasks
-        </Flex>
+        </Text>
       </Flex>
       <Flex
         flexDirection='column'
@@ -31,8 +33,8 @@ const Dashboard: React.FC<Props> = ({
           my='20px'
           width={['100%', null, '50%']}
         >
-          {unsorted &&
-            unsorted.map((task: TaskProps) =>
+          {unsorted.length > 0 &&
+            unsorted?.map((task: TaskProps) =>
               <TaskEntry
                 task={task}
               />)
@@ -43,4 +45,4 @@ const Dashboard: React.FC<Props> = ({
   )
 }
 
-export default Dashboard
+export default Tasks

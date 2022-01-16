@@ -116,6 +116,18 @@ const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): J
               Tasks
             </Text>
           </Box>
+          <Box
+            onClick={() => router.push("/todoList")}
+            my={['0', null, '20px']}
+          >
+            <Text
+              className='cursor-pointer'
+              fontSize='20px'
+              mr={['20px', null, '0']}
+            >
+              TodoList
+            </Text>
+          </Box>
         </Flex>
         {
           user?.id ?
