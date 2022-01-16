@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ColorProps } from 'lib/interface'
 import { controlTaskColor } from 'lib/controller/controlTask'
 import styled, { css } from 'styled-components'
 import MotionBox from 'styled/MotionBox'
 import Flex from 'styled/Flex'
+import Text from 'styled/Text'
 import { motionBoxVariant } from 'assets/animationVariant'
+import ReactTooltip from "react-tooltip";
 
 const ColorCircle = styled(MotionBox) <{ bgColor: string, selected: boolean }>`
   cursor: pointer;
@@ -33,6 +35,11 @@ const ColorPanel: React.FC<Props> = ({
   setInputVal,
   inputProperties
 }): JSX.Element => {
+  console.log('123', inputProperties)
+  useEffect(() => {
+    ReactTooltip.rebuild();
+  });
+
   return (
     <Flex
       data-test="ServerSettings-colorPalette"
@@ -52,8 +59,20 @@ const ColorPanel: React.FC<Props> = ({
             onClick={() => controlTaskColor(setInputVal, color, inputProperties)}
             selected={currentValue === color?.colorValue}
             bgColor={color?.colorValue}
-          />)
-      }
+            data-tip data-for={`colorTip-${inputProperties}-${color.colorValue}`}
+          />
+      )}
+      {colors && colors?.map(
+        (color: ColorProps, idx: number) =>
+          <ReactTooltip
+            key={idx}
+            id={`colorTip-${inputProperties}-${color.colorValue}`} place="top" effect="solid"
+          >
+            <Text>
+              {color.colorName}
+            </Text>
+          </ReactTooltip>
+      )}
     </Flex>
   )
 }
