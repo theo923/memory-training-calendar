@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { findJSXByAttr } from '__test__/testUtils'
 
-import ModifyBoard from 'components/ModifyBoard'
+import ModifyBoard from 'components/CalendarSection/ModifyBoard'
 
 const setup = (props = {}, state = null) => {
   return shallow(<ModifyBoard {...props} />)

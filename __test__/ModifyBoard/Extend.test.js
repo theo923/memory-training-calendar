@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { findJSXByAttr } from '__test__/testUtils'
 
-import ModifyBoardExtend from 'components/ModifyBoard/extend'
+import ModifyBoardExtend from 'components/CalendarSection/ModifyBoard/extend'
 
 const setup = (props = {}, state = null) => {
   return shallow(<ModifyBoardExtend {...props} />)

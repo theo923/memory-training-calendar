@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { findJSXByAttr } from '__test__/testUtils'
 
-import CreateTaskBoardExtend from 'components/CreateTaskBoard/extend'
+import CreateTaskBoardExtend from 'components/CalendarSection/CreateTaskBoard/extend'
 
 const setup = (props = {}, state = null) => {
   return shallow(<CreateTaskBoardExtend {...props} />)
