@@ -7,6 +7,7 @@ export const analyze_tasks = (tasks: any) => {
       ).length
       return {
         ...task?.attributes,
+        id: task.id,
         totalTasks,
         successTasks,
       }

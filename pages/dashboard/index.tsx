@@ -3,7 +3,7 @@ import React from "react";
 import Layout from "components/Layout";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
-import Dashboard from "components/Dashboard";
+import Dashboard from "components/DashboardSection/Dashboard";
 import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";

@@ -1,4 +1,4 @@
-import TaskCard from 'components/TaskBoard/TaskCard'
+import TaskCard from 'components/CalendarSection/TaskBoard/TaskCard'
 import { getFullDate } from 'lib/get/getDate'
 import { TaskProps, UserTasksProps } from 'lib/interface'
 import React from 'react'

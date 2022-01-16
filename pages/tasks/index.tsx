@@ -3,7 +3,7 @@ import React from "react";
 import Layout from "components/Layout";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
-import Tasks from "components/Tasks";
+import Tasks from "components/TaskSection/Tasks";
 import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
@@ -14,6 +14,7 @@ import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
 import { getStartMonthEndMonth } from "lib/get/getDate";
 import { getSortedDateTask } from "lib/get/getSortedDateTask";
+import Modal from "components/Modal";
 
 interface Props {
   serverSettings: ServerSettingsProps
@@ -36,6 +37,7 @@ const tasks: React.FC<Props> = ({
         <title>Tasks | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Modal />
       <Layout main userSettings={userSettings}>
         <NavigationBar
           user={user}
@@ -44,6 +46,8 @@ const tasks: React.FC<Props> = ({
         />
         <MainComponent>
           <Tasks
+            user={user}
+            serverSettings={serverSettings}
             unsorted={unsorted}
           />
         </MainComponent>

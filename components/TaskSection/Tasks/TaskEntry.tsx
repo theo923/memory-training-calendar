@@ -1,7 +1,8 @@
 import { setTextColor, setBooleanColor } from "lib/controller/controlColor";
-import { TaskProps } from "lib/interface";
-import { useState } from "react";
+import { ServerSettingsProps, TaskProps } from "lib/interface";
+import { useContext, useEffect, useState } from "react";
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from "react-icons/fa";
+import { BiDetail } from "react-icons/bi";
 import styled, { css } from "styled-components";
 import Box from "styled/Box";
 import Button from "styled/Button";
@@ -10,6 +11,8 @@ import GlassBox from "styled/GlassBox";
 import ReadSlateText from "styled/ReadSlateText";
 import Text from "styled/Text";
 import tw from "twin.macro";
+import { ModalContext } from "components/Modal/ModalContext";
+import ModifyBoardExtend from "components/CalendarSection/ModifyBoard/extend";
 
 type FinishedIdentifier = {
   finished: boolean
@@ -50,13 +53,36 @@ const TaskEntryDescription = styled(GlassBox) <{ setTaskColor: string }>`
 `
 
 interface Props {
+  serverSettings: ServerSettingsProps
   task: TaskProps
 }
 
 const TaskEntry: React.FC<Props> = ({
+  serverSettings,
   task,
 }) => {
+  const modalContext = useContext(ModalContext)
   const [open, setOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (!modalContext.modalIsOpen) {
+      modalContext.setModalContent(null)
+    }
+  }, [modalContext.modalIsOpen])
+
+  const handleModal = () => {
+    modalContext.setModalContent(
+      <Box width='50vw'>
+        <ModifyBoardExtend
+          reload
+          targetedTask={task}
+          colorPalette={serverSettings.taskColor}
+        />
+      </Box>
+    )
+    modalContext.setModalIsOpen(true)
+  }
+
   return (
     <Box
       data-test="calendar-TaskEntry"
@@ -82,16 +108,25 @@ const TaskEntry: React.FC<Props> = ({
             {task?.taskTitle}
           </Text>
         </Box>
-        {open &&
-          <Button onClick={() => setOpen(prev => !prev)}>
-            <FaCompressArrowsAlt size='20px' />
-          </Button>
-        }
-        {!open &&
-          <Button onClick={() => setOpen(prev => !prev)}>
-            <FaExpandArrowsAlt size='20px' />
-          </Button>
-        }
+        <Flex justifyContent='center' alignItems='center'>
+          <Flex mr='10px'>
+            <Button onClick={() => handleModal()}>
+              <BiDetail size='20px' />
+            </Button>
+          </Flex>
+          <Flex mr='10px'>
+            {open &&
+              <Button onClick={() => setOpen(prev => !prev)}>
+                <FaCompressArrowsAlt size='20px' />
+              </Button>
+            }
+            {!open &&
+              <Button onClick={() => setOpen(prev => !prev)}>
+                <FaExpandArrowsAlt size='20px' />
+              </Button>
+            }
+          </Flex>
+        </Flex>
       </TaskEntryTitle>
       {open &&
         <TaskEntryDescription

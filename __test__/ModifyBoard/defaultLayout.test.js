@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { findJSXByAttr } from '__test__/testUtils'
 
-import ModifyBoardDefaultLayout from 'components/ModifyBoard/defaultLayout'
+import ModifyBoardDefaultLayout from 'components/CalendarSection/ModifyBoard/defaultLayout'
 
 const setup = (props = {}, state = null) => {
   return shallow(<ModifyBoardDefaultLayout {...props} />)

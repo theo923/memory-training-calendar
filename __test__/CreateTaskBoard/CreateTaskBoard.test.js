@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { findJSXByAttr } from '__test__/testUtils'
 
-import CreateTaskBoard from 'components/CreateTaskBoard'
+import CreateTaskBoard from 'components/CalendarSection/CreateTaskBoard'
 
 const setup = (props = {}, state = null) => {
   return shallow(<CreateTaskBoard {...props} />)

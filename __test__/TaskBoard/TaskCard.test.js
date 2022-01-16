@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { findJSXByAttr } from '__test__/testUtils'
 
-import TaskCard from 'components/TaskBoard/TaskCard'
+import TaskCard from 'components/CalendarSection/TaskBoard/TaskCard'
 
 const setup = (props = {}, state = null) => {
   return shallow(<TaskCard {...props} />)

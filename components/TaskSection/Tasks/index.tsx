@@ -2,14 +2,18 @@ import React from 'react'
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
 import Box from 'styled/Box';
-import { TaskProps } from 'lib/interface';
+import { ServerSettingsProps, TaskProps, UserProps } from 'lib/interface';
 import TaskEntry from './TaskEntry';
 
 interface Props {
+  user: UserProps
+  serverSettings: ServerSettingsProps
   unsorted: TaskProps[]
 }
 
 const Tasks: React.FC<Props> = ({
+  user,
+  serverSettings,
   unsorted
 }) => {
   return (
@@ -34,9 +38,11 @@ const Tasks: React.FC<Props> = ({
           width={['100%', null, '50%']}
         >
           {unsorted.length > 0 &&
-            unsorted?.map((task: TaskProps) =>
+            unsorted.map((tk: TaskProps, idx: number) =>
               <TaskEntry
-                task={task}
+                key={idx}
+                serverSettings={serverSettings}
+                task={{ ...tk, userID: user.id, userName: user.username }}
               />)
           }
         </Flex>
