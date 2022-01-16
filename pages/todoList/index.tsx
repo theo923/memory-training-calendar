@@ -13,6 +13,7 @@ import { getUserInfo } from "lib/get/getUserInfo";
 import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
 import { getTodoList } from "lib/get/getTodoList";
+import Modal from "components/Modal";
 
 interface Props {
   serverSettings: ServerSettingsProps
@@ -35,6 +36,7 @@ const todoList: React.FC<Props> = ({
         <title>TodoList | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Modal />
       <Layout main userSettings={userSettings}>
         <NavigationBar
           user={user}

@@ -1,9 +1,12 @@
 import axios from "axios";
+import { ModalContext } from "components/Modal/ModalContext";
 import { setTextColor, setBooleanColor } from "lib/controller/controlColor";
 import { UserProps, TodoProps } from "lib/interface";
 import { refreshData } from "lib/utils/refresh_data";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { BiDetail } from "react-icons/bi";
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from "react-icons/fa";
+import { RiDeleteBin5Line } from "react-icons/ri";
 import styled, { css } from "styled-components";
 import Box from "styled/Box";
 import Button from "styled/Button";
@@ -12,6 +15,7 @@ import GlassBox from "styled/GlassBox";
 import ReadSlateText from "styled/ReadSlateText";
 import Text from "styled/Text";
 import tw from "twin.macro";
+import TodoListExtend from "./extend";
 
 type FinishedIdentifier = {
   finished: boolean
@@ -67,7 +71,47 @@ const TodoEntry: React.FC<Props> = ({
   user,
   todoList
 }) => {
+  const modalContext = useContext(ModalContext)
   const [open, setOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (!modalContext.modalIsOpen) {
+      modalContext.setModalContent(null)
+    }
+  }, [modalContext.modalIsOpen])
+
+  const handleModal = () => {
+    modalContext.setModalContent(
+      <Box width='50vw'>
+        <TodoListExtend
+          todo={{
+            title,
+            description,
+            finished
+          }}
+          todoList={todoList}
+          user={user}
+        />
+      </Box>
+    )
+    modalContext.setModalIsOpen(true)
+  }
+
+  const handleDelete = async () => {
+    try {
+      await axios.post('/api/updateTodo', {
+        userID: user.id,
+        todoList: todoList.filter((todo: TodoProps) => todo.title !== title)
+      }).then(({ data: { success } }) => {
+        if (success) {
+          refreshData('/todoList', 'replace')
+        }
+      })
+    }
+    catch (err) {
+      console.log('Failed to add todo...')
+    }
+  }
 
   const handleFinished = async () => {
     try {
@@ -81,10 +125,8 @@ const TodoEntry: React.FC<Props> = ({
           else return todo
         })
       }).then(({ data: { success } }) => {
-        if (success) {
+        if (success)
           refreshData('/todoList', 'replace')
-        }
-
       })
     }
     catch (err) {
@@ -118,16 +160,26 @@ const TodoEntry: React.FC<Props> = ({
             {title}
           </Text>
         </Box>
-        {open &&
-          <Button onClick={() => setOpen(prev => !prev)}>
-            <FaCompressArrowsAlt size='20px' />
-          </Button>
-        }
-        {!open &&
-          <Button onClick={() => setOpen(prev => !prev)}>
-            <FaExpandArrowsAlt size='20px' />
-          </Button>
-        }
+        {/* <Flex justifyContent='center' alignItems='center'></Flex> */}
+        <Flex justifyContent='center' alignItems='center'>
+          <Flex mr='10px'>
+            <Button onClick={() => handleModal()}>
+              <BiDetail size='20px' />
+            </Button>
+          </Flex>
+          <Flex mr='10px'>
+            {open &&
+              <Button onClick={() => setOpen(prev => !prev)}>
+                <FaCompressArrowsAlt size='20px' />
+              </Button>
+            }
+            {!open &&
+              <Button onClick={() => setOpen(prev => !prev)}>
+                <FaExpandArrowsAlt size='20px' />
+              </Button>
+            }
+          </Flex>
+        </Flex>
       </TodoEntryTitle>
       {open &&
         <TodoEntryDescription
@@ -140,9 +192,14 @@ const TodoEntry: React.FC<Props> = ({
             my='8px'
             p={['3px']}
             maxHeight='300px'
-            width='auto'
+            width='100%'
             maxWidth={['400px', '600px', '425px']}
           >
+            <Flex width='100%' justifyContent='flex-end'>
+              <Button onClick={() => handleDelete()}>
+                <RiDeleteBin5Line />
+              </Button>
+            </Flex>
             <Text
               fontSize='18px'
               color={setTextColor(7)}
