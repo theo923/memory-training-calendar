@@ -19,13 +19,11 @@ const InputText = styled(Box)`
 interface Props {
   targetedTask: TaskProps,
   colorPalette: TaskColorProps,
-  reload?: boolean
 }
 
 const ModifyBoardDefaultLayout: React.FC<Props> = ({
   targetedTask,
   colorPalette,
-  reload = false
 }): JSX.Element => {
   const [colorPicker, setColorPicker] = useState<string>('gradient')
   const [loading, setLoading] = useState<boolean | undefined>()
@@ -54,7 +52,6 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
         taskColor: inputVal.taskColor
       }).then(({ data: { success } }) => {
         if (success) {
-          if (reload) refreshData('', 'reload')
           refreshData()
           setStatus('Done')
         }

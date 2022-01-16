@@ -3,39 +3,36 @@ import React from "react";
 import Layout from "components/Layout";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
-import Dashboard from "components/Dashboard";
+import TodoList from "components/TodoList";
 import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
 import { initializeUser } from "lib/initialize";
-import { ServerSettingsProps, TaskProps, UserProps, UserSettingsProps, UserTasksProps } from "lib/interface";
+import { ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
-import { getStartMonthEndMonth } from "lib/get/getDate";
-import { getSortedDateTask } from "lib/get/getSortedDateTask";
+import { getTodoList } from "lib/get/getTodoList";
 
 interface Props {
   serverSettings: ServerSettingsProps
   user: UserProps
   userSettings: UserSettingsProps
-  tasks: UserTasksProps
-  unsorted: TaskProps[]
+  todoList: any
   status: boolean
 }
 
-const dashboard: React.FC<Props> = ({
+const todoList: React.FC<Props> = ({
   serverSettings,
   user,
   userSettings,
-  tasks,
-  unsorted,
+  todoList,
   status
 }): JSX.Element => {
   return (
     <>
       <Head>
-        <title>Dashboard | Memory Training Calendar</title>
+        <title>TodoList | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout main userSettings={userSettings}>
@@ -45,10 +42,9 @@ const dashboard: React.FC<Props> = ({
           colorPalette={serverSettings?.bgColor}
         />
         <MainComponent>
-          <Dashboard
+          <TodoList
             user={user}
-            tasks={tasks}
-            unsorted={unsorted}
+            todoList={todoList}
           />
         </MainComponent>
         <JobBoard>
@@ -85,24 +81,21 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         props: {
           serverSettings,
           user: initializeUser,
-          tasks: {},
-          unsorted: {},
+          todoList: [],
           userSettings: {},
           status: false
         }
       }
 
     const { user } = await getUserInfo(req)
-    const { startMonth, endMonth } = getStartMonthEndMonth(new Date())
-    const { sortedDateTask, unsortedDateTask } = await getSortedDateTask(user, startMonth, endMonth, req, false)
+    const { todoList } = await getTodoList(user, req)
     const userSettings = await getUserSettings(user?.id, req)
 
     return {
       props: {
         serverSettings,
         user,
-        tasks: sortedDateTask,
-        unsorted: unsortedDateTask,
+        todoList,
         userSettings,
         status: true
       }
@@ -113,8 +106,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       props: {
         serverSettings: {},
         user: initializeUser,
-        tasks: {},
-        unsorted: {},
+        todoList: [],
         userSettings: {},
         status: false
       }
@@ -122,4 +114,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
 }
 
-export default dashboard;
+export default todoList;

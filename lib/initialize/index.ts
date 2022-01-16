@@ -4,6 +4,7 @@ import {
   RegisterInfoProps,
   TaskDateProps,
   TaskProps,
+  TodoProps,
   UserProps,
 } from 'lib/interface'
 
@@ -49,4 +50,10 @@ export const initializeTaskDate: TaskDateProps = {
   t_date: new Date(),
   t_period: '',
   t_finished: false,
+}
+
+export const initializeTodo: TodoProps = {
+  title: '',
+  description: '[{"type":"paragraph","children":[{"text":""}]}]',
+  finished: false,
 }

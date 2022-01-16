@@ -2,9 +2,9 @@ import React from 'react'
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
 import Box from 'styled/Box';
-import CircleProgress from '../../Progress/CircleProgress';
+import CircleProgress from '../Progress/CircleProgress';
 import Grid from 'styled/Grid';
-import { UserProps, UserTasksProps } from 'lib/interface';
+import { TaskProps, UserProps, UserTasksProps } from 'lib/interface';
 import { getFullDate } from 'lib/get/getDate';
 import { checkNum } from 'lib/utils/check_valid_num';
 import DashboardTask from './DashboardTask';
@@ -13,7 +13,7 @@ import TodayTask from './TodayTask';
 interface Props {
   user: UserProps
   tasks: UserTasksProps
-  unsorted: any
+  unsorted: TaskProps[]
 }
 
 const Dashboard: React.FC<Props> = ({
@@ -47,11 +47,15 @@ const Dashboard: React.FC<Props> = ({
         justifyContent='center'
         alignItems='center'
       >
-        <Flex my='50px' fontSize="50px">
-          {`Welcome back! ${user.username}`}
+        <Flex my='50px'>
+          <Text fontSize="50px">
+            {`Welcome back! ${user.username}`}
+          </Text>
         </Flex>
-        <Flex my='20px' fontSize="30px">
-          Here is Your Progress
+        <Flex my='20px'>
+          <Text fontSize="30px">
+            Here is Your Progress
+          </Text>
         </Flex>
       </Flex>
       <Grid gridTemplateColumns={['1fr 1fr']} my='20px'>

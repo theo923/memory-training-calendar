@@ -1,18 +1,15 @@
 import React from 'react'
 import Flex from 'styled/Flex';
+import Text from 'styled/Text';
 import Box from 'styled/Box';
-import { TaskProps, UserProps } from 'lib/interface';
+import { TaskProps } from 'lib/interface';
 import TaskEntry from './TaskEntry';
 
 interface Props {
-  user: UserProps
-  serverSettings: any
-  unsorted: any
+  unsorted: TaskProps[]
 }
 
 const Tasks: React.FC<Props> = ({
-  user,
-  serverSettings,
   unsorted
 }) => {
   return (
@@ -21,10 +18,11 @@ const Tasks: React.FC<Props> = ({
         flexDirection='column'
         justifyContent='center'
         alignItems='center'
+        my='50px'
       >
-        <Flex my='50px' fontSize="50px">
+        <Text fontSize="50px">
           Your Current Tasks
-        </Flex>
+        </Text>
       </Flex>
       <Flex
         flexDirection='column'
@@ -35,12 +33,10 @@ const Tasks: React.FC<Props> = ({
           my='20px'
           width={['100%', null, '50%']}
         >
-          {unsorted &&
-            unsorted.map((tk: TaskProps, idx: number) =>
+          {unsorted.length > 0 &&
+            unsorted?.map((task: TaskProps) =>
               <TaskEntry
-                key={idx}
-                serverSettings={serverSettings}
-                task={{ ...tk, userID: user.id, userName: user.username }}
+                task={task}
               />)
           }
         </Flex>
