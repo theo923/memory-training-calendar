@@ -31,7 +31,7 @@ const DashboardTask: React.FC<Props> = ({
 
   return (
     <Grid
-      data-test="calendar-dashboardTask"
+      data-test="dashboard-dashboardTask"
       gridTemplateColumns='0.6fr 1.4fr'
     >
       <DashboardTaskWrapper

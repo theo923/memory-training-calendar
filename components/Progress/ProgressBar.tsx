@@ -53,7 +53,10 @@ const ProgressBar: React.FC<Props> = ({
   };
 
   return (
-    <Box position='relative'>
+    <Box
+      data-test='progress-progressBar'
+      position='relative'
+    >
       <Bar
         pst='relative'
         cl='#CE5374'

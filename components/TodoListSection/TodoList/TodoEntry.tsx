@@ -136,7 +136,7 @@ const TodoEntry: React.FC<Props> = ({
 
   return (
     <Box
-      data-test="todoList-TodoEntry"
+      data-test="todoList-todoEntry"
       mx='20px'
     >
       <TodoEntryTitle
@@ -160,7 +160,6 @@ const TodoEntry: React.FC<Props> = ({
             {title}
           </Text>
         </Box>
-        {/* <Flex justifyContent='center' alignItems='center'></Flex> */}
         <Flex justifyContent='center' alignItems='center'>
           <Flex mr='10px'>
             <Button onClick={() => handleModal()}>
@@ -204,9 +203,11 @@ const TodoEntry: React.FC<Props> = ({
               fontSize='18px'
               color={setTextColor(7)}
             >
-              <ReadSlateText
-                values={JSON.parse(description)}
-              />
+              {description &&
+                <ReadSlateText
+                  values={JSON.parse(description)}
+                />
+              }
             </Text>
           </Box>
         </TodoEntryDescription>

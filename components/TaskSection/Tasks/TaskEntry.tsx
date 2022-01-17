@@ -85,7 +85,7 @@ const TaskEntry: React.FC<Props> = ({
 
   return (
     <Box
-      data-test="calendar-TaskEntry"
+      data-test="tasks-taskEntry"
       mx='20px'
     >
       <TaskEntryTitle
@@ -105,7 +105,7 @@ const TaskEntry: React.FC<Props> = ({
             fontSize='18px'
             color={setTextColor(7)}
           >
-            {task?.taskTitle}
+            {task?.taskTitle || ''}
           </Text>
         </Box>
         <Flex justifyContent='center' alignItems='center'>
@@ -146,9 +146,11 @@ const TaskEntry: React.FC<Props> = ({
               fontSize='18px'
               color={setTextColor(7)}
             >
-              <ReadSlateText
-                values={JSON.parse(task?.taskDescription)}
-              />
+              {task?.taskDescription &&
+                <ReadSlateText
+                  values={JSON.parse(task.taskDescription)}
+                />
+              }
             </Text>
           </Box>
         </TaskEntryDescription>

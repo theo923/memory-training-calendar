@@ -36,6 +36,7 @@ const CircleProgress = ({
 
   return (
     <Flex
+      data-test='progress-circleProgress'
       justifyContent="center"
       alignItems="center"
     >

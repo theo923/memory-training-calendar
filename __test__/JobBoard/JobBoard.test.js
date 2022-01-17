@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { findJSXByAttr } from '__test__/testUtils'
-
 import JobBoard from 'components/JobBoard'
 
 const setup = (props = {}, state = null) => {

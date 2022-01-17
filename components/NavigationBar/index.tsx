@@ -51,7 +51,7 @@ const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): J
 
   return (
     <NavigationBarWrapper
-      data-test="component-NavigationBar"
+      data-test="component-navigationBar"
       minWidth={['100px', null, null, null, '200px']}
       height="100%"
     >
