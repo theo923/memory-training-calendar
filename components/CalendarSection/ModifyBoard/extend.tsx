@@ -8,7 +8,7 @@ import { ModalContext } from 'components/Modal/ModalContext'
 import ModifyBoardDefaultLayout from './defaultLayout'
 import axios from 'axios'
 import { refreshData } from 'lib/utils/refresh_data'
-import getUserIP from 'lib/get/getIP'
+import {getUserIP} from 'lib/get/getIP'
 
 interface Props {
   currentUser: UserProps,

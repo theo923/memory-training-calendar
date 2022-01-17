@@ -1,17 +1,16 @@
-import { useState, useEffect } from 'react'
 import publicIp from 'public-ip'
+import { useState, useEffect } from 'react'
 
-const getUserIP = (): string => {
+export const getUserIP = (): string => {
   const [IP, setIP] = useState<string>('')
   useEffect(() => {
     handleGet()
   }, [IP])
 
   const handleGet = async () => {
-    setIP(await publicIp.v4())
+    const ip = (await publicIp.v4()) || ''
+    setIP(ip)
   }
 
   return IP
 }
-
-export default getUserIP

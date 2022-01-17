@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { setBooleanColor, setTextColor } from 'lib/controller/controlColor'
-import getUserIP from 'lib/get/getIP'
+import {getUserIP} from 'lib/get/getIP'
 import { UserProps } from 'lib/interface'
 import { refreshData } from 'lib/utils/refresh_data'
 import React from 'react'

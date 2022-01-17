@@ -10,7 +10,7 @@ import { TodoProps, UserProps } from 'lib/interface';
 import axios from 'axios';
 import { refreshData } from 'lib/utils/refresh_data';
 import { initializeTodo } from 'lib/initialize';
-import getUserIP from 'lib/get/getIP';
+import {getUserIP} from 'lib/get/getIP';
 
 interface Props {
   user: UserProps

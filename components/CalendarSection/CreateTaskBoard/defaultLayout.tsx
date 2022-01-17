@@ -20,7 +20,7 @@ import SlateTextBox from 'styled/SlateTextBox/'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import tw from 'twin.macro'
-import getUserIP from 'lib/get/getIP'
+import {getUserIP} from 'lib/get/getIP'
 
 
 const InputText = styled(Box)`
@@ -92,7 +92,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       setStatus('Failed to add task, please try again...')
     }
   }
-  
+
   return (
     <Box data-test="createTaskBoard-defaultLayout">
       <Flex justifyContent='center' mt='10px'>

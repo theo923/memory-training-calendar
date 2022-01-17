@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ModalContext } from "components/Modal/ModalContext";
 import { setTextColor, setBooleanColor } from "lib/controller/controlColor";
-import getUserIP from "lib/get/getIP";
+import {getUserIP} from "lib/get/getIP";
 import { UserProps, TodoProps } from "lib/interface";
 import { refreshData } from "lib/utils/refresh_data";
 import { useContext, useEffect, useState } from "react";

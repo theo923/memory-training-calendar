@@ -44,6 +44,7 @@ const Tasks: React.FC<Props> = ({
             unsorted.map((tk: TaskProps, idx: number) =>
               <TaskEntry
                 key={idx}
+                user={user}
                 serverSettings={serverSettings}
                 task={{ ...tk, userID: user.id, userName: user.username }}
               />)

@@ -11,7 +11,7 @@ import axios from 'axios'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import SlateTextBox from 'styled/SlateTextBox'
-import getUserIP from 'lib/get/getIP'
+import {getUserIP} from 'lib/get/getIP'
 
 const InputText = styled(Box)`
   align-self: center;

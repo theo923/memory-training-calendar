@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { auth } from 'lib/firebase';
-import getUserIP from 'lib/get/getIP';
+import {getUserIP} from 'lib/get/getIP';
 import { initializeLoginInfo } from 'lib/initialize';
 import { LoginInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';

@@ -12,7 +12,7 @@ import Input from 'styled/Input'
 import SlateTextBox from 'styled/SlateTextBox'
 import { refreshData } from 'lib/utils/refresh_data'
 import axios from 'axios'
-import getUserIP from 'lib/get/getIP'
+import {getUserIP} from 'lib/get/getIP'
 
 const InputText = styled(Box)`
   align-self: center;

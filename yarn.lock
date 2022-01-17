@@ -1540,6 +1540,13 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
 
+"@types/public-ip@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@types/public-ip/-/public-ip-3.1.0.tgz#d86c2825dd53c6f1b825338df73f33a8bf331935"
+  integrity sha512-OgI5S2NovvE3Do0/Yt+Rm4s8bvlUqc3sN+7VJDpGVERsFt+r/M4TVXGokVd7nQGxieVXJ1zTWGmFvFPBDuUFyQ==
+  dependencies:
+    public-ip "*"
+
 "@types/react-datepicker@^4.3.4":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@types/react-datepicker/-/react-datepicker-4.3.4.tgz#1cccf5acfb8672fce08940d1cf69e664500ea63d"
@@ -5260,7 +5267,7 @@ public-encrypt@^4.0.0:
     randombytes "^2.0.1"
     safe-buffer "^5.1.2"
 
-public-ip@^5.0.0:
+public-ip@*, public-ip@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/public-ip/-/public-ip-5.0.0.tgz#b392fcc88552c3b36933a286068948816515f92a"
   integrity sha512-xaH3pZMni/R2BG7ZXXaWS9Wc9wFlhyDVJF47IJ+3ali0TGv+2PsckKxbmo+rnx3ZxiV2wblVhtdS3bohAP6GGw==

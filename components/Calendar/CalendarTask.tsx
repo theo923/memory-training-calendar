@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setTextColor, targetIdentifier, dayIdentifier, setBooleanColor } from "lib/controller/controlColor";
-import getUserIP from "lib/get/getIP";
+import {getUserIP} from "lib/get/getIP";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
 import { TaskProps, UserProps } from "lib/interface";
 import { refreshData } from "lib/utils/refresh_data";

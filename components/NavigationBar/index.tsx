@@ -1,6 +1,6 @@
 import axios from 'axios';
 import ColorPanel from 'components/ServerSettings/ColorPalette';
-import getUserIP from 'lib/get/getIP';
+import {getUserIP} from 'lib/get/getIP';
 import { UserSettingsProps, BgColorProps, UserProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
 import { NextRouter, useRouter } from 'next/router';
