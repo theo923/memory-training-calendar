@@ -79,3 +79,18 @@ export interface TodoProps {
   description: string
   finished: boolean
 }
+
+export interface QuizBookProps {
+  name: string
+  description: string
+  attempt: number
+  quiz: QuizProps[]
+}
+
+export interface QuizProps {
+  question: string
+  answer: string
+  prompt: string
+  finished_date: Date | null
+  last_answer: string | null
+}

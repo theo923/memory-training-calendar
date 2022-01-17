@@ -3,37 +3,37 @@ import React from "react";
 import Layout from "components/Layout";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
-import TodoList from "components/TodoList";
+import QuizBooks from "components/QuizBooks";
 import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
 import { initializeUser } from "lib/initialize";
-import { ServerSettingsProps, TodoProps, UserProps, UserSettingsProps } from "lib/interface";
+import { QuizBookProps, ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
-import { getTodoList } from "lib/get/getTodoList";
+import { getQuizBook } from "lib/get/getQuizBook";
 import Modal from "components/Modal";
 
 interface Props {
   serverSettings: ServerSettingsProps
   user: UserProps
   userSettings: UserSettingsProps
-  todoList: TodoProps[]
+  quizBooks: QuizBookProps[]
   status: boolean
 }
 
-const todoList: React.FC<Props> = ({
+const quizBook: React.FC<Props> = ({
   serverSettings,
   user,
   userSettings,
-  todoList,
+  quizBooks,
   status
 }): JSX.Element => {
   return (
     <>
       <Head>
-        <title>TodoList | Memory Training Calendar</title>
+        <title>QuizBook | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Modal />
@@ -44,9 +44,9 @@ const todoList: React.FC<Props> = ({
           colorPalette={serverSettings?.bgColor}
         />
         <MainComponent>
-          <TodoList
+          <QuizBooks
             user={user}
-            todoList={todoList}
+            quizBooks={quizBooks}
           />
         </MainComponent>
         <JobBoard>
@@ -83,21 +83,21 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         props: {
           serverSettings,
           user: initializeUser,
-          todoList: [],
+          quizBooks: [],
           userSettings: {},
           status: false
         }
       }
 
     const { user } = await getUserInfo(req)
-    const { todoList } = await getTodoList(user, req)
+    const { quizBooks } = await getQuizBook(user, req)
     const userSettings = await getUserSettings(user?.id, req)
 
     return {
       props: {
         serverSettings,
         user,
-        todoList,
+        quizBooks,
         userSettings,
         status: true
       }
@@ -108,7 +108,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       props: {
         serverSettings: {},
         user: initializeUser,
-        todoList: [],
+        quizBooks: [],
         userSettings: {},
         status: false
       }
@@ -116,4 +116,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
 }
 
-export default todoList;
+export default quizBook;
