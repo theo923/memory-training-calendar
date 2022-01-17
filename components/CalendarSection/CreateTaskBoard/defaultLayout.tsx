@@ -20,6 +20,7 @@ import SlateTextBox from 'styled/SlateTextBox/'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import tw from 'twin.macro'
+import getUserIP from 'lib/get/getIP'
 
 
 const InputText = styled(Box)`
@@ -47,6 +48,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
   currentUser,
   colorPalette,
 }): JSX.Element => {
+  const ip = getUserIP()
   const [colorPicker, setColorPicker] = useState<string>('gradient')
   const [inputVal, setInputVal] = useState<TaskProps>(initializeTask)
   const [loading, setLoading] = useState<boolean | undefined>()
@@ -73,7 +75,8 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
         taskTitle: inputVal.taskTitle,
         taskDescription: inputVal.taskDescription,
         targetedDate: default_schedule(target),
-        taskColor: inputVal.taskColor
+        taskColor: inputVal.taskColor,
+        ip
       }).then(({ data: { success } }) => {
         if (success) {
           refreshData()
@@ -89,7 +92,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       setStatus('Failed to add task, please try again...')
     }
   }
-
+  
   return (
     <Box data-test="createTaskBoard-defaultLayout">
       <Flex justifyContent='center' mt='10px'>

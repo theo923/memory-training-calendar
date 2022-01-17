@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { TaskColorProps, TaskProps } from 'lib/interface'
+import { TaskColorProps, TaskProps, UserProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
@@ -8,23 +8,30 @@ import { ModalContext } from 'components/Modal/ModalContext'
 import ModifyBoardDefaultLayout from './defaultLayout'
 import axios from 'axios'
 import { refreshData } from 'lib/utils/refresh_data'
+import getUserIP from 'lib/get/getIP'
 
 interface Props {
+  currentUser: UserProps,
   targetedTask: TaskProps,
   colorPalette: TaskColorProps,
   reload?: boolean
 }
 
 const ModifyBoardExtend: React.FC<Props> = ({
+  currentUser,
   targetedTask,
   colorPalette,
   reload = false
 }): JSX.Element => {
   const modalContext = useContext(ModalContext)
+  const ip = getUserIP()
 
   const handleDelete = async () => {
     await axios.post('/api/deleteTask', {
-      id: targetedTask.id
+      userID: currentUser.id,
+      userName: currentUser.username,
+      id: targetedTask.id,
+      ip
     }).then(({ data: { success } }) => {
       if (success)
         refreshData('', 'reload')
@@ -42,6 +49,7 @@ const ModifyBoardExtend: React.FC<Props> = ({
         <RiDeleteBin5Line />
       </Button>
       <ModifyBoardDefaultLayout
+        currentUser={currentUser}
         targetedTask={targetedTask}
         colorPalette={colorPalette}
         reload={reload}

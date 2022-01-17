@@ -8,7 +8,7 @@ import Text from 'styled/Text'
 import { motionBoxVariant } from 'assets/animationVariant'
 import ReactTooltip from "react-tooltip";
 
-const ColorCircle = styled(MotionBox) <{ bgColor: string, selected: boolean }>`
+const ColorCircle = styled(MotionBox) <{ bgcolor: string, selected: boolean }>`
   cursor: pointer;
   height: 30px;
   width: 30px;
@@ -16,8 +16,8 @@ const ColorCircle = styled(MotionBox) <{ bgColor: string, selected: boolean }>`
   border: .2px solid transparent;
   border-radius: 50px;
   
-  ${({ bgColor, selected }) => css`
-    background: ${bgColor || '#fff'};
+  ${({ bgcolor, selected }) => css`
+    background: ${bgcolor || '#fff'};
     border: ${selected ? '1px solid #000' : null}
   `}
 `
@@ -57,7 +57,7 @@ const ColorPanel: React.FC<Props> = ({
             mx='10px'
             onClick={() => controlTaskColor(setInputVal, color, inputProperties)}
             selected={currentValue === color?.colorValue}
-            bgColor={color?.colorValue}
+            bgcolor={color?.colorValue}
             data-tip data-for={`colorTip-${inputProperties}-${color.colorValue}`}
           />
       )}

@@ -5,6 +5,14 @@ export const UPDATE_USER_TODO = gql`
     updateUserTask(id: $id, data: { todo: $todo }) {
       data {
         id
+        attributes {
+          todo {
+            id
+            title
+            description
+            finished
+          }
+        }
       }
     }
   }

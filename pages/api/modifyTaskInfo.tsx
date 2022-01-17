@@ -1,5 +1,6 @@
 import { client, DEFAULT_HEADERS } from "lib/apollo"
 import { UPDATE_TASK_INFO_MUTATION } from "lib/queries/modify-task-info"
+import { write_logs } from "lib/utils/write_logs"
 
 const modifyTaskInfo = async (req: any, res: any) => {
   try {
@@ -7,7 +8,10 @@ const modifyTaskInfo = async (req: any, res: any) => {
       id,
       taskTitle,
       taskDescription,
-      taskColor
+      taskColor,
+      userID,
+      userName,
+      ip
     } = req.body
     const { data } =
       await client.mutate({
@@ -20,6 +24,9 @@ const modifyTaskInfo = async (req: any, res: any) => {
         },
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
+    
+    await write_logs('modify', 'calendar', userID, userName, ip, data, req)
+    
     res.json({
       data,
       success: true

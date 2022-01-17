@@ -2,7 +2,7 @@ import { setBgColor, dayIdentifier, setTextColor } from "lib/controller/controlC
 import { getCalendar } from "lib/get/getCalendar";
 import { getFullDate } from "lib/get/getDate";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
-import { UserTasksProps, TaskProps } from "lib/interface";
+import { UserTasksProps, TaskProps, UserProps } from "lib/interface";
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import Box from "styled/Box";
@@ -34,6 +34,7 @@ const DoneAll = styled(Box)`
 `;
 
 interface Props {
+  currentUser: UserProps
   target: Date
   setTarget: React.Dispatch<React.SetStateAction<Date>>
   userTasks: UserTasksProps
@@ -42,6 +43,7 @@ interface Props {
 }
 
 const Calendar: React.FC<Props> = ({
+  currentUser,
   target,
   setTarget,
   userTasks,
@@ -142,6 +144,7 @@ const Calendar: React.FC<Props> = ({
                           target={target}
                           targetedTask={targetedTask}
                           setTargetedTask={setTargetedTask}
+                          currentUser={currentUser}
                         />
                       )
                     })

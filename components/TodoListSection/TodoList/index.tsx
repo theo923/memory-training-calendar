@@ -10,6 +10,7 @@ import { TodoProps, UserProps } from 'lib/interface';
 import axios from 'axios';
 import { refreshData } from 'lib/utils/refresh_data';
 import { initializeTodo } from 'lib/initialize';
+import getUserIP from 'lib/get/getIP';
 
 interface Props {
   user: UserProps
@@ -20,6 +21,7 @@ const TodoList: React.FC<Props> = ({
   user,
   todoList
 }) => {
+  const ip = getUserIP()
   const [addTodo, setAddTodo] = useState<TodoProps>(initializeTodo)
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
@@ -47,6 +49,8 @@ const TodoList: React.FC<Props> = ({
     try {
       await axios.post('/api/updateTodo', {
         userID: user.id,
+        userName: user.username,
+        ip,
         todoList: [...todoList, addTodo]
       }).then(({ data: { success } }) => {
         if (success) {

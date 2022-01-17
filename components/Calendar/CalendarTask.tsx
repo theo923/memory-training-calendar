@@ -1,7 +1,8 @@
 import axios from "axios";
 import { setTextColor, targetIdentifier, dayIdentifier, setBooleanColor } from "lib/controller/controlColor";
+import getUserIP from "lib/get/getIP";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
-import { TaskProps } from "lib/interface";
+import { TaskProps, UserProps } from "lib/interface";
 import { refreshData } from "lib/utils/refresh_data";
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
@@ -48,6 +49,7 @@ interface Props {
   target: Date
   targetedTask: TaskProps
   setTargetedTask: React.Dispatch<React.SetStateAction<TaskProps>>
+  currentUser: UserProps
 }
 
 const CalendarTask: React.FC<Props> = ({
@@ -55,8 +57,10 @@ const CalendarTask: React.FC<Props> = ({
   day,
   target,
   targetedTask,
-  setTargetedTask
+  setTargetedTask,
+  currentUser
 }) => {
+  const ip = getUserIP()
   const width = useWindowDimensions()?.width
   const [textlimit, setTextlimit] = useState<number>(0);
   const taskColor = (targetedTask === task ? setTextColor(targetIdentifier(task, targetedTask)) : task?.taskColor) || '#fff'
@@ -81,7 +85,10 @@ const CalendarTask: React.FC<Props> = ({
             t_period: entry!['t_period'],
             t_finished: entry!['t_finished']
           }
-        })
+        }),
+        ip,
+        userID: currentUser?.id || '',
+        userName: currentUser?.username || ''
       }).then(({ data: { success } }) => {
         if (success) {
           refreshData()

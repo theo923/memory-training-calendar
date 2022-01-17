@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { TaskColorProps, TaskProps } from 'lib/interface'
+import { TaskColorProps, TaskProps, UserProps } from 'lib/interface'
 import { controlTaskDescription, controlTaskTitle } from 'lib/controller/controlTask'
 import styled from 'styled-components'
 import Box from 'styled/Box'
@@ -11,22 +11,26 @@ import axios from 'axios'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import SlateTextBox from 'styled/SlateTextBox'
+import getUserIP from 'lib/get/getIP'
 
 const InputText = styled(Box)`
   align-self: center;
 `
 
 interface Props {
+  currentUser: UserProps,
   targetedTask: TaskProps,
   colorPalette: TaskColorProps,
   reload?: boolean
 }
 
 const ModifyBoardDefaultLayout: React.FC<Props> = ({
+  currentUser,
   targetedTask,
   colorPalette,
   reload = false
 }): JSX.Element => {
+  const ip = getUserIP()
   const [colorPicker, setColorPicker] = useState<string>('gradient')
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
@@ -40,6 +44,14 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
     setLoading(true)
     setStatus('Loading...')
     if (
+      currentUser.id !== targetedTask.userID ||
+      currentUser.username !== targetedTask.userName
+    ) {
+      setLoading(false)
+      setStatus('You do not have right to modify it because you are not the author of the task')
+    }
+
+    if (
       targetedTask?.taskTitle !== inputVal?.taskTitle ||
       targetedTask?.taskDescription !== inputVal?.taskDescription ||
       targetedTask?.taskColor !== inputVal?.taskColor
@@ -51,7 +63,8 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
         targetedDate: targetedTask.targetedDate,
         taskTitle: inputVal.taskTitle,
         taskDescription: inputVal.taskDescription,
-        taskColor: inputVal.taskColor
+        taskColor: inputVal.taskColor,
+        ip
       }).then(({ data: { success } }) => {
         if (success) {
           if (reload) refreshData('', 'reload')

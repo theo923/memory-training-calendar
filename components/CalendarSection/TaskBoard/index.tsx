@@ -1,15 +1,17 @@
 import TaskCard from 'components/CalendarSection/TaskBoard/TaskCard'
 import { getFullDate } from 'lib/get/getDate'
-import { TaskProps, UserTasksProps } from 'lib/interface'
+import { TaskProps, UserProps, UserTasksProps } from 'lib/interface'
 import React from 'react'
 import Box from 'styled/Box'
 
 interface Props {
+  currentUser: UserProps,
   userTasks: UserTasksProps,
   target: Date,
 }
 
 const TaskBoard: React.FC<Props> = ({
+  currentUser,
   userTasks,
   target,
 }): JSX.Element => {
@@ -24,6 +26,7 @@ const TaskBoard: React.FC<Props> = ({
               taskTitle={task.taskTitle}
               taskDescription={task.taskDescription}
               finished={task.t_finished}
+              currentUser={currentUser}
             />
           ))
         : <Box>
