@@ -1,5 +1,6 @@
 import axios from 'axios';
 import ColorPanel from 'components/ServerSettings/ColorPalette';
+import {getUserIP} from 'lib/get/getIP';
 import { UserSettingsProps, BgColorProps, UserProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
 import { NextRouter, useRouter } from 'next/router';
@@ -27,6 +28,7 @@ interface Props {
 }
 
 const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): JSX.Element => {
+  const ip = getUserIP()
   const initializeInputVal = {
     bgColor: userSettings?.bgColor || '#fff'
   }
@@ -41,7 +43,9 @@ const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): J
 
   const updateSettings = async (inputVal: InputValProp) => {
     await axios.post('/api/updateUserSettings', {
+      ip,
       userID: user?.id,
+      userName: user.username,
       bgColor: inputVal?.bgColor
     }).then(({ data }) => {
       if (data.success)

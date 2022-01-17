@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { auth } from 'lib/firebase';
+import {getUserIP} from 'lib/get/getIP';
 import { initializeLoginInfo } from 'lib/initialize';
 import { LoginInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
@@ -22,6 +23,7 @@ const ContentBox = styled(Box)`
 
 const LoginPanel = () => {
   const router: NextRouter = useRouter()
+  const ip = getUserIP()
   const [_cT, setTokenCookie, _rTC] = useCookies(['calendar-user-token']);
   const [_cI, setIDCookie, _rIC] = useCookies(['calendar-user-id']);
   const [_cN, setNameCookie, _rNC] = useCookies(['calendar-user-name']);
@@ -32,7 +34,8 @@ const LoginPanel = () => {
     setStatus('Loading...')
     const response = await axios.post('/api/authorization', {
       identifier: loginInfo.email,
-      password: loginInfo.password
+      password: loginInfo.password,
+      ip
     })
     const { success } = response.data
     if (success) {
@@ -80,7 +83,9 @@ const LoginPanel = () => {
             flexDirection='column'
             justifyContent='center'
           >
-            Email:
+            <Text>
+              Email:
+            </Text>
           </Flex>
           <Input
             type='email'
@@ -93,7 +98,9 @@ const LoginPanel = () => {
             flexDirection='column'
             justifyContent='center'
           >
-            Password:
+            <Text>
+              Password:
+            </Text>
           </Flex>
           <Input
             type='password'

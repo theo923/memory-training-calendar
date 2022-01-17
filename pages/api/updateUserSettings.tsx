@@ -1,11 +1,14 @@
 import { client, DEFAULT_HEADERS } from "lib/apollo"
 import { getUserSettings } from "lib/get/getUserSettings"
 import { UPDATE_USER_SETTINGS_MUTATION } from "lib/queries/update-user-settings"
+import { write_logs } from "lib/utils/write_logs"
 
 const updateUserSettings = async (req: any, res: any) => {
   try {
     const {
+      ip,
       userID,
+      userName,
       bgColor
     } = req.body
 
@@ -21,6 +24,8 @@ const updateUserSettings = async (req: any, res: any) => {
         },
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
+    
+    await write_logs('update', 'User Settings', userID, userName, ip, data, req)
 
     res.json({
       data,

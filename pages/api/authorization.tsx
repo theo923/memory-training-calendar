@@ -1,7 +1,9 @@
 import { client } from "lib/apollo"
 import { REFRESH_TOKEN_MUTATION } from "lib/queries/refresh-token"
+import { write_logs } from "lib/utils/write_logs"
 
 const authorization = async (req: any, res: any) => {
+  const { ip } = req.body
   try {
     const { identifier, password } = req.body
     const { data: { login } } =
@@ -12,6 +14,9 @@ const authorization = async (req: any, res: any) => {
           password
         }
       })
+    
+    await write_logs('login', 'App', login.user.id, login.user.username, ip, login.user, '')
+    
     res.json({
       data: login,
       success: true

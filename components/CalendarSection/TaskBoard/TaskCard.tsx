@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { setBooleanColor, setTextColor } from 'lib/controller/controlColor'
+import {getUserIP} from 'lib/get/getIP'
+import { UserProps } from 'lib/interface'
 import { refreshData } from 'lib/utils/refresh_data'
 import React from 'react'
 import { RiDeleteBin5Line } from 'react-icons/ri'
@@ -27,17 +29,24 @@ interface Props {
   taskTitle: string
   taskDescription: string
   finished: boolean
+  currentUser: UserProps,
 }
 
 const TaskCard: React.FC<Props> = ({
   taskID,
   taskTitle,
   taskDescription,
-  finished
+  finished,
+  currentUser
 }): JSX.Element => {
+  const ip = getUserIP()
+
   const handleSubmit = async () => {
     await axios.post('/api/deleteTask', {
-      id: taskID
+      id: taskID,
+      userID: currentUser.id,
+      userName: currentUser.username,
+      ip
     }).then(({ data: { success } }) => {
       if (success)
         refreshData()

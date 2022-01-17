@@ -77,6 +77,7 @@ const App: React.FC<Props> = ({
         />
         <MainComponent>
           <Calendar
+            currentUser={currentUser}
             target={target}
             setTarget={setTarget}
             userTasks={userTasks}
@@ -112,6 +113,7 @@ const App: React.FC<Props> = ({
           {user?.id && user?.username &&
             <Board title={'Task Board'}>
               <TaskBoard
+                currentUser={currentUser}
                 userTasks={userTasks}
                 target={target}
               />
@@ -120,6 +122,7 @@ const App: React.FC<Props> = ({
           {user?.id && user?.username &&
             <Board title={'Modify Board'}>
               <ModifyBoard
+                currentUser={currentUser}
                 targetedTask={targetedTask}
                 colorPalette={serverSettings.taskColor}
               />

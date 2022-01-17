@@ -1,7 +1,9 @@
 import { client, DEFAULT_HEADERS } from "lib/apollo"
 import { DELETE_TASK_MUTATION } from "lib/queries/delete-task"
+import { write_logs } from "lib/utils/write_logs"
 
-const createTask = async (req: any, res: any) => {
+const deleteTask = async (req: any, res: any) => {
+  const { userName, userID, ip } = req.body
   try {
     const {
       id
@@ -14,6 +16,7 @@ const createTask = async (req: any, res: any) => {
         },
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
+    await write_logs('delete', 'calendar', userID, userName, ip, data, req)
     res.json({
       data,
       success: true
@@ -25,4 +28,4 @@ const createTask = async (req: any, res: any) => {
   }
 }
 
-export default createTask
+export default deleteTask

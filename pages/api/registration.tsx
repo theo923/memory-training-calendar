@@ -1,9 +1,10 @@
 import { client } from "lib/apollo"
 import { REGISTRATION_USER_QUERY, REGISTRATION_USER_INFO_QUERY } from "lib/queries/registration"
+import { write_logs } from "lib/utils/write_logs"
 
 const registration = async (req: any, res: any) => {
   try {
-    const { email, username, password } = req.body
+    const { email, username, password, ip } = req.body
 
     if (!email.match(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/g))
       throw 'error'
@@ -26,6 +27,8 @@ const registration = async (req: any, res: any) => {
         publishedAt: new Date()
       }
     })
+
+    await write_logs('register', 'App', id, username, ip, { id, username }, '')
 
     res.json({
       data: { jwt },

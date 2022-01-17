@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { auth } from 'lib/firebase';
+import {getUserIP} from 'lib/get/getIP';
 import { initializeRegisterInfo } from 'lib/initialize';
 import { RegisterInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
@@ -22,6 +23,7 @@ const ContentBox = styled(Box)`
 
 const RegisterPanel = () => {
   const router: NextRouter = useRouter()
+  const ip = getUserIP()
   const [_c, setCookie, _rC] = useCookies(['calendar-user-token']);
   const [registerInfo, setRegisterInfo] = useState<RegisterInfoProps>(initializeRegisterInfo)
   const [status, setStatus] = useState<string>('')
@@ -46,7 +48,8 @@ const RegisterPanel = () => {
     const response = await axios.post('/api/registration', {
       email: registerInfo.email,
       username: registerInfo.username,
-      password: registerInfo.password
+      password: registerInfo.password,
+      ip
     })
     const { success } = response.data
     if (success) {
@@ -85,7 +88,9 @@ const RegisterPanel = () => {
             flexDirection='column'
             justifyContent='center'
           >
-            Email:
+            <Text>
+              Email:
+            </Text>
           </Flex>
           <Input
             type='email'
@@ -98,7 +103,9 @@ const RegisterPanel = () => {
             flexDirection='column'
             justifyContent='center'
           >
-            Username:
+            <Text>
+              Username:
+            </Text>
           </Flex>
           <Input
             value={registerInfo.username}
@@ -110,7 +117,9 @@ const RegisterPanel = () => {
             flexDirection='column'
             justifyContent='center'
           >
-            Password:
+            <Text>
+              Password:
+            </Text>
           </Flex>
           <Input
             type='password'
@@ -123,7 +132,9 @@ const RegisterPanel = () => {
             flexDirection='column'
             justifyContent='center'
           >
-            Confirm Password:
+            <Text>
+              Confirm Password:
+            </Text>
           </Flex>
           <Input
             type='password'

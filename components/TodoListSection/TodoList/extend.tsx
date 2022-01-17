@@ -12,6 +12,7 @@ import Input from 'styled/Input'
 import SlateTextBox from 'styled/SlateTextBox'
 import { refreshData } from 'lib/utils/refresh_data'
 import axios from 'axios'
+import {getUserIP} from 'lib/get/getIP'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -30,6 +31,7 @@ const TodoListExtend: React.FC<Props> = ({
 }): JSX.Element => {
   const modalContext = useContext(ModalContext)
 
+  const ip = getUserIP()
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
   const [inputVal, setInputVal] = useState<TodoProps>(todo)
@@ -45,6 +47,8 @@ const TodoListExtend: React.FC<Props> = ({
     setStatus('Loading...')
     await axios.post('/api/updateTodo', {
       userID: user.id,
+      userName: user.username,
+      ip,
       todoList: todoList.map((todo: TodoProps) => {
         if (todo.title === inputVal.title)
           return {
