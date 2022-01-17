@@ -24,24 +24,26 @@ const Dashboard: React.FC<Props> = ({
   const today = new Date()
   let numOfTasks = 0
   let monthDone = 0
-  for (const [_, val] of Object.entries(tasks)) {
-    val.forEach((task) => {
-      numOfTasks++
-      if (task.t_finished)
-        monthDone++
-    })
-  }
-
   let percentageDay = 0
-  if (tasks![getFullDate(today)]) {
-    const totalTasks = tasks![getFullDate(today)].length
-    const successfulTask = tasks![getFullDate(today)].filter(task => task?.t_finished === true).length
-    percentageDay = Math.ceil(Math.abs(successfulTask / totalTasks * 100))
+  if (tasks != null) {
+    for (const [_, val] of Object.entries(tasks)) {
+      val.forEach((task) => {
+        numOfTasks++
+        if (task.t_finished)
+          monthDone++
+      })
+
+      if (tasks![getFullDate(today)]) {
+        const totalTasks = tasks![getFullDate(today)].length
+        const successfulTask = tasks![getFullDate(today)].filter(task => task?.t_finished === true).length
+        percentageDay = Math.ceil(Math.abs(successfulTask / totalTasks * 100))
+      }
+    }
   }
   const percentageMonth = Math.ceil(Math.abs(monthDone / numOfTasks * 100))
 
   return (
-    <Box textAlign='center'>
+    <Box data-test='component-dashboard' textAlign='center'>
       <Flex
         flexDirection='column'
         justifyContent='center'
@@ -49,7 +51,7 @@ const Dashboard: React.FC<Props> = ({
       >
         <Flex my='50px'>
           <Text fontSize="50px">
-            {`Welcome back! ${user.username}`}
+            {`Welcome back! ${user?.username || ''}`}
           </Text>
         </Flex>
         <Flex my='20px'>
@@ -94,7 +96,8 @@ const Dashboard: React.FC<Props> = ({
             my='20px'
             width='100%'
           >
-            {tasks![getFullDate(today)] &&
+            {tasks != null &&
+              tasks![getFullDate(today)] &&
               <TodayTask
                 task={tasks![getFullDate(today)][Math.floor(Math.random() * tasks![getFullDate(today)].length)]}
               />
@@ -112,14 +115,15 @@ const Dashboard: React.FC<Props> = ({
             mx={['0', '50px', '20px']}
             width={['100%', '80%', '80%']}
           >
-            {unsorted.length > 0 && unsorted.filter((_: any, idx: number) => idx < 5).map((task: any, idx: number) =>
-              <DashboardTask
-                key={idx}
-                task={task}
-                successTasks={task?.successTasks || 0}
-                totalTasks={task?.totalTasks || 0}
-              />
-            )}
+            {unsorted?.length > 0 &&
+              unsorted.filter((_: any, idx: number) => idx < 5).map((task: any, idx: number) =>
+                <DashboardTask
+                  key={idx}
+                  task={task}
+                  successTasks={task?.successTasks || 0}
+                  totalTasks={task?.totalTasks || 0}
+                />
+              )}
           </Flex>
         </Flex>
       </Grid>

@@ -19,7 +19,7 @@ const UtilsBoard: React.FC<Props> = ({ children }): JSX.Element => {
 
   return (
     <UtilsBoardWrapper
-      data-test="component-UtilsBoard"
+      data-test="component-utilsBoard"
       m={['10px']}
       // @ts-ignore
       position='fixed'

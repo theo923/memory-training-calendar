@@ -1,4 +1,4 @@
-import React, {useState } from 'react'
+import React, { useState } from 'react'
 import { UserProps, QuizBookProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
@@ -47,7 +47,7 @@ const QuizBook: React.FC<Props> = ({
 
   return (
     <Box
-      data-test="quizBooks-book"
+      data-test="quizBooks-quizBook"
       mx='20px'
     >
       <QuizBookTitle
@@ -64,7 +64,7 @@ const QuizBook: React.FC<Props> = ({
             fontSize='18px'
             color={setTextColor(7)}
           >
-            {quizBook.name}
+            {quizBook?.name || ''}
           </Text>
         </Box>
         <Flex justifyContent='center' alignItems='center'>
@@ -100,9 +100,11 @@ const QuizBook: React.FC<Props> = ({
               fontSize='18px'
               color={setTextColor(7)}
             >
-              <ReadSlateText
-                values={JSON.parse(quizBook.description)}
-              />
+              {quizBook?.description &&
+                <ReadSlateText
+                  values={JSON.parse(quizBook.description)}
+                />
+              }
             </Text>
           </Box>
         </QuizBookDescription>

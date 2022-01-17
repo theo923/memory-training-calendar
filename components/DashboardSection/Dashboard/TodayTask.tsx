@@ -54,7 +54,7 @@ const TodayTask: React.FC<Props> = ({
 
   return (
     <Box
-      data-test="calendar-todayTask"
+      data-test="dashboard-todayTask"
       mx='20px'
     >
       <TodayTaskTitle
@@ -95,9 +95,11 @@ const TodayTask: React.FC<Props> = ({
             fontSize='18px'
             color={setTextColor(7)}
           >
-            <ReadSlateText
-              values={JSON.parse(task?.taskDescription)}
-            />
+            {task?.taskDescription &&
+              <ReadSlateText
+                values={JSON.parse(task?.taskDescription)}
+              />
+            }
           </Text>
         </Box>
       </TodayTaskDescription>

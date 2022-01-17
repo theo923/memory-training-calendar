@@ -65,7 +65,10 @@ const TodoList: React.FC<Props> = ({
   }
 
   return (
-    <Box textAlign='center'>
+    <Box
+      data-test='component-todoList'
+      textAlign='center'
+    >
       <Flex
         flexDirection='column'
         justifyContent='center'
@@ -86,7 +89,7 @@ const TodoList: React.FC<Props> = ({
           my='20px'
           width={['100%', null, '50%']}
         >
-          {todoList.length > 0 &&
+          {todoList?.length > 0 &&
             todoList?.map((todo: any, idx: number) =>
               <TodoEntry
                 key={idx}
@@ -103,7 +106,7 @@ const TodoList: React.FC<Props> = ({
             mb='10px'
           >
             <Input
-              value={addTodo.title}
+              value={addTodo?.title || ''}
               placeholder="Please insert your todo's name"
               onChange={(e: ChangeEvent<HTMLInputElement>) => setAddTodo({ ...addTodo, title: e.target.value })}
             />
@@ -112,14 +115,14 @@ const TodoList: React.FC<Props> = ({
               alignItems='center'
               ml='5px'>
               <Button
-                disabled={loading || addTodo.title === ''}
+                disabled={loading || addTodo?.title === ''}
                 onClick={() => handleAddTodo()}
               >
                 <MdAddTask size='25px' />
               </Button>
             </Flex>
           </Flex>
-          {status.length > 0 && <Text color='red'>{status}</Text>}
+          {status?.length > 0 && <Text color='red'>{status}</Text>}
         </Flex>
       </Flex>
     </Box>

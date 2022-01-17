@@ -17,7 +17,10 @@ const Tasks: React.FC<Props> = ({
   unsorted
 }) => {
   return (
-    <Box textAlign='center'>
+    <Box
+      data-test='component-tasks'
+      textAlign='center'
+    >
       <Flex
         flexDirection='column'
         justifyContent='center'
@@ -37,7 +40,7 @@ const Tasks: React.FC<Props> = ({
           my='20px'
           width={['100%', null, '50%']}
         >
-          {unsorted.length > 0 &&
+          {unsorted?.length > 0 &&
             unsorted.map((tk: TaskProps, idx: number) =>
               <TaskEntry
                 key={idx}

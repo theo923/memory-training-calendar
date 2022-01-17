@@ -64,7 +64,7 @@ const TodoListExtend: React.FC<Props> = ({
 
 
   return (
-    <Box data-test="modifyBoard-extend">
+    <Box data-test="todolist-extend">
       <Flex justifyContent='flex-end'>
         <Button onClick={() => modalContext.setModalIsOpen(false)}>
           <RiCloseCircleFill size='20px' />

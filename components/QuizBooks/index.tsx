@@ -15,7 +15,10 @@ const QuizBooks: React.FC<Props> = ({
   quizBooks
 }) => {
   return (
-    <Box textAlign='center'>
+    <Box
+      data-test='component-quizBooks'
+      textAlign='center'
+    >
       <Flex
         flexDirection='column'
         justifyContent='center'
@@ -36,7 +39,7 @@ const QuizBooks: React.FC<Props> = ({
           my='20px'
           width={['100%', null, '50%']}
         >
-          {quizBooks.length > 0 &&
+          {quizBooks?.length > 0 &&
             quizBooks?.map((quizBook: QuizBookProps, idx: number) =>
               <QuizBook
                 key={idx}
