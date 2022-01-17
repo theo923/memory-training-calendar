@@ -35,7 +35,6 @@ const ColorPanel: React.FC<Props> = ({
   setInputVal,
   inputProperties
 }): JSX.Element => {
-  console.log('123', inputProperties)
   useEffect(() => {
     ReactTooltip.rebuild();
   });

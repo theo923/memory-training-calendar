@@ -55,7 +55,6 @@ const TodoListExtend: React.FC<Props> = ({
         else return todo
       })
     }).then(({ data: { success } }) => {
-      console.log(success)
       if (success)
         refreshData('', 'reload')
       else

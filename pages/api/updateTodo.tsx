@@ -9,8 +9,6 @@ const updateTodo = async (req: any, res: any) => {
       todoList
     } = req.body
 
-    console.log(todoList)
-
     const userData = await getUserTaskIDs(userID, req)
     const { id } = userData[0]
 
