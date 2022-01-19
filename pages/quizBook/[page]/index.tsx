@@ -33,6 +33,7 @@ const quizBook: React.FC<Props> = ({
   status,
   pageArray
 }): JSX.Element => {
+  console.log(pageArray)
   return (
     <>
       <Head>
@@ -78,7 +79,7 @@ const quizBook: React.FC<Props> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   try {
     const serverSettings = await getServerSettings()
     const itemsForPages = 3;
@@ -100,7 +101,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const userSettings = await getUserSettings(user?.id, req)
 
     const pageArray = calculatePageArray(
-      parseInt('1'),
+      parseInt(query.page as string),
       Math.ceil(quizBooks.length / itemsForPages)
     );
 
@@ -108,7 +109,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       props: {
         serverSettings,
         user,
-        quizBooks,
+        quizBooks: quizBooks.length > 0 ? quizBooks.filter((_qb: QuizBookProps, idx: number) =>
+          (parseInt(query.page as string) - 1) * itemsForPages <= idx &&
+          idx <= parseInt(query.page as string) * itemsForPages - 1) : [],
         userSettings,
         status: true,
         pageArray

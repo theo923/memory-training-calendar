@@ -81,6 +81,7 @@ export interface TodoProps {
 }
 
 export interface QuizBookProps {
+  id?: string
   name: string
   description: string
   attempt: number
@@ -88,6 +89,7 @@ export interface QuizBookProps {
 }
 
 export interface QuizProps {
+  id?: string
   question: string
   answer: string
   prompt: string
