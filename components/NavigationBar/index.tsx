@@ -83,6 +83,7 @@ const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): J
           justifyContent="center"
           alignItems="center"
           my={['5px']}
+          flexWrap='wrap'
         >
           <Box
             onClick={() => router.push("/dashboard")}

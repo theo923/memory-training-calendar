@@ -57,3 +57,20 @@ export const initializeTodo: TodoProps = {
   description: '[{"type":"paragraph","children":[{"text":""}]}]',
   finished: false,
 }
+
+export const initializeQuizBook = {
+  id: '',
+  name: '',
+  description: '',
+  attempt: 0,
+  quiz: [],
+}
+
+export const initializeQuiz = {
+  id: '',
+  question: '',
+  answer: '',
+  prompt: '',
+  finished_date: null,
+  last_answer: null,
+}

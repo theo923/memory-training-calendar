@@ -1,26 +1,25 @@
 import { gql } from '@apollo/client'
 
-export const READ_USER_QUIZ_QUERY = gql`
-  query UserTask($id: String!) {
-    userTasks(filters: { userID: { eq: $id } }) {
+export const UPDATE_USER_QUIZBOOKS = gql`
+  mutation UpdateUserQuizBooks(
+    $id: ID!
+    $quizbook: [ComponentQuizQuizBookInput]
+  ) {
+    updateUserTask(id: $id, data: { quizbook: $quizbook }) {
       data {
         id
         attributes {
-          userID
-          userName
           quizbook {
-            id
             name
             description
-            attempt
             quiz {
-              id
               question
               answer
-              prompt
-              finished_date
               last_answer
+              finished_date
+              prompt
             }
+            attempt
           }
         }
       }
