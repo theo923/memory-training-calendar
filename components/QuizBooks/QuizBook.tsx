@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { UserProps, QuizBookProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
@@ -7,8 +7,11 @@ import Text from 'styled/Text'
 import styled, { css } from 'styled-components'
 import { setTextColor } from 'lib/controller/controlColor'
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from 'react-icons/fa'
+import { AiFillEdit } from 'react-icons/ai'
 import GlassBox from 'styled/GlassBox'
 import ReadSlateText from 'styled/ReadSlateText'
+import { ModalContext } from 'components/Modal/ModalContext'
+import QuizBookPanel from 'components/QuizBookPanel'
 
 const QuizBookEntry = styled(GlassBox) <{ setTaskColor: string }>`
   border-radius: 5px;
@@ -33,13 +36,31 @@ const QuizBookDescription = styled(Box)`
 
 interface Props {
   quizBook: QuizBookProps
+  quizBooks: QuizBookProps[],
   user: UserProps
 }
 
 const QuizBook: React.FC<Props> = ({
   quizBook,
+  quizBooks,
+  user
 }): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false)
+  const modalContext = useContext(ModalContext)
+
+  const handleQuizBookPanel = () => {
+    modalContext.setModalContent(
+      <Box width='50vw'>
+        <QuizBookPanel
+          quizBook={quizBook}
+          quizBooks={quizBooks}
+          user={user}
+          action='modify'
+        />
+      </Box>
+    )
+    modalContext.setModalIsOpen(true)
+  }
 
   return (
     <QuizBookEntry
@@ -61,6 +82,11 @@ const QuizBook: React.FC<Props> = ({
             </Text>
           </Box>
           <Flex justifyContent='center' alignItems='center'>
+            <Flex mr='10px'>
+              <Button onClick={() => handleQuizBookPanel()}>
+                <AiFillEdit size='20px' />
+              </Button>
+            </Flex>
             <Flex mr='10px'>
               {open &&
                 <Button onClick={() => setOpen(prev => !prev)}>

@@ -36,7 +36,7 @@ const QuizBookExtend: React.FC<Props> = ({
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
   const [name, setName] = useState<string>(addQuizBook?.name || '')
-  const [description, setDescription] = useState<string>('')
+  const [description, setDescription] = useState<string>(addQuizBook?.description || '')
 
   useEffect(() => {
     setName(addQuizBook.name)
