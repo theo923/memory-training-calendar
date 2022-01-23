@@ -9,14 +9,14 @@ interface Props {
   setPage: Dispatch<React.SetStateAction<number>>
 }
 
-const PageNavigation: React.FC<Props> = ({
+const Pagination: React.FC<Props> = ({
   pageArray,
   // page,
   setPage
 }): JSX.Element => {
   return (
     <Flex
-      data-test="component-pageNavigation"
+      data-test="component-pagination"
       flexWrap='wrap'
       justifyContent='center'
       alignItems='center'
@@ -39,4 +39,4 @@ const PageNavigation: React.FC<Props> = ({
   );
 };
 
-export default PageNavigation;
+export default Pagination;
