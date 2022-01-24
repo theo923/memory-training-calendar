@@ -38,7 +38,7 @@ const QuizBooks: React.FC<Props> = ({
     }
   }, [modalContext.modalIsOpen])
 
-  const handleCreateModal = () => {
+  const handleCreateQuizBookModal = () => {
     modalContext.setModalContent(
       <Box width='50vw'>
         <QuizBookExtend
@@ -102,7 +102,7 @@ const QuizBooks: React.FC<Props> = ({
             ml='5px'>
             <Button
               disabled={addQuizBook?.name === ''}
-              onClick={() => handleCreateModal()}
+              onClick={() => handleCreateQuizBookModal()}
             >
               <BiBookAdd size='25px' />
             </Button>

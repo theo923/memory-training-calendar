@@ -43,7 +43,7 @@ const updateQuizBooks = async (req: any, res: any) => {
     })
   }
   catch (err) {
-    console.log(err)
+    console.log(JSON.stringify(err))
     res.json({ success: false })
   }
 }

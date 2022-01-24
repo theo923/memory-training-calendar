@@ -9,6 +9,7 @@ import Box from 'styled/Box'
 import QuizBookExtend from 'components/QuizBooks/QuizBookExtend'
 import { AiFillEdit } from 'react-icons/ai'
 import { RiAddCircleLine } from 'react-icons/ri'
+import QuizModify from './QuizModify'
 
 interface Props {
   quizBooks: QuizBookProps[]
@@ -40,8 +41,34 @@ const QuizBookPanel: React.FC<Props> = ({
     modalContext.setModalIsOpen(true)
   }
 
-  const handleCreateQuiz = () => {
-
+  const handleQuiz = (action: string, data?: QuizProps) => {
+    if (action === 'create') {
+      modalContext.setModalContent(
+        <Box width='50vw'>
+          <QuizModify
+            quizBooks={quizBooks}
+            quizBook={quizBook}
+            user={user}
+            action='create'
+          />
+        </Box>
+      )
+      modalContext.setModalIsOpen(true)
+    }
+    if (action === 'modify' && data) {
+      modalContext.setModalContent(
+        <Box width='50vw'>
+          <QuizModify
+            quizBooks={quizBooks}
+            quizBook={quizBook}
+            user={user}
+            action='modify'
+            quiz={data}
+          />
+        </Box>
+      )
+      modalContext.setModalIsOpen(true)
+    }
   }
 
   return (
@@ -68,7 +95,7 @@ const QuizBookPanel: React.FC<Props> = ({
         <Text mr='10px' fontSize='20px'>
           Quiz List:
         </Text>
-        <Button onClick={() => handleCreateQuiz()}>
+        <Button onClick={() => handleQuiz('create')}>
           <RiAddCircleLine size='20px' />
         </Button>
       </Flex>
@@ -82,7 +109,7 @@ const QuizBookPanel: React.FC<Props> = ({
             last_answer: string | null */}
             {q?.question}
           </Text>
-          <Button onClick={() => handleCreateModal()}>
+          <Button onClick={() => handleQuiz('modify', q)}>
             <AiFillEdit size='20px' />
           </Button>
         </Flex>

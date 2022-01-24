@@ -13,9 +13,14 @@ export const controlTaskTitle = (
 export const controlTaskDescription = (
   changeHook: React.Dispatch<React.SetStateAction<any>>,
   insideObject: boolean,
-  value?: string
+  value?: string,
+  property?: string
 ) => {
-  if (insideObject) {
+  if (property && insideObject)
+    changeHook((prev: any) => {
+      return { ...prev, [property]: value }
+    })
+  else if (insideObject) {
     changeHook((prev: any) => {
       return { ...prev, taskDescription: value }
     })

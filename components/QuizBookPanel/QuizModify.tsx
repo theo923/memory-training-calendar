@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
-import { QuizBookProps, UserProps } from 'lib/interface'
+import React, { ChangeEvent, useContext, useState } from 'react'
+import { QuizBookProps, UserProps, QuizProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
@@ -13,36 +13,41 @@ import SlateTextBox from 'styled/SlateTextBox'
 import { refreshData } from 'lib/utils/refresh_data'
 import axios from 'axios'
 import { getUserIP } from 'lib/get/getIP'
+import { initializeQuiz } from 'lib/initialize'
 
 const InputText = styled(Box)`
   align-self: center;
 `
 
 interface Props {
-  addQuizBook: QuizBookProps
   quizBooks: QuizBookProps[]
+  quizBook: QuizBookProps
   user: UserProps
-  action: 'create' | 'modify'
+  action: 'create' | 'modify' | 'delete'
+  quiz?: QuizProps
 }
 
-const QuizBookExtend: React.FC<Props> = ({
-  addQuizBook,
+const QuizModify: React.FC<Props> = ({
   quizBooks,
+  quizBook,
   user,
-  action
+  action,
+  quiz
 }): JSX.Element => {
   const modalContext = useContext(ModalContext)
   const ip = getUserIP()
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
-  const [name, setName] = useState<string>(addQuizBook?.name || '')
-  const [description, setDescription] = useState<string>(addQuizBook?.description || '')
+  const [inputVal, setInputVal] = useState<QuizProps>(quiz ? quiz : initializeQuiz)
 
-  useEffect(() => {
-    setName(addQuizBook.name)
-    if (addQuizBook?.description.length > 0)
-      setDescription(addQuizBook.description)
-  }, [addQuizBook])
+  // export interface QuizProps {
+  //   id?: string
+  //   question: string
+  //   answer: string
+  //   prompt: string
+  //   finished_date: Date | null
+  //   last_answer: string | null
+  // }
 
   const handleSubmit = async () => {
     setLoading(true)
@@ -52,54 +57,76 @@ const QuizBookExtend: React.FC<Props> = ({
         userID: user.id,
         userName: user.username,
         ip,
-        quizbook: [...quizBooks, { ...addQuizBook, name, description }]
+        quizbook: quizBooks.map((qb: QuizBookProps) => {
+          if (qb === quizBook)
+            return {
+              ...quizBook,
+              quiz: [...qb?.quiz, inputVal]
+            }
+          return qb
+        })
       }).then(({ data: { success } }) => {
         if (success)
           refreshData('', 'reload')
         else
           setStatus('Failed to create Quiz Book, please try again...')
       })
+
     if (action === 'modify')
       await axios.post('/api/updateQuizBooks', {
         userID: user.id,
         userName: user.username,
         ip,
-        quizbook: quizBooks.map((quizBook: QuizBookProps) => {
-          if (quizBook.id === addQuizBook.id)
+        quizbook: quizBooks.map((qb: QuizBookProps) => {
+          if (qb === quizBook)
             return {
-              ...addQuizBook,
-              name,
-              description
+              ...qb,
+              quiz: qb?.quiz?.map((q: QuizProps) => {
+                if (q === quiz)
+                  return {
+                    ...quiz,
+                    ...inputVal
+                  }
+                return q
+              })
             }
-          return quizBook
+          return qb
         })
       }).then(({ data: { success } }) => {
         if (success)
           refreshData('', 'reload')
         else
-          setStatus('Failed to modify Quiz Book, please try again...')
+          setStatus('Failed to create Quiz Book, please try again...')
       })
+
     setLoading(false)
   }
 
-  const handleDeleteQuizBook = async () => {
+  const handleDeleteQuiz = async () => {
     await axios.post('/api/updateQuizBooks', {
       userID: user.id,
       userName: user.username,
       ip,
-      quizbook: quizBooks.filter((qb: QuizBookProps) => qb !== addQuizBook)
+      quizbook: quizBooks.map((qb: QuizBookProps) => {
+        if (qb === quizBook)
+          return {
+            ...qb,
+            quiz: qb?.quiz?.filter((q: QuizProps) => q !== quiz)
+          }
+        return qb
+      })
     }).then(({ data: { success } }) => {
       if (success)
         refreshData('', 'reload')
       else
-        setStatus('Failed to delete Quiz Book, please try again...')
+        setStatus('Failed to create Quiz Book, please try again...')
     })
   }
 
   return (
     <Box data-test="todolist-extend">
-      <Flex my='10px' justifyContent='space-between'>
-        <Button onClick={() => handleDeleteQuizBook()}>
+      <Flex mb='10px' justifyContent='space-between'>
+        <Button onClick={() => handleDeleteQuiz()}>
           <RiDeleteBin5Line />
         </Button>
         <Button onClick={() => modalContext.setModalIsOpen(false)}>
@@ -112,31 +139,30 @@ const QuizBookExtend: React.FC<Props> = ({
           lineHeight={['20px', null, '28px']}
           mr='2'
         >
-          Name of the QuizBook:
+          Name of the Quiz:
         </InputText>
         <Input
-          value={name}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+          value={inputVal.question}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setInputVal({ ...inputVal, question: e.target.value })}
         />
         <InputText
           fontSize={['20px', null, '20px']}
           lineHeight={['20px', null, '28px']}
           mr='2'
         >
-          Description of the QuizBook:
+          Prompt of the QuizBook:
         </InputText>
         <SlateTextBox
-          values={description ? JSON.parse(description) : ''}
+          values={inputVal.prompt ? JSON.parse(inputVal.prompt) : ''}
           callChangeFunction={controlTaskDescription}
-          changeHook={setDescription}
+          insideObject
+          property='prompt'
+          changeHook={setInputVal}
         />
         <Flex justifyContent='space-around'>
           <Button disabled={loading} onClick={() => handleSubmit()}>Submit</Button>
           <Button disabled={loading}
-            onClick={() => {
-              setName(addQuizBook.name);
-              setDescription(addQuizBook.description);
-            }}>
+            onClick={() => quiz ? setInputVal(quiz) : setInputVal(initializeQuiz)}>
             Reset
           </Button>
         </Flex>
@@ -148,5 +174,5 @@ const QuizBookExtend: React.FC<Props> = ({
   )
 }
 
-export default QuizBookExtend
+export default QuizModify
 
