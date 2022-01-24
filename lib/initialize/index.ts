@@ -71,6 +71,6 @@ export const initializeQuiz = {
   question: '',
   answer: '',
   prompt: '',
-  finished_date: null,
-  last_answer: null,
+  finished_date: new Date(),
+  last_answer: '',
 }

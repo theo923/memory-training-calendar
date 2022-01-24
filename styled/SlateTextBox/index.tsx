@@ -14,10 +14,15 @@ import Flex from 'styled/Flex'
 
 interface Props {
   values?: Descendant[]
-  callChangeFunction:
-  (changeHook: React.Dispatch<React.SetStateAction<any>>, insideObject: boolean, value?: string | undefined) => void;
+  callChangeFunction: (
+    changeHook: React.Dispatch<React.SetStateAction<any>>,
+    insideObject: boolean,
+    value?: string | undefined,
+    property?: string | undefined
+  ) => void;
   insideObject?: boolean
   changeHook: React.Dispatch<React.SetStateAction<any>>;
+  property?: string
   height?: string
 }
 
@@ -26,6 +31,7 @@ const SlateTextBox: React.FC<Props> = ({
   callChangeFunction,
   insideObject,
   changeHook,
+  property,
   height = '300px'
 }) => {
   try {
@@ -35,7 +41,8 @@ const SlateTextBox: React.FC<Props> = ({
     const editor = useMemo(() => withEmbeds(withHistory(withReact(createEditor()))), [])
 
     useEffect(() => {
-      if (insideObject) callChangeFunction(changeHook, true, JSON.stringify(value))
+      if (insideObject && property) callChangeFunction(changeHook, true, JSON.stringify(value), property)
+      else if (insideObject) callChangeFunction(changeHook, true, JSON.stringify(value))
       else if (changeHook) callChangeFunction(changeHook, false, JSON.stringify(value))
     }, [value])
 
