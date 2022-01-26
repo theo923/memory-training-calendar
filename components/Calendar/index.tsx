@@ -99,7 +99,9 @@ const Calendar: React.FC<Props> = ({
                   my='5px'
                   mx='5px'
                   minWidth={["20px", '70px', "100px", "120px"]}
+                  maxWidth={["auto", '70px', "100px", "120px"]}
                   minHeight={['0', "150px"]}
+                  maxHeight={['auto', "150px"]}
                 >
                   {<Grid gridTemplateColumns='1fr 1fr 1fr' width={['110px', null, '100%']}>
                     <Text
