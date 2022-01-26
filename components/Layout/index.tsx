@@ -6,12 +6,12 @@ import Grid from "styled/Grid";
 import GlassBox from "styled/GlassBox";
 import styled, { css } from "styled-components";
 
-const Wrapper = styled(Box) <{ bColor: string }>`
+const Wrapper = styled(Box) <{ bgcolor: string }>`
   min-height: 100vh;
   min-width: 100vw;
   
-  ${({ bColor }) => css`
-    background: ${bColor}
+  ${({ bgcolor }) => css`
+    background: ${bgcolor}
   `}
 `
 
@@ -23,10 +23,10 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ main, children, userSettings }): JSX.Element => {
   return (
-    <Wrapper  bColor={userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);'}>
+    <Wrapper bgcolor={userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);'}>
       <Grid
         data-test="component-layout"
-        gridTemplateColumns={['0.5fr 1fr 0.5fr']}
+        gridTemplateColumns={['1fr', '0.5fr 1fr 0.5fr']}
       >
         <Box />
         <Flex
