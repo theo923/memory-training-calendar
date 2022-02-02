@@ -103,7 +103,7 @@ const CalendarTask: React.FC<Props> = ({
     <CalendarTaskWrapper
       data-test="calendar-calendarTask"
       onClick={() => setTargetedTask(task)}
-      my={['5px']}
+      mb={['7px']}
       mx={['10px', '0px']}
       setTaskColor={taskColor}
     >

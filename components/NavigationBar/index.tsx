@@ -1,25 +1,39 @@
 import axios from 'axios';
 import ColorPanel from 'components/ServerSettings/ColorPalette';
-import {getUserIP} from 'lib/get/getIP';
+import { getUserIP } from 'lib/get/getIP';
 import { UserSettingsProps, BgColorProps, UserProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
 import { NextRouter, useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Box from 'styled/Box';
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
 import tw from 'twin.macro';
+import { motionBoxVariant } from 'assets/animationVariant';
+import MotionBox from 'styled/MotionBox';
+import ReactTooltip from 'react-tooltip';
+import { navData, NavDataProps } from './navData';
 
 const NavigationBarWrapper = styled(Box)`
   z-index: 50;
   ${tw`rounded-md`}
 `
 
+const NavButton = styled(MotionBox) <{ bgcolor: string, selected: boolean }>`
+  cursor: pointer;
+  border: .2px solid transparent;
+  border-radius: 50px;
+  
+  // ${({ bgcolor, selected }) => css`
+  //   background: ${bgcolor || '#fff'};
+  //   border: ${selected ? '1px solid #000' : null}
+  // `}
+`
+
 interface InputValProp {
   bgColor: string
 }
-
 
 interface Props {
   user: UserProps
@@ -85,79 +99,55 @@ const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): J
           my={['5px']}
           flexWrap='wrap'
         >
-          <Box
-            onClick={() => router.push("/dashboard")}
-            my={['0', null, '20px']}
-          >
-            <Text
-              className='cursor-pointer'
-              fontSize='20px'
-              mr={['20px', null, '0']}
-            >
-              Dashboard
-            </Text>
-          </Box>
-          <Box
-            onClick={() => router.push("/")}
-            my={['0', null, '20px']}
-          >
-            <Text
-              className='cursor-pointer'
-              fontSize='20px'
-              mr={['20px', null, '0']}
-            >
-              Calendar
-            </Text>
-          </Box>
-          <Box
-            onClick={() => router.push("/tasks")}
-            my={['0', null, '20px']}
-          >
-            <Text
-              className='cursor-pointer'
-              fontSize='20px'
-              mr={['20px', null, '0']}
-            >
-              Tasks
-            </Text>
-          </Box>
-          <Box
-            onClick={() => router.push("/todoList")}
-            my={['0', null, '20px']}
-          >
-            <Text
-              className='cursor-pointer'
-              fontSize='20px'
-              mr={['20px', null, '0']}
-            >
-              TodoList
-            </Text>
-          </Box>
-          <Box
-            onClick={() => router.push("/quizBook")}
-            my={['0', null, '20px']}
-          >
-            <Text
-              className='cursor-pointer'
-              fontSize='20px'
-              mr={['20px', null, '0']}
-            >
-              QuizBook
-            </Text>
-          </Box>
+          {navData && navData.map(
+            (nav: NavDataProps, idx: number) =>
+              <NavButton
+                key={idx}
+                my={['0', null, '20px']}
+                mr={['10px', null, '0']}
+                variants={motionBoxVariant}
+                initial="initial"
+                animate="animate"
+                whileHover='hover'
+                onClick={() => router.push(nav.destination)}
+                bgcolor={'#fff'}
+                selected={true}
+                data-tip data-for={`navTip-${nav.name}`}
+              >
+                {nav.icon}
+              </NavButton>
+          )}
         </Flex>
-        {
-          user?.id ?
-            <Flex mb='10px'>
-              <ColorPanel
-                currentValue={inputVal?.bgColor}
-                setInputVal={setInputVal}
-                colors={colorPalette?.color_gradient}
-                inputProperties='bgColor'
-              />
-            </Flex> :
-            <Box />
+        {user?.id ?
+          <Flex mb='10px'>
+            <ColorPanel
+              currentValue={inputVal?.bgColor}
+              setInputVal={setInputVal}
+              colors={colorPalette?.color_gradient}
+              inputProperties='bgColor'
+            />
+          </Flex> :
+          <Box />
         }
+        <ReactTooltip
+          id={`colorTip-777`} place="top" effect="solid"
+        >
+          <Text>
+            DashBoard
+          </Text>
+        </ReactTooltip>
+
+        {navData && navData.map(
+          (nav: NavDataProps, idx: number) =>
+            <ReactTooltip
+              key={idx}
+              id={`navTip-${nav.name}`} place="top" effect="solid"
+            >
+              <Text>
+                {nav.name}
+              </Text>
+            </ReactTooltip>
+        )}
       </Flex>
     </NavigationBarWrapper >
   )
