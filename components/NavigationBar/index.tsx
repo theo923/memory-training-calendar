@@ -40,15 +40,17 @@ const NavigationBar = (): JSX.Element => {
   const ip = getUserIP()
   const serverSettingsInfo = useContext(ServerSettingsContext)
   const userInfo = useContext(UserContext)
-  const initializeInputVal = {
-    bgColor: userInfo?.userSettings?.bgColor || '#fff'
-  }
-  const [inputVal, setInputVal] = useState<InputValProp>(initializeInputVal)
+  const [inputVal, setInputVal] = useState<InputValProp>()
   const router: NextRouter = useRouter()
 
   useEffect(() => {
+    setInputVal({ bgColor: userInfo?.userSettings?.bgColor })
+  }, [userInfo?.userSettings?.bgColor])
+
+  useEffect(() => {
     if (userInfo?.userSettings?.bgColor !== inputVal?.bgColor) {
-      updateSettings(inputVal)
+      if (inputVal)
+        updateSettings(inputVal)
     }
   }, [inputVal?.bgColor])
 

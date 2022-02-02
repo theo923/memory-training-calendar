@@ -14,9 +14,9 @@ const authorization = async (req: any, res: any) => {
           password
         }
       })
-    
+
     await write_logs('login', 'App', login.user.id, login.user.username, ip, login.user, '')
-    
+
     res.json({
       data: login,
       success: true
@@ -24,6 +24,7 @@ const authorization = async (req: any, res: any) => {
   }
   catch (err) {
     console.log(err)
+    console.log('error in authorize user')
     res.json({ success: false })
   }
 }

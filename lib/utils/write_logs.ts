@@ -29,5 +29,6 @@ export const write_logs = async (
     })
   } catch (err) {
     console.log(err)
+    console.log('error in writing logs...')
   }
 }

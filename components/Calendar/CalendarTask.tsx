@@ -37,6 +37,11 @@ const CalendarTaskWrapper = styled(GlassBox) <{ setTaskColor: string }>`
   `}
 `
 
+const CalendarText = styled(Text)`
+  font-size: 18px;
+  user-select: none;
+`
+
 const Symbol = styled(Flex)`
   opacity: 0;
   &:hover {
@@ -128,8 +133,8 @@ const CalendarTask: React.FC<Props> = ({
           mx='3px'
           p={['3px']}
         >
-          <Text
-            fontSize='18px'
+          <CalendarText
+
             color={task === targetedTask ? setTextColor(6) : setTextColor(dayIdentifier(day, target))}
           >
             {
@@ -139,7 +144,7 @@ const CalendarTask: React.FC<Props> = ({
                   : task?.taskTitle?.substring(0, textlimit)
                 : task?.taskTitle
             }
-          </Text>
+          </CalendarText>
         </Box>
       </CalendarTaskWrapper>
       <ReactTooltip
