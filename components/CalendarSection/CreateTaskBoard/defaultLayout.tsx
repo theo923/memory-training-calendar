@@ -1,5 +1,5 @@
-import React, { ChangeEvent, forwardRef, useEffect, useState } from 'react'
-import { TaskColorProps, TaskProps, UserProps, UserTasksProps } from 'lib/interface'
+import React, { ChangeEvent, forwardRef, useContext, useEffect, useState } from 'react'
+import { TaskProps, UserTasksProps } from 'lib/interface'
 import {
   controlTaskDescription,
   controlTaskTitle,
@@ -20,7 +20,9 @@ import SlateTextBox from 'styled/SlateTextBox/'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import tw from 'twin.macro'
-import {getUserIP} from 'lib/get/getIP'
+import { getUserIP } from 'lib/get/getIP'
+import { ServerSettingsContext } from 'components/ServerSettings'
+import { UserContext } from 'components/User'
 
 
 const InputText = styled(Box)`
@@ -36,8 +38,6 @@ interface Props {
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
   setTarget: React.Dispatch<React.SetStateAction<Date>>,
-  currentUser: UserProps,
-  colorPalette: TaskColorProps,
 }
 
 const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
@@ -45,8 +45,6 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
   setUserTasks,
   target,
   setTarget,
-  currentUser,
-  colorPalette,
 }): JSX.Element => {
   const ip = getUserIP()
   const [colorPicker, setColorPicker] = useState<string>('gradient')
@@ -59,6 +57,8 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       {value}
     </Button>
   ));
+  const serverSettingsInfo = useContext(ServerSettingsContext)
+  const userInfo = useContext(UserContext)
 
   useEffect(() => {
     if (!userTasks![getFullDate(target)])
@@ -70,8 +70,8 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
     setStatus('Loading...')
     try {
       await axios.post('/api/createTask', {
-        userID: currentUser.id,
-        userName: currentUser.username,
+        userID: userInfo?.user?.id,
+        userName: userInfo?.user?.username,
         taskTitle: inputVal.taskTitle,
         taskDescription: inputVal.taskDescription,
         targetedDate: default_schedule(target),
@@ -158,13 +158,13 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
         ? <ColorPanel
           currentValue={inputVal?.taskColor}
           setInputVal={setInputVal}
-          colors={colorPalette?.color_static}
+          colors={serverSettingsInfo?.colorPalette?.color_static}
           inputProperties='taskColor' />
         : colorPicker === 'gradient'
           ? <ColorPanel
             currentValue={inputVal?.taskColor}
             setInputVal={setInputVal}
-            colors={colorPalette?.color_gradient}
+            colors={serverSettingsInfo?.colorPalette?.color_gradient}
             inputProperties='taskColor' />
           : null
       }

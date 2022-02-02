@@ -1,5 +1,5 @@
 import { setTextColor, setBooleanColor } from "lib/controller/controlColor";
-import { ServerSettingsProps, TaskProps, UserProps } from "lib/interface";
+import { TaskProps } from "lib/interface";
 import { useContext, useEffect, useState } from "react";
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from "react-icons/fa";
 import { BiDetail } from "react-icons/bi";
@@ -53,14 +53,10 @@ const TaskEntryDescription = styled(GlassBox) <{ setTaskColor: string }>`
 `
 
 interface Props {
-  user: UserProps
-  serverSettings: ServerSettingsProps
   task: TaskProps
 }
 
 const TaskEntry: React.FC<Props> = ({
-  user,
-  serverSettings,
   task,
 }) => {
   const modalContext = useContext(ModalContext)
@@ -77,9 +73,7 @@ const TaskEntry: React.FC<Props> = ({
       <Box width='50vw'>
         <ModifyBoardExtend
           reload
-          currentUser={user}
           targetedTask={task}
-          colorPalette={serverSettings.taskColor}
         />
       </Box>
     )

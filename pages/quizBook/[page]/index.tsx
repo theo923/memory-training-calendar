@@ -33,7 +33,6 @@ const quizBook: React.FC<Props> = ({
   status,
   pageArray
 }): JSX.Element => {
-  console.log(pageArray)
   return (
     <>
       <Head>
@@ -41,12 +40,12 @@ const quizBook: React.FC<Props> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Modal />
-      <Layout main userSettings={userSettings}>
-        <NavigationBar
-          user={user}
-          userSettings={userSettings}
-          colorPalette={serverSettings?.bgColor}
-        />
+      <Layout main
+        user={user}
+        serverSettings={serverSettings}
+        userSettings={userSettings}
+      >
+        <NavigationBar />
         <MainComponent>
           <QuizBooks
             pageArray={pageArray}

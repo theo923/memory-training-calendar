@@ -38,18 +38,14 @@ const tasks: React.FC<Props> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Modal />
-      <Layout main userSettings={userSettings}>
-        <NavigationBar
-          user={user}
-          userSettings={userSettings}
-          colorPalette={serverSettings?.bgColor}
-        />
+      <Layout main
+        user={user}
+        serverSettings={serverSettings}
+        userSettings={userSettings}
+      >
+        <NavigationBar />
         <MainComponent>
-          <Tasks
-            user={user}
-            serverSettings={serverSettings}
-            unsorted={unsorted}
-          />
+          <Tasks unsorted={unsorted} />
         </MainComponent>
         <JobBoard>
           {status === false &&

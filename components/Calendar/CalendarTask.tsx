@@ -1,11 +1,12 @@
 import axios from "axios";
 import { setTextColor, targetIdentifier, dayIdentifier, setBooleanColor } from "lib/controller/controlColor";
-import {getUserIP} from "lib/get/getIP";
+import { getUserIP } from "lib/get/getIP";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
 import { TaskProps, UserProps } from "lib/interface";
 import { refreshData } from "lib/utils/refresh_data";
 import { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
+import ReactTooltip from "react-tooltip";
 import styled, { css } from "styled-components";
 import Box from "styled/Box";
 import Flex from "styled/Flex";
@@ -100,45 +101,55 @@ const CalendarTask: React.FC<Props> = ({
   }
 
   return (
-    <CalendarTaskWrapper
-      data-test="calendar-calendarTask"
-      onClick={() => setTargetedTask(task)}
-      mb={['7px']}
-      mx={['10px', '0px']}
-      setTaskColor={taskColor}
-    >
-      <FinishedIdentifier
-        finished={task?.t_finished}
-        onClick={() => handleFinished(task)}
+    <>
+      <CalendarTaskWrapper
+        data-test="calendar-calendarTask"
+        onClick={() => setTargetedTask(task)}
+        mb={['7px']}
+        mx={['10px', '0px']}
+        setTaskColor={taskColor}
+        data-tip data-for={`taskTip-${task?.taskTitle}`}
       >
-        {task?.t_finished ?
-          <Symbol>
-            <AiOutlineClose size='20px' />
-          </Symbol>
-          :
-          <Symbol>
-            <AiOutlineCheck size='20px' />
-          </Symbol>
-        }
-      </FinishedIdentifier>
-      <Box
-        mx='3px'
-        p={['3px']}
-      >
-        <Text
-          fontSize='18px'
-          color={task === targetedTask ? setTextColor(6) : setTextColor(dayIdentifier(day, target))}
+        <FinishedIdentifier
+          finished={task?.t_finished}
+          onClick={() => handleFinished(task)}
         >
-          {
-            textlimit ?
-              task?.taskTitle?.length > textlimit ?
-                task?.taskTitle?.substring(0, textlimit) + '...'
-                : task?.taskTitle?.substring(0, textlimit)
-              : task?.taskTitle
+          {task?.t_finished ?
+            <Symbol>
+              <AiOutlineClose size='20px' />
+            </Symbol>
+            :
+            <Symbol>
+              <AiOutlineCheck size='20px' />
+            </Symbol>
           }
+        </FinishedIdentifier>
+        <Box
+          mx='3px'
+          p={['3px']}
+        >
+          <Text
+            fontSize='18px'
+            color={task === targetedTask ? setTextColor(6) : setTextColor(dayIdentifier(day, target))}
+          >
+            {
+              textlimit ?
+                task?.taskTitle?.length > textlimit ?
+                  task?.taskTitle?.substring(0, textlimit) + '...'
+                  : task?.taskTitle?.substring(0, textlimit)
+                : task?.taskTitle
+            }
+          </Text>
+        </Box>
+      </CalendarTaskWrapper>
+      <ReactTooltip
+        id={`taskTip-${task?.taskTitle}`} place="top" effect="solid"
+      >
+        <Text>
+          {task?.taskTitle}
         </Text>
-      </Box>
-    </CalendarTaskWrapper>
+      </ReactTooltip>
+    </>
   )
 }
 

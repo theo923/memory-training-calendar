@@ -42,7 +42,6 @@ const App: React.FC<Props> = ({
 }): JSX.Element => {
   const router: NextRouter = useRouter()
   const currentYear: Date = targetYear ? new Date(targetYear) : new Date()
-  const currentUser: UserProps = user || initializeUser
   const [target, setTarget] = useState<Date>(
     isSameMonth(currentYear, new Date()) ?
       new Date()
@@ -69,15 +68,14 @@ const App: React.FC<Props> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Modal />
-      <Layout main userSettings={userSettings}>
-        <NavigationBar
-          user={user}
-          userSettings={userSettings}
-          colorPalette={serverSettings?.bgColor}
-        />
+      <Layout main
+        user={user}
+        serverSettings={serverSettings}
+        userSettings={userSettings}
+      >
+        <NavigationBar />
         <MainComponent>
           <Calendar
-            currentUser={currentUser}
             target={target}
             setTarget={setTarget}
             userTasks={userTasks}
@@ -101,19 +99,16 @@ const App: React.FC<Props> = ({
           {user?.id && user?.username &&
             <Board title={'Create Task Board'}>
               <CreateTaskBoard
-                currentUser={currentUser}
                 userTasks={userTasks}
                 setUserTasks={setUserTasks}
                 target={target}
                 setTarget={setTarget}
-                colorPalette={serverSettings.taskColor}
               />
             </Board>
           }
           {user?.id && user?.username &&
             <Board title={'Task Board'}>
               <TaskBoard
-                currentUser={currentUser}
                 userTasks={userTasks}
                 target={target}
               />
@@ -121,11 +116,7 @@ const App: React.FC<Props> = ({
           }
           {user?.id && user?.username &&
             <Board title={'Modify Board'}>
-              <ModifyBoard
-                currentUser={currentUser}
-                targetedTask={targetedTask}
-                colorPalette={serverSettings.taskColor}
-              />
+              <ModifyBoard targetedTask={targetedTask} />
             </Board>
           }
           {status === true &&

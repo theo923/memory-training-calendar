@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
-import { QuizBookProps, UserProps } from 'lib/interface'
+import { QuizBookProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
@@ -13,6 +13,7 @@ import SlateTextBox from 'styled/SlateTextBox'
 import { refreshData } from 'lib/utils/refresh_data'
 import axios from 'axios'
 import { getUserIP } from 'lib/get/getIP'
+import { UserContext } from 'components/User'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -21,16 +22,15 @@ const InputText = styled(Box)`
 interface Props {
   addQuizBook: QuizBookProps
   quizBooks: QuizBookProps[]
-  user: UserProps
   action: 'create' | 'modify'
 }
 
 const QuizBookExtend: React.FC<Props> = ({
   addQuizBook,
   quizBooks,
-  user,
   action
 }): JSX.Element => {
+  const userInfo = useContext(UserContext)
   const modalContext = useContext(ModalContext)
   const ip = getUserIP()
   const [loading, setLoading] = useState<boolean | undefined>()
@@ -49,8 +49,8 @@ const QuizBookExtend: React.FC<Props> = ({
     setStatus('Loading...')
     if (action === 'create')
       await axios.post('/api/updateQuizBooks', {
-        userID: user.id,
-        userName: user.username,
+        userID: userInfo?.user.id,
+        userName: userInfo?.user.username,
         ip,
         quizbook: [...quizBooks, { ...addQuizBook, name, description }]
       }).then(({ data: { success } }) => {
@@ -61,8 +61,8 @@ const QuizBookExtend: React.FC<Props> = ({
       })
     if (action === 'modify')
       await axios.post('/api/updateQuizBooks', {
-        userID: user.id,
-        userName: user.username,
+        userID: userInfo?.user.id,
+        userName: userInfo?.user.username,
         ip,
         quizbook: quizBooks.map((quizBook: QuizBookProps) => {
           if (quizBook.id === addQuizBook.id)
@@ -84,8 +84,8 @@ const QuizBookExtend: React.FC<Props> = ({
 
   const handleDeleteQuizBook = async () => {
     await axios.post('/api/updateQuizBooks', {
-      userID: user.id,
-      userName: user.username,
+      userID: userInfo?.user.id,
+      userName: userInfo?.user.username,
       ip,
       quizbook: quizBooks.filter((qb: QuizBookProps) => qb !== addQuizBook)
     }).then(({ data: { success } }) => {

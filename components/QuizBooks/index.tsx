@@ -2,7 +2,7 @@ import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
 import Box from 'styled/Box';
-import { QuizBookProps, UserProps } from 'lib/interface';
+import { QuizBookProps } from 'lib/interface';
 import QuizBook from './QuizBook';
 import { BiBookAdd } from 'react-icons/bi';
 import Button from 'styled/Button';
@@ -14,13 +14,11 @@ import PageNavigation from 'components/Pagination';
 import { refreshData } from 'lib/utils/refresh_data';
 
 interface Props {
-  user: UserProps
   quizBooks: QuizBookProps[],
   pageArray: number[]
 }
 
 const QuizBooks: React.FC<Props> = ({
-  user,
   quizBooks,
   pageArray
 }) => {
@@ -44,7 +42,6 @@ const QuizBooks: React.FC<Props> = ({
         <QuizBookExtend
           addQuizBook={addQuizBook}
           quizBooks={quizBooks}
-          user={user}
           action='create'
         />
       </Box>
@@ -81,7 +78,6 @@ const QuizBooks: React.FC<Props> = ({
             quizBooks?.map((quizBook: QuizBookProps, idx: number) =>
               <QuizBook
                 key={idx}
-                user={user}
                 quizBook={quizBook}
                 quizBooks={quizBooks}
               />)

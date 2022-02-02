@@ -37,17 +37,14 @@ const todoList: React.FC<Props> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Modal />
-      <Layout main userSettings={userSettings}>
-        <NavigationBar
-          user={user}
-          userSettings={userSettings}
-          colorPalette={serverSettings?.bgColor}
-        />
+      <Layout main
+        user={user}
+        serverSettings={serverSettings}
+        userSettings={userSettings}
+      >
+        <NavigationBar />
         <MainComponent>
-          <TodoList
-            user={user}
-            todoList={todoList}
-          />
+          <TodoList todoList={todoList} />
         </MainComponent>
         <JobBoard>
           {status === false &&
