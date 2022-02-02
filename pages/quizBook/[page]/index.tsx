@@ -49,7 +49,6 @@ const quizBook: React.FC<Props> = ({
         <MainComponent>
           <QuizBooks
             pageArray={pageArray}
-            user={user}
             quizBooks={quizBooks}
           />
         </MainComponent>
