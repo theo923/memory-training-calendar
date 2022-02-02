@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { TaskColorProps, UserProps, UserTasksProps } from 'lib/interface'
+import { UserTasksProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import { ModalContext } from 'components/Modal/ModalContext'
@@ -11,8 +11,6 @@ interface Props {
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
   setTarget: React.Dispatch<React.SetStateAction<Date>>,
-  currentUser: UserProps,
-  colorPalette: TaskColorProps,
 }
 
 const CreateTaskBoard: React.FC<Props> = ({
@@ -20,8 +18,6 @@ const CreateTaskBoard: React.FC<Props> = ({
   setUserTasks,
   target,
   setTarget,
-  currentUser,
-  colorPalette,
 }): JSX.Element => {
   const modalContext = useContext(ModalContext)
 
@@ -30,12 +26,10 @@ const CreateTaskBoard: React.FC<Props> = ({
       modalContext.setModalContent(
         <Box width='50vw'>
           <CreateTaskBoardExtend
-            currentUser={currentUser}
             userTasks={userTasks}
             setUserTasks={setUserTasks}
             target={target}
             setTarget={setTarget}
-            colorPalette={colorPalette}
           />
         </Box>
       )
@@ -49,12 +43,10 @@ const CreateTaskBoard: React.FC<Props> = ({
     <Box data-test="component-createTaskBoard">
       <Button onClick={() => modalContext.setModalIsOpen(true)}>Extend</Button>
       <CreateTaskBoardDefaultLayout
-        currentUser={currentUser}
         userTasks={userTasks}
         setUserTasks={setUserTasks}
         target={target}
         setTarget={setTarget}
-        colorPalette={colorPalette}
       />
     </Box>
   )

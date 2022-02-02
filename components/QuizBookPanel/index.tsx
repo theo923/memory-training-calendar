@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { QuizBookProps, QuizProps, UserProps } from 'lib/interface'
+import { QuizBookProps, QuizProps } from 'lib/interface'
 import { ModalContext } from 'components/Modal/ModalContext'
 import { RiCloseCircleFill } from 'react-icons/ri'
 import Button from 'styled/Button'
@@ -14,18 +14,15 @@ import QuizModify from './QuizModify'
 interface Props {
   quizBooks: QuizBookProps[]
   quizBook: QuizBookProps
-  user: UserProps
   action: 'create' | 'modify'
 }
 
 const QuizBookPanel: React.FC<Props> = ({
   quizBooks,
   quizBook,
-  user,
   // action
 }): JSX.Element => {
   const modalContext = useContext(ModalContext)
-  console.log('123', quizBook)
 
   const handleCreateModal = () => {
     modalContext.setModalContent(
@@ -33,7 +30,6 @@ const QuizBookPanel: React.FC<Props> = ({
         <QuizBookExtend
           addQuizBook={quizBook}
           quizBooks={quizBooks}
-          user={user}
           action='modify'
         />
       </Box>
@@ -48,7 +44,6 @@ const QuizBookPanel: React.FC<Props> = ({
           <QuizModify
             quizBooks={quizBooks}
             quizBook={quizBook}
-            user={user}
             action='create'
           />
         </Box>
@@ -61,7 +56,6 @@ const QuizBookPanel: React.FC<Props> = ({
           <QuizModify
             quizBooks={quizBooks}
             quizBook={quizBook}
-            user={user}
             action='modify'
             quiz={data}
           />

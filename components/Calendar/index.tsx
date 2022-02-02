@@ -2,8 +2,8 @@ import { setBgColor, dayIdentifier, setTextColor } from "lib/controller/controlC
 import { getCalendar } from "lib/get/getCalendar";
 import { getFullDate } from "lib/get/getDate";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
-import { UserTasksProps, TaskProps, UserProps } from "lib/interface";
-import React, { useEffect, useState } from "react";
+import { UserTasksProps, TaskProps } from "lib/interface";
+import React, { useContext, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import Box from "styled/Box";
 import Flex from "styled/Flex";
@@ -14,6 +14,9 @@ import TaskBox from "./CalendarTask";
 import { days } from "lib/data/dates";
 import ProgressBar from "components/Progress/ProgressBar";
 import { MdAutoAwesome } from "react-icons/md";
+import { UserContext } from "components/User";
+import { ModalContext } from "components/Modal/ModalContext";
+import ModifyBoardExtend from "components/CalendarSection/ModifyBoard/extend";
 
 type CalendarColumnProps = {
   setColor: string
@@ -34,7 +37,6 @@ const DoneAll = styled(Box)`
 `;
 
 interface Props {
-  currentUser: UserProps
   target: Date
   setTarget: React.Dispatch<React.SetStateAction<Date>>
   userTasks: UserTasksProps
@@ -43,7 +45,6 @@ interface Props {
 }
 
 const Calendar: React.FC<Props> = ({
-  currentUser,
   target,
   setTarget,
   userTasks,
@@ -52,6 +53,23 @@ const Calendar: React.FC<Props> = ({
 }) => {
   const [calendar, setCalendar] = useState<Date[][]>([]);
   const width = useWindowDimensions()?.width
+  const userInfo = useContext(UserContext)
+  const modalContext = useContext(ModalContext)
+
+  useEffect(() => {
+    if (modalContext.modalIsOpen) {
+      modalContext.setModalContent(
+        <Box width='50vw'>
+          <ModifyBoardExtend
+            targetedTask={targetedTask}
+          />
+        </Box>
+      )
+    }
+    else {
+      modalContext.setModalContent(null)
+    }
+  }, [modalContext.modalIsOpen])
 
   useEffect(() => {
     setCalendar(getCalendar(target))
@@ -141,15 +159,17 @@ const Calendar: React.FC<Props> = ({
                     (task: TaskProps, tidx: number) => {
                       if (tidx >= 3 && width >= 540) return null
                       return (
-                        <TaskBox
-                          key={tidx}
-                          task={task}
-                          day={day}
-                          target={target}
-                          targetedTask={targetedTask}
-                          setTargetedTask={setTargetedTask}
-                          currentUser={currentUser}
-                        />
+                        <Box onDoubleClick={() => modalContext.setModalIsOpen(true)}>
+                          <TaskBox
+                            key={tidx}
+                            task={task}
+                            day={day}
+                            target={target}
+                            targetedTask={targetedTask}
+                            setTargetedTask={setTargetedTask}
+                            currentUser={userInfo?.user}
+                          />
+                        </Box>
                       )
                     })
                   }

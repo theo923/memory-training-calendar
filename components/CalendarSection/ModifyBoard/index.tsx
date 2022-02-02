@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { TaskColorProps, TaskProps, UserProps } from 'lib/interface'
+import { TaskProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import ModifyBoardDefaultLayout from './defaultLayout'
@@ -7,15 +7,11 @@ import { ModalContext } from 'components/Modal/ModalContext'
 import ModifyBoardExtend from './extend'
 
 interface Props {
-  currentUser: UserProps,
-  targetedTask: TaskProps,
-  colorPalette: TaskColorProps,
+  targetedTask: TaskProps
 }
 
 const ModifyBoard: React.FC<Props> = ({
-  currentUser,
   targetedTask,
-  colorPalette,
 }): JSX.Element => {
   const modalContext = useContext(ModalContext)
 
@@ -24,9 +20,7 @@ const ModifyBoard: React.FC<Props> = ({
       modalContext.setModalContent(
         <Box width='50vw'>
           <ModifyBoardExtend
-            currentUser={currentUser}
             targetedTask={targetedTask}
-            colorPalette={colorPalette}
           />
         </Box>
       )
@@ -42,9 +36,7 @@ const ModifyBoard: React.FC<Props> = ({
         <>
           <Button onClick={() => modalContext.setModalIsOpen(true)}>Extend</Button>
           <ModifyBoardDefaultLayout
-            currentUser={currentUser}
             targetedTask={targetedTask}
-            colorPalette={colorPalette}
           />
         </>
         :

@@ -38,15 +38,14 @@ const dashboard: React.FC<Props> = ({
         <title>Dashboard | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout main userSettings={userSettings}>
-        <NavigationBar
-          user={user}
-          userSettings={userSettings}
-          colorPalette={serverSettings?.bgColor}
-        />
+      <Layout main
+        user={user}
+        serverSettings={serverSettings}
+        userSettings={userSettings}
+      >
+        <NavigationBar />
         <MainComponent>
           <Dashboard
-            user={user}
             tasks={tasks}
             unsorted={unsorted}
           />

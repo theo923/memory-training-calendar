@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { UserProps, QuizBookProps } from 'lib/interface'
+import { QuizBookProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
@@ -36,14 +36,12 @@ const QuizBookDescription = styled(Box)`
 
 interface Props {
   quizBook: QuizBookProps
-  quizBooks: QuizBookProps[],
-  user: UserProps
+  quizBooks: QuizBookProps[]
 }
 
 const QuizBook: React.FC<Props> = ({
   quizBook,
-  quizBooks,
-  user
+  quizBooks
 }): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false)
   const modalContext = useContext(ModalContext)
@@ -54,7 +52,6 @@ const QuizBook: React.FC<Props> = ({
         <QuizBookPanel
           quizBook={quizBook}
           quizBooks={quizBooks}
-          user={user}
           action='modify'
         />
       </Box>

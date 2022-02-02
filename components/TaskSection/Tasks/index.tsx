@@ -1,21 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
 import Box from 'styled/Box';
-import { ServerSettingsProps, TaskProps, UserProps } from 'lib/interface';
+import { TaskProps } from 'lib/interface';
 import TaskEntry from './TaskEntry';
+import { UserContext } from 'components/User';
 
 interface Props {
-  user: UserProps
-  serverSettings: ServerSettingsProps
   unsorted: TaskProps[]
 }
 
 const Tasks: React.FC<Props> = ({
-  user,
-  serverSettings,
   unsorted
 }) => {
+  const userInfo = useContext(UserContext)
   return (
     <Box
       data-test='component-tasks'
@@ -44,9 +42,7 @@ const Tasks: React.FC<Props> = ({
             unsorted.map((tk: TaskProps, idx: number) =>
               <TaskEntry
                 key={idx}
-                user={user}
-                serverSettings={serverSettings}
-                task={{ ...tk, userID: user.id, userName: user.username }}
+                task={{ ...tk, userID: userInfo?.user.id, userName: userInfo?.user.username }}
               />)
           }
         </Flex>

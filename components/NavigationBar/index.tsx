@@ -1,10 +1,9 @@
 import axios from 'axios';
 import ColorPanel from 'components/ServerSettings/ColorPalette';
 import { getUserIP } from 'lib/get/getIP';
-import { UserSettingsProps, BgColorProps, UserProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
 import { NextRouter, useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled, { css } from "styled-components";
 import Box from 'styled/Box';
 import Flex from 'styled/Flex';
@@ -14,6 +13,8 @@ import { motionBoxVariant } from 'assets/animationVariant';
 import MotionBox from 'styled/MotionBox';
 import ReactTooltip from 'react-tooltip';
 import { navData, NavDataProps } from './navData';
+import { ServerSettingsContext } from 'components/ServerSettings';
+import { UserContext } from 'components/User';
 
 const NavigationBarWrapper = styled(Box)`
   z-index: 50;
@@ -35,22 +36,18 @@ interface InputValProp {
   bgColor: string
 }
 
-interface Props {
-  user: UserProps
-  userSettings?: UserSettingsProps
-  colorPalette?: BgColorProps
-}
-
-const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): JSX.Element => {
+const NavigationBar = (): JSX.Element => {
   const ip = getUserIP()
+  const serverSettingsInfo = useContext(ServerSettingsContext)
+  const userInfo = useContext(UserContext)
   const initializeInputVal = {
-    bgColor: userSettings?.bgColor || '#fff'
+    bgColor: userInfo?.userSettings?.bgColor || '#fff'
   }
   const [inputVal, setInputVal] = useState<InputValProp>(initializeInputVal)
   const router: NextRouter = useRouter()
 
   useEffect(() => {
-    if (userSettings?.bgColor !== inputVal?.bgColor) {
+    if (userInfo?.userSettings?.bgColor !== inputVal?.bgColor) {
       updateSettings(inputVal)
     }
   }, [inputVal?.bgColor])
@@ -58,8 +55,8 @@ const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): J
   const updateSettings = async (inputVal: InputValProp) => {
     await axios.post('/api/updateUserSettings', {
       ip,
-      userID: user?.id,
-      userName: user.username,
+      userID: userInfo?.user?.id,
+      userName: userInfo?.user.username,
       bgColor: inputVal?.bgColor
     }).then(({ data }) => {
       if (data.success)
@@ -118,24 +115,17 @@ const NavigationBar: React.FC<Props> = ({ user, userSettings, colorPalette }): J
               </NavButton>
           )}
         </Flex>
-        {user?.id ?
+        {userInfo?.user?.id ?
           <Flex mb='10px'>
             <ColorPanel
               currentValue={inputVal?.bgColor}
               setInputVal={setInputVal}
-              colors={colorPalette?.color_gradient}
+              colors={serverSettingsInfo?.colorPalette?.color_gradient}
               inputProperties='bgColor'
             />
           </Flex> :
           <Box />
         }
-        <ReactTooltip
-          id={`colorTip-777`} place="top" effect="solid"
-        >
-          <Text>
-            DashBoard
-          </Text>
-        </ReactTooltip>
 
         {navData && navData.map(
           (nav: NavDataProps, idx: number) =>

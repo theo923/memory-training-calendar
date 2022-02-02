@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
-import { TaskColorProps, TaskProps, UserProps } from 'lib/interface'
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react'
+import { TaskProps } from 'lib/interface'
 import { controlTaskDescription, controlTaskTitle } from 'lib/controller/controlTask'
 import styled from 'styled-components'
 import Box from 'styled/Box'
@@ -11,23 +11,21 @@ import axios from 'axios'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import SlateTextBox from 'styled/SlateTextBox'
-import {getUserIP} from 'lib/get/getIP'
+import { getUserIP } from 'lib/get/getIP'
+import { ServerSettingsContext } from 'components/ServerSettings'
+import { UserContext } from 'components/User'
 
 const InputText = styled(Box)`
   align-self: center;
 `
 
 interface Props {
-  currentUser: UserProps,
   targetedTask: TaskProps,
-  colorPalette: TaskColorProps,
   reload?: boolean
 }
 
 const ModifyBoardDefaultLayout: React.FC<Props> = ({
-  currentUser,
   targetedTask,
-  colorPalette,
   reload = false
 }): JSX.Element => {
   const ip = getUserIP()
@@ -35,6 +33,8 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
   const [inputVal, setInputVal] = useState<TaskProps>(targetedTask)
+  const serverSettingsInfo = useContext(ServerSettingsContext)
+  const userInfo = useContext(UserContext)
 
   useEffect(() => {
     setInputVal(targetedTask)
@@ -44,8 +44,8 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
     setLoading(true)
     setStatus('Loading...')
     if (
-      currentUser.id !== targetedTask.userID ||
-      currentUser.username !== targetedTask.userName
+      userInfo?.user?.id !== targetedTask.userID ||
+      userInfo?.user?.username !== targetedTask.userName
     ) {
       setLoading(false)
       setStatus('You do not have right to modify it because you are not the author of the task')
@@ -135,13 +135,13 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
         ? <ColorPanel
           currentValue={inputVal?.taskColor}
           setInputVal={setInputVal}
-          colors={colorPalette?.color_static}
+          colors={serverSettingsInfo?.colorPalette?.color_static}
           inputProperties='taskColor' />
         : colorPicker === 'gradient'
           ? <ColorPanel
             currentValue={inputVal?.taskColor}
             setInputVal={setInputVal}
-            colors={colorPalette?.color_gradient}
+            colors={serverSettingsInfo?.colorPalette?.color_gradient}
             inputProperties='taskColor' />
           : null
       }

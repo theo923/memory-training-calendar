@@ -1,20 +1,20 @@
 import TaskCard from 'components/CalendarSection/TaskBoard/TaskCard'
+import { UserContext } from 'components/User'
 import { getFullDate } from 'lib/get/getDate'
-import { TaskProps, UserProps, UserTasksProps } from 'lib/interface'
-import React from 'react'
+import { TaskProps, UserTasksProps } from 'lib/interface'
+import React, { useContext } from 'react'
 import Box from 'styled/Box'
 
 interface Props {
-  currentUser: UserProps,
   userTasks: UserTasksProps,
   target: Date,
 }
 
 const TaskBoard: React.FC<Props> = ({
-  currentUser,
   userTasks,
   target,
 }): JSX.Element => {
+  const userInfo = useContext(UserContext)
   return (
     <Box data-test="component-taskBoard">
       {userTasks![getFullDate(target)] ?
@@ -26,7 +26,7 @@ const TaskBoard: React.FC<Props> = ({
               taskTitle={task.taskTitle}
               taskDescription={task.taskDescription}
               finished={task.t_finished}
-              currentUser={currentUser}
+              currentUser={userInfo?.user}
             />
           ))
         : <Box>

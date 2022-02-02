@@ -1,26 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
 import Box from 'styled/Box';
 import CircleProgress from 'components/Progress/CircleProgress';
 import Grid from 'styled/Grid';
-import { TaskProps, UserProps, UserTasksProps } from 'lib/interface';
+import { TaskProps, UserTasksProps } from 'lib/interface';
 import { getFullDate } from 'lib/get/getDate';
 import { checkNum } from 'lib/utils/check_valid_num';
 import DashboardTask from './DashboardTask';
 import TodayTask from './TodayTask';
+import { UserContext } from 'components/User';
 
 interface Props {
-  user: UserProps
   tasks: UserTasksProps
   unsorted: TaskProps[]
 }
 
 const Dashboard: React.FC<Props> = ({
-  user,
   tasks,
   unsorted
 }) => {
+  const userInfo = useContext(UserContext)
   const today = new Date()
   let numOfTasks = 0
   let monthDone = 0
@@ -51,7 +51,7 @@ const Dashboard: React.FC<Props> = ({
       >
         <Flex my='50px'>
           <Text fontSize="50px">
-            {`Welcome back! ${user?.username || ''}`}
+            {`Welcome back! ${userInfo?.user?.username || ''}`}
           </Text>
         </Flex>
         <Flex my='20px'>

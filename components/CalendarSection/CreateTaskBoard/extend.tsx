@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { TaskColorProps, UserProps, UserTasksProps } from 'lib/interface'
+import { UserTasksProps } from 'lib/interface'
 import { initializeUserTask } from 'lib/initialize'
 import { getFullDate } from 'lib/get/getDate'
 import Box from 'styled/Box'
@@ -13,9 +13,7 @@ interface Props {
   userTasks: UserTasksProps,
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
-  setTarget: React.Dispatch<React.SetStateAction<Date>>,
-  currentUser: UserProps,
-  colorPalette: TaskColorProps,
+  setTarget: React.Dispatch<React.SetStateAction<Date>>
 }
 
 const CreateTaskBoardExtend: React.FC<Props> = ({
@@ -23,8 +21,6 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
   setUserTasks,
   target,
   setTarget,
-  currentUser,
-  colorPalette,
 }): JSX.Element => {
   const modalContext = useContext(ModalContext)
 
@@ -39,12 +35,10 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
         <Button onClick={() => modalContext.setModalIsOpen(false)}><RiCloseCircleFill size='20px' /></Button>
       </Flex>
       <CreateTaskBoardDefaultLayout
-        currentUser={currentUser}
         userTasks={userTasks}
         setUserTasks={setUserTasks}
         target={target}
         setTarget={setTarget}
-        colorPalette={colorPalette}
       />
     </Box>
   )

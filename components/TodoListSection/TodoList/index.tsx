@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useContext, useState } from 'react'
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
 import Box from 'styled/Box';
@@ -6,25 +6,25 @@ import TodoEntry from './TodoEntry'
 import Input from 'styled/Input';
 import { MdAddTask } from 'react-icons/md';
 import Button from 'styled/Button';
-import { TodoProps, UserProps } from 'lib/interface';
+import { TodoProps } from 'lib/interface';
 import axios from 'axios';
 import { refreshData } from 'lib/utils/refresh_data';
 import { initializeTodo } from 'lib/initialize';
 import { getUserIP } from 'lib/get/getIP';
+import { UserContext } from 'components/User';
 
 interface Props {
-  user: UserProps
   todoList: TodoProps[]
 }
 
 const TodoList: React.FC<Props> = ({
-  user,
   todoList
 }) => {
   const ip = getUserIP()
   const [addTodo, setAddTodo] = useState<TodoProps>(initializeTodo)
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
+  const userInfo = useContext(UserContext)
 
   const filterUnvalidInput = async () => {
     if (todoList.filter(todo => todo.title === addTodo.title).length > 0)
@@ -48,8 +48,8 @@ const TodoList: React.FC<Props> = ({
     }
     try {
       await axios.post('/api/updateTodo', {
-        userID: user.id,
-        userName: user.username,
+        userID: userInfo?.user.id,
+        userName: userInfo?.user.username,
         ip,
         todoList: [...todoList, addTodo]
       }).then(({ data: { success } }) => {
@@ -97,7 +97,7 @@ const TodoList: React.FC<Props> = ({
             todoList?.map((todo: any, idx: number) =>
               <TodoEntry
                 key={idx}
-                user={user}
+                user={userInfo?.user}
                 todoList={todoList}
                 title={todo.title}
                 description={todo.description}
