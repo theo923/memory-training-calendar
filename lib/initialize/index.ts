@@ -74,3 +74,10 @@ export const initializeQuiz = {
   finished_date: new Date(),
   last_answer: '',
 }
+
+export const initializeSchedule = {
+  daily: 7,
+  bidaily: 3,
+  weekly: 2,
+  monthly: 3,
+}

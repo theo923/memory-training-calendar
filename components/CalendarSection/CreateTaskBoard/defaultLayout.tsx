@@ -1,10 +1,10 @@
 import React, { ChangeEvent, forwardRef, useContext, useEffect, useState } from 'react'
-import { TaskProps, UserTasksProps } from 'lib/interface'
+import { ScheduleProps, TaskProps, UserTasksProps } from 'lib/interface'
 import {
   controlTaskDescription,
   controlTaskTitle,
 } from 'lib/controller/controlTask'
-import { initializeUserTask, initializeTask } from 'lib/initialize'
+import { initializeUserTask, initializeTask, initializeSchedule } from 'lib/initialize'
 import { getFullDate } from 'lib/get/getDate'
 import styled from 'styled-components'
 import Box from 'styled/Box'
@@ -23,6 +23,8 @@ import tw from 'twin.macro'
 import { getUserIP } from 'lib/get/getIP'
 import { ServerSettingsContext } from 'components/ServerSettings'
 import { UserContext } from 'components/User'
+import RadioButton from 'styled/RadioButton'
+import CustomSchedule, { custom_schedule } from 'lib/utils/custom_schedule'
 
 
 const InputText = styled(Box)`
@@ -59,22 +61,30 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
   ));
   const serverSettingsInfo = useContext(ServerSettingsContext)
   const userInfo = useContext(UserContext)
+  const [schedule, setSchedule] = useState<string>('Default')
+  const [scheduleInputVal, setScheduleInputVal] = useState<ScheduleProps>(initializeSchedule)
 
   useEffect(() => {
     if (!userTasks![getFullDate(target)])
       initializeUserTask(setUserTasks, target)
   }, [target])
 
+  const handleSchedule = (e: ChangeEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    setSchedule(target.value)
+  }
+
   const handleSubmit = async () => {
     setLoading(true)
     setStatus('Loading...')
+    const targetedDate = schedule === 'Customizable' ? custom_schedule(target, scheduleInputVal) : default_schedule(target)
     try {
       await axios.post('/api/createTask', {
         userID: userInfo?.user?.id,
         userName: userInfo?.user?.username,
         taskTitle: inputVal.taskTitle,
         taskDescription: inputVal.taskDescription,
-        targetedDate: default_schedule(target),
+        targetedDate,
         taskColor: inputVal.taskColor,
         ip
       }).then(({ data: { success } }) => {
@@ -112,6 +122,31 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
           />
         </Border>
       </Flex>
+      <Flex>
+        <Box width='100%'>
+          <InputText
+            fontSize={['20px', null, '20px']}
+            lineHeight={['20px', null, '28px']}
+          >
+            Schedule Type:
+          </InputText>
+        </Box>
+        <Box width='100%'>
+          <RadioButton
+            layout='row'
+            name='schedule'
+            values={['Default', 'Customizable']}
+            currentValue={schedule}
+            onChange={handleSchedule}
+          />
+        </Box>
+      </Flex>
+      {schedule === 'Customizable' &&
+        <CustomSchedule
+          inputVal={scheduleInputVal}
+          setInputVal={setScheduleInputVal}
+        />
+      }
       <InputText
         fontSize={['20px', null, '20px']}
         lineHeight={['20px', null, '28px']}
