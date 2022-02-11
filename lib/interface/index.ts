@@ -96,3 +96,10 @@ export interface QuizProps {
   finished_date: Date | null
   last_answer: string | null
 }
+
+export interface ScheduleProps {
+  daily: number
+  bidaily: number
+  weekly: number
+  monthly: number
+}

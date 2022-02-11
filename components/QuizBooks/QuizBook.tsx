@@ -8,6 +8,7 @@ import styled, { css } from 'styled-components'
 import { setTextColor } from 'lib/controller/controlColor'
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from 'react-icons/fa'
 import { AiFillEdit } from 'react-icons/ai'
+import { VscTriangleRight } from 'react-icons/vsc'
 import GlassBox from 'styled/GlassBox'
 import ReadSlateText from 'styled/ReadSlateText'
 import { ModalContext } from 'components/Modal/ModalContext'
@@ -95,6 +96,11 @@ const QuizBook: React.FC<Props> = ({
                   <FaExpandArrowsAlt size='20px' />
                 </Button>
               }
+            </Flex>
+            <Flex mr='10px'>
+              <Button onClick={() => {}}>
+                <VscTriangleRight size='20px' />
+              </Button>
             </Flex>
           </Flex>
         </QuizBookTitle>
