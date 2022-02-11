@@ -80,7 +80,8 @@ const QuizBooks: React.FC<Props> = ({
                 key={idx}
                 quizBook={quizBook}
                 quizBooks={quizBooks}
-              />)
+              />
+            )
           }
         </Flex>
         <Flex
