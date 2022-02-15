@@ -3,7 +3,7 @@ import React from "react";
 import Layout from "components/Layout";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
-import QuizBooks from "components/QuizBooks";
+// import QuizBooks from "components/QuizBooks";
 import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
@@ -14,7 +14,7 @@ import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
 import { getQuizBook } from "lib/get/getQuizBook";
 import Modal from "components/Modal";
-import { calculatePageArray } from "lib/utils/calculate_page_arr";
+// import { calculatePageArray } from "lib/utils/calculate_page_arr";
 import Quiz from "components/Quiz";
 
 interface Props {
