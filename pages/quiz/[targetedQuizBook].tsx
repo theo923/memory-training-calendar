@@ -15,23 +15,22 @@ import { getServerSettings } from "lib/get/getServerSettings";
 import { getQuizBook } from "lib/get/getQuizBook";
 import Modal from "components/Modal";
 import { calculatePageArray } from "lib/utils/calculate_page_arr";
+import Quiz from "components/Quiz";
 
 interface Props {
   serverSettings: ServerSettingsProps
   user: UserProps
   userSettings: UserSettingsProps
-  quizBooks: QuizBookProps[]
+  quizBook: QuizBookProps
   status: boolean
-  pageArray: number[]
 }
 
 const quizBook: React.FC<Props> = ({
   serverSettings,
   user,
   userSettings,
-  quizBooks,
+  quizBook,
   status,
-  pageArray
 }): JSX.Element => {
   return (
     <>
@@ -47,10 +46,7 @@ const quizBook: React.FC<Props> = ({
       >
         <NavigationBar />
         <MainComponent>
-          <QuizBooks
-            pageArray={pageArray}
-            quizBooks={quizBooks}
-          />
+          <Quiz quizBook={quizBook} />
         </MainComponent>
         <JobBoard>
           {status === false &&
@@ -80,51 +76,51 @@ const quizBook: React.FC<Props> = ({
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   try {
     const serverSettings = await getServerSettings()
-    const itemsForPages = 3;
 
     if (!req.cookies['calendar-user-token'])
       return {
         props: {
           serverSettings,
           user: initializeUser,
-          quizBooks: [],
+          quizBooks: {},
           userSettings: {},
-          status: false,
-          pageArray: [1]
+          status: false
         }
       }
 
     const { user } = await getUserInfo(req)
-    const { quizBooks } = await getQuizBook(user, req)
+    const { quizBook } = await getQuizBook(user, req, query.targetedQuizBook as string)
+    console.log(quizBook[0])
     const userSettings = await getUserSettings(user?.id, req)
 
-    const pageArray = calculatePageArray(
-      parseInt(query.page as string),
-      Math.ceil(quizBooks.length / itemsForPages)
-    );
+    if (quizBook.length > 0)
+      return {
+        props: {
+          serverSettings,
+          user,
+          quizBook: quizBook[0],
+          userSettings,
+          status: true
+        }
+      }
 
     return {
       props: {
-        serverSettings,
-        user,
-        quizBooks: quizBooks.length > 0 ? quizBooks.filter((_qb: QuizBookProps, idx: number) =>
-          (parseInt(query.page as string) - 1) * itemsForPages <= idx &&
-          idx <= parseInt(query.page as string) * itemsForPages - 1) : [],
-        userSettings,
-        status: true,
-        pageArray
+        serverSettings: {},
+        user: initializeUser,
+        quizBooks: {},
+        userSettings: {},
+        status: false
       }
     }
-
   } catch (err) {
     return {
       props: {
         serverSettings: {},
         user: initializeUser,
-        quizBooks: [],
+        quizBooks: {},
         userSettings: {},
-        status: false,
-        pageArray: [1]
+        status: false
       }
     }
   }
