@@ -12,7 +12,7 @@ import { QuizBookProps, ServerSettingsProps, UserProps, UserSettingsProps } from
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
-import { getQuizBook } from "lib/get/getQuizBook";
+import { getQuizBooks } from "lib/get/getQuizBooks";
 import Modal from "components/Modal";
 import { calculatePageArray } from "lib/utils/calculate_page_arr";
 
@@ -95,7 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       }
 
     const { user } = await getUserInfo(req)
-    const { quizBooks } = await getQuizBook(user, req)
+    const { quizBooks } = await getQuizBooks(user, req)
     const userSettings = await getUserSettings(user?.id, req)
 
     const pageArray = calculatePageArray(
