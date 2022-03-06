@@ -13,6 +13,7 @@ import GlassBox from 'styled/GlassBox'
 import ReadSlateText from 'styled/ReadSlateText'
 import { ModalContext } from 'components/Modal/ModalContext'
 import QuizBookPanel from 'components/QuizBookPanel'
+import { refreshData } from 'lib/utils/refresh_data'
 
 const QuizBookEntry = styled(GlassBox) <{ setTaskColor: string }>`
   border-radius: 5px;
@@ -97,13 +98,20 @@ const QuizBook: React.FC<Props> = ({
                 </Button>
               }
             </Flex>
-            <Flex mr='10px'>
-              <Button onClick={() => {}}>
-                <VscTriangleRight size='20px' />
-              </Button>
-            </Flex>
+            {quizBook?.quiz.length > 0 &&
+              <Flex mr='10px'>
+                <Button onClick={() => refreshData(`/quiz/${quizBook?.slug}`, 'push')}>
+                  <VscTriangleRight size='20px' />
+                </Button>
+              </Flex>
+            }
           </Flex>
         </QuizBookTitle>
+        {quizBook?.quiz.length === 0 &&
+          <Text color='red' fontWeight={700}>
+            Please add questions for the QuizBook first!
+          </Text>
+        }
         {open &&
           <QuizBookDescription my='10px'>
             <Box
@@ -141,7 +149,7 @@ const QuizBook: React.FC<Props> = ({
           {`${quizBook?.attempt || 0} attempts`}
         </Text>
       </Flex>
-    </QuizBookEntry>
+    </QuizBookEntry >
   )
 }
 

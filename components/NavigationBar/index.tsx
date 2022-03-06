@@ -62,7 +62,7 @@ const NavigationBar = (): JSX.Element => {
       bgColor: inputVal?.bgColor
     }).then(({ data }) => {
       if (data.success)
-        refreshData()
+        refreshData('', 'reload')
     })
   }
 
@@ -108,7 +108,12 @@ const NavigationBar = (): JSX.Element => {
                 initial="initial"
                 animate="animate"
                 whileHover='hover'
-                onClick={() => router.push(nav.destination)}
+                onClick={() => {
+                  if (router.asPath === nav.destination)
+                    refreshData('', 'reload')
+                  else
+                    refreshData(nav.destination, 'replace')
+                }}
                 bgcolor={'#fff'}
                 selected={true}
                 data-tip data-for={`navTip-${nav.name}`}

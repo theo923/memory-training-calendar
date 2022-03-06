@@ -12,7 +12,6 @@ import { ServerSettingsProps, TaskProps, UserProps, UserSettingsProps, UserTasks
 import { initializeTask, initializeUser } from "lib/initialize";
 import { addDays, isSameMonth, startOfWeek } from "date-fns";
 import { getStartYearEndYear, getYearMonth } from "lib/get/getDate";
-import { NextRouter, useRouter } from "next/router";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
 import { getUserInfo } from "lib/get/getUserInfo";
@@ -22,6 +21,7 @@ import { getUserSettings } from "lib/get/getUserSettings";
 import UtilsBoard from "components/UtilsBoard";
 import ChatBoard from "components/ChatBoard";
 import Modal from "components/Modal";
+import { refreshData } from "lib/utils/refresh_data";
 
 interface Props {
   serverSettings: ServerSettingsProps
@@ -30,6 +30,7 @@ interface Props {
   targetYear: Date
   user: UserProps
   userSettings: UserSettingsProps
+  error?: boolean
 }
 
 const App: React.FC<Props> = ({
@@ -38,9 +39,9 @@ const App: React.FC<Props> = ({
   status,
   tasks,
   serverSettings,
-  userSettings
+  userSettings,
+  error
 }): JSX.Element => {
-  const router: NextRouter = useRouter()
   const currentYear: Date = targetYear ? new Date(targetYear) : new Date()
   const [target, setTarget] = useState<Date>(
     isSameMonth(currentYear, new Date()) ?
@@ -53,13 +54,19 @@ const App: React.FC<Props> = ({
 
   useEffect(() => {
     if (!isSameMonth(currentYear, target)) {
-      router.replace(`/year/${getYearMonth(addDays(target, 1))}`)
+      refreshData(`/year/${getYearMonth(addDays(new Date(), 1))}`, 'replace')
     }
   }, [target])
 
   useEffect(() => {
     setUserTasks(tasks)
   }, [tasks])
+
+  useEffect(() => {
+    if (error) {
+      refreshData(`/year/${getYearMonth(addDays(new Date(), 1))}`, 'replace')
+    }
+  }, [error])
 
   return (
     <>
@@ -75,13 +82,16 @@ const App: React.FC<Props> = ({
       >
         <NavigationBar />
         <MainComponent>
-          <Calendar
-            target={target}
-            setTarget={setTarget}
-            userTasks={userTasks}
-            targetedTask={targetedTask}
-            setTargetedTask={setTargetedTask}
-          />
+          {!error ?
+            <Calendar
+              target={target}
+              setTarget={setTarget}
+              userTasks={userTasks}
+              targetedTask={targetedTask}
+              setTargetedTask={setTargetedTask}
+            />
+            : <></>
+          }
         </MainComponent>
         <JobBoard>
           {status === false &&
@@ -143,6 +153,7 @@ const App: React.FC<Props> = ({
 
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
   try {
+    if (query!['year'] === 'undefined') return { props: { error: true } }
     const targetYear = new Date((query!['year'] + '-01') as string)
     const serverSettings = await getServerSettings()
 

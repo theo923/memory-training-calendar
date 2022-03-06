@@ -21,6 +21,9 @@ export const SlateWrapper = styled(Box)`
   word-break: break-all;
   white-space: pre-line;
     ${tw`border-2 border-black shadow-md rounded-md px-2 my-2`}
+    div {
+      height: max-content;
+    }
 `
 
 export const HOTKEYS: { [key: string]: string } = {

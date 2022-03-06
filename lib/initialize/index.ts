@@ -63,6 +63,7 @@ export const initializeQuizBook = {
   name: '',
   description: '',
   attempt: 0,
+  slug: '',
   quiz: [],
 }
 

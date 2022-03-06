@@ -1,6 +1,6 @@
+import { refreshData } from 'lib/utils/refresh_data'
 import { remove_cookie } from 'lib/utils/remove_cookie'
 import Link from 'next/link'
-import { NextRouter, useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from 'react-icons/fa'
 import { RiLoginBoxLine, RiLogoutBoxLine } from 'react-icons/ri'
@@ -28,7 +28,6 @@ const Board: React.FC<Props> = ({
   children,
   type = ''
 }): JSX.Element => {
-  const router: NextRouter = useRouter()
   const [open, setOpen] = useState<boolean>(false)
   return (
     <Wrapper data-test="component-board">
@@ -67,7 +66,7 @@ const Board: React.FC<Props> = ({
           </Button>
         }
         {type === 'logout' &&
-          <Button onClick={() => { remove_cookie(); router.push('/') }} >
+          <Button onClick={() => { remove_cookie(); refreshData('/') }} >
             <Link href='/'>
               <Box>
                 <RiLogoutBoxLine size='20px' />

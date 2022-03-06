@@ -87,7 +87,7 @@ const QuizBookPanel: React.FC<Props> = ({
         mt='10px'
       >
         <Text mr='10px' fontSize='20px'>
-          Quiz List:
+          Question List:
         </Text>
         <Button onClick={() => handleQuiz('create')}>
           <RiAddCircleLine size='20px' />

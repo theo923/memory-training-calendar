@@ -20,6 +20,7 @@ export const UPDATE_USER_QUIZBOOKS = gql`
               prompt
             }
             attempt
+            slug
           }
         }
       }

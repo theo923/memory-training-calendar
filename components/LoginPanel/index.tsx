@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { auth } from 'lib/firebase';
-import {getUserIP} from 'lib/get/getIP';
+import { getUserIP } from 'lib/get/getIP';
 import { initializeLoginInfo } from 'lib/initialize';
 import { LoginInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
-import { NextRouter, useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { BsFillArrowLeftSquareFill } from 'react-icons/bs'
@@ -22,7 +21,6 @@ const ContentBox = styled(Box)`
 `
 
 const LoginPanel = () => {
-  const router: NextRouter = useRouter()
   const ip = getUserIP()
   const [_cT, setTokenCookie, _rTC] = useCookies(['calendar-user-token']);
   const [_cI, setIDCookie, _rIC] = useCookies(['calendar-user-id']);
@@ -67,7 +65,7 @@ const LoginPanel = () => {
 
   return (
     <ContentBox data-test='component-loginPanel'>
-      <Button onClick={() => router.back()}>
+      <Button onClick={() => refreshData('', 'back')}>
         <BsFillArrowLeftSquareFill size='30px' />
       </Button>
       <Flex

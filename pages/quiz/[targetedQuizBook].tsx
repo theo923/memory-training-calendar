@@ -90,7 +90,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
     const { user } = await getUserInfo(req)
     const { quizBook } = await getQuizBook(user, req, query.targetedQuizBook as string)
-    console.log(quizBook[0])
     const userSettings = await getUserSettings(user?.id, req)
 
     if (quizBook.length > 0)
