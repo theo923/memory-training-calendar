@@ -13,4 +13,5 @@ export const refreshData = (
     router.push({
       pathname: location,
     })
+  if (method === 'back') router.back()
 }

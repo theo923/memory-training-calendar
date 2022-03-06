@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { auth } from 'lib/firebase';
-import {getUserIP} from 'lib/get/getIP';
+import { getUserIP } from 'lib/get/getIP';
 import { initializeRegisterInfo } from 'lib/initialize';
 import { RegisterInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
-import { NextRouter, useRouter } from 'next/router';
 import React, { ChangeEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { BsFillArrowLeftSquareFill } from 'react-icons/bs'
@@ -22,7 +21,6 @@ const ContentBox = styled(Box)`
 `
 
 const RegisterPanel = () => {
-  const router: NextRouter = useRouter()
   const ip = getUserIP()
   const [_c, setCookie, _rC] = useCookies(['calendar-user-token']);
   const [registerInfo, setRegisterInfo] = useState<RegisterInfoProps>(initializeRegisterInfo)
@@ -72,7 +70,7 @@ const RegisterPanel = () => {
 
   return (
     <ContentBox data-test='component-registerPanel'>
-      <Button onClick={() => router.back()}>
+      <Button onClick={() => refreshData('', 'back')}>
         <BsFillArrowLeftSquareFill size='30px' />
       </Button>
       <Flex

@@ -61,7 +61,7 @@ const QuizBooks: React.FC<Props> = ({
       >
         <Flex my='50px'>
           <Text fontSize="50px">
-            quizBook
+            Quiz Book
           </Text>
         </Flex>
       </Flex>

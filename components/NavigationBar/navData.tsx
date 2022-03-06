@@ -1,3 +1,5 @@
+import { addDays } from "date-fns";
+import { getYearMonth } from "lib/get/getDate";
 import { FaTasks } from "react-icons/fa";
 import { ImCalendar, ImList } from "react-icons/im";
 import { MdQuiz, MdSpaceDashboard } from "react-icons/md";
@@ -16,7 +18,7 @@ export const navData: NavDataProps[] = [
   },
   {
     name: 'Calendar',
-    destination: '/',
+    destination: `/year/${getYearMonth(addDays(new Date(), 1))}`,
     icon: <ImCalendar size='25px' />,
   },
   {
@@ -31,7 +33,7 @@ export const navData: NavDataProps[] = [
   },
   {
     name: 'QuizBook',
-    destination: '/quizBook',
+    destination: '/quizBook/1',
     icon: <MdQuiz size='30px' />,
   },
 ]
