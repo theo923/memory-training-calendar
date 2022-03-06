@@ -139,7 +139,7 @@ const QuizModify: React.FC<Props> = ({
           lineHeight={['20px', null, '28px']}
           mr='2'
         >
-          Name of the Quiz:
+          Question:
         </InputText>
         <Input
           value={inputVal.question}
@@ -150,7 +150,7 @@ const QuizModify: React.FC<Props> = ({
           lineHeight={['20px', null, '28px']}
           mr='2'
         >
-          Prompt of the QuizBook:
+          Prompt:
         </InputText>
         <SlateTextBox
           values={inputVal.prompt ? JSON.parse(inputVal.prompt) : ''}
@@ -158,6 +158,17 @@ const QuizModify: React.FC<Props> = ({
           insideObject
           property='prompt'
           changeHook={setInputVal}
+        />
+        <InputText
+          fontSize={['20px', null, '20px']}
+          lineHeight={['20px', null, '28px']}
+          mr='2'
+        >
+          Answer:
+        </InputText>
+        <Input
+          value={inputVal.answer}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setInputVal({ ...inputVal, answer: e.target.value })}
         />
         <Flex justifyContent='space-around'>
           <Button disabled={loading} onClick={() => handleSubmit()}>Submit</Button>

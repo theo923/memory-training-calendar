@@ -2,6 +2,7 @@ import { client, DEFAULT_HEADERS } from "lib/apollo"
 import { getUserTaskIDs } from "lib/get/getUserTaskIDs"
 import { QuizBookProps, QuizProps } from "lib/interface"
 import { UPDATE_USER_QUIZBOOKS } from "lib/queries/update-user-quizbooks"
+import { slug_converter } from "lib/utils/slug_converter"
 import { write_logs } from "lib/utils/write_logs"
 
 const updateQuizBooks = async (req: any, res: any) => {
@@ -25,6 +26,7 @@ const updateQuizBooks = async (req: any, res: any) => {
             delete qb.id
             return {
               ...qb,
+              slug: slug_converter(qb.name),
               quiz: qb.quiz.map((q: QuizProps) => {
                 delete q.id
                 return q
@@ -43,7 +45,7 @@ const updateQuizBooks = async (req: any, res: any) => {
     })
   }
   catch (err) {
-    console.log(err)
+    console.log(JSON.stringify(err))
     res.json({ success: false })
   }
 }

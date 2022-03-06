@@ -24,13 +24,14 @@ export const getQuizBook = async (
       if (returnArr.length > 0) {
         return {
           quizBook: returnArr
-            .filter((q: QuizBookProps) => q.name === targetedQuizBook)
+            .filter((q: QuizBookProps) => q.slug === targetedQuizBook)
             .map((q: QuizBookProps) => {
               return {
                 id: q.id,
                 name: q.name,
                 description: q.description,
                 attempt: q.attempt,
+                slug: q.slug,
                 quiz: q.quiz.map((qz: QuizProps) => {
                   return {
                     id: qz.id,

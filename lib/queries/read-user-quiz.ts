@@ -13,6 +13,7 @@ export const READ_USER_QUIZ_QUERY = gql`
             name
             description
             attempt
+            slug
             quiz {
               id
               question

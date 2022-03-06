@@ -24,6 +24,7 @@ export const getQuizBooks = async (user: UserProps, req: any) => {
             name: q.name,
             description: q.description,
             attempt: q.attempt,
+            slug: q.slug,
             quiz: q.quiz.map((qz: QuizProps) => {
               return {
                 id: qz.id,

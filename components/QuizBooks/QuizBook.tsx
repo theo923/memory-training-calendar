@@ -13,6 +13,7 @@ import GlassBox from 'styled/GlassBox'
 import ReadSlateText from 'styled/ReadSlateText'
 import { ModalContext } from 'components/Modal/ModalContext'
 import QuizBookPanel from 'components/QuizBookPanel'
+import router from 'next/router'
 
 const QuizBookEntry = styled(GlassBox) <{ setTaskColor: string }>`
   border-radius: 5px;
@@ -98,7 +99,7 @@ const QuizBook: React.FC<Props> = ({
               }
             </Flex>
             <Flex mr='10px'>
-              <Button onClick={() => {}}>
+              <Button onClick={() => router.push(`/quiz/${quizBook?.slug}`)}>
                 <VscTriangleRight size='20px' />
               </Button>
             </Flex>
