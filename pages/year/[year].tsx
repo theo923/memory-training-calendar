@@ -82,7 +82,7 @@ const App: React.FC<Props> = ({
       >
         <NavigationBar />
         <MainComponent>
-          {!error &&
+          {!error ?
             <Calendar
               target={target}
               setTarget={setTarget}
@@ -90,6 +90,7 @@ const App: React.FC<Props> = ({
               targetedTask={targetedTask}
               setTargetedTask={setTargetedTask}
             />
+            : <></>
           }
         </MainComponent>
         <JobBoard>
