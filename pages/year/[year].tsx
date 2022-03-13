@@ -10,8 +10,8 @@ import ModifyBoard from "components/CalendarSection/ModifyBoard";
 import TaskBoard from "components/CalendarSection/TaskBoard";
 import { ServerSettingsProps, TaskProps, UserProps, UserSettingsProps, UserTasksProps } from "lib/interface";
 import { initializeTask, initializeUser } from "lib/initialize";
-import { addDays, isSameMonth, startOfWeek } from "date-fns";
-import { getStartYearEndYear, getYearMonth } from "lib/get/getDate";
+import { isSameMonth, startOfWeek } from "date-fns";
+import { getStartYearEndYear } from "lib/get/getDate";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
 import { getUserInfo } from "lib/get/getUserInfo";
@@ -22,6 +22,7 @@ import UtilsBoard from "components/UtilsBoard";
 import ChatBoard from "components/ChatBoard";
 import Modal from "components/Modal";
 import { refreshData } from "lib/utils/refresh_data";
+import { CALENDAR_URL } from "lib/data/pageUrl";
 
 interface Props {
   serverSettings: ServerSettingsProps
@@ -54,7 +55,7 @@ const App: React.FC<Props> = ({
 
   useEffect(() => {
     if (!isSameMonth(currentYear, target)) {
-      refreshData(`/year/${getYearMonth(addDays(new Date(), 1))}`, 'replace')
+      refreshData(CALENDAR_URL, 'replace')
     }
   }, [target])
 
@@ -64,7 +65,7 @@ const App: React.FC<Props> = ({
 
   useEffect(() => {
     if (error) {
-      refreshData(`/year/${getYearMonth(addDays(new Date(), 1))}`, 'replace')
+      refreshData(CALENDAR_URL, 'replace')
     }
   }, [error])
 

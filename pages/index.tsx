@@ -1,14 +1,13 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
-import { addDays } from "date-fns";
-import { getYearMonth } from "lib/get/getDate";
 import { refreshData } from "lib/utils/refresh_data";
+import { CALENDAR_URL } from "lib/data/pageUrl";
 
 
 const App = (): JSX.Element => {
 
   useEffect(() => {
-    refreshData(`/year/${getYearMonth(addDays(new Date(), 1))}`)
+    refreshData(CALENDAR_URL)
   }, [])
 
   return (

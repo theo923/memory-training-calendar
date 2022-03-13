@@ -1,7 +1,8 @@
 import axios from "axios";
 import { ModalContext } from "components/Modal/ModalContext";
 import { setTextColor, setBooleanColor } from "lib/controller/controlColor";
-import {getUserIP} from "lib/get/getIP";
+import { TODOLIST_URL_PAGE } from "lib/data/pageUrl";
+import { getUserIP } from "lib/get/getIP";
 import { UserProps, TodoProps } from "lib/interface";
 import { refreshData } from "lib/utils/refresh_data";
 import { useContext, useEffect, useState } from "react";
@@ -62,7 +63,8 @@ interface Props {
   description: string
   finished: boolean
   user: UserProps
-  todoList: TodoProps[]
+  allTodoList: TodoProps[]
+  currentPage: number
 }
 
 const TodoEntry: React.FC<Props> = ({
@@ -70,7 +72,8 @@ const TodoEntry: React.FC<Props> = ({
   description,
   finished,
   user,
-  todoList
+  allTodoList,
+  currentPage
 }) => {
   const ip = getUserIP()
   const modalContext = useContext(ModalContext)
@@ -91,7 +94,7 @@ const TodoEntry: React.FC<Props> = ({
             description,
             finished
           }}
-          todoList={todoList}
+          allTodoList={allTodoList}
           user={user}
         />
       </Box>
@@ -105,10 +108,10 @@ const TodoEntry: React.FC<Props> = ({
         userID: user.id,
         userName: user.username,
         ip,
-        todoList: todoList.filter((todo: TodoProps) => todo.title !== title)
+        todoList: allTodoList.filter((todo: TodoProps) => todo.title !== title)
       }).then(({ data: { success } }) => {
         if (success) {
-          refreshData('/todoList', 'replace')
+          refreshData(TODOLIST_URL_PAGE(currentPage), 'replace')
         }
       })
     }
@@ -123,7 +126,7 @@ const TodoEntry: React.FC<Props> = ({
         userID: user.id,
         userName: user.username,
         ip,
-        todoList: todoList.map((todo: TodoProps) => {
+        todoList: allTodoList.map((todo: TodoProps) => {
           if (todo.title === title) return {
             ...todo,
             finished: !finished
@@ -132,7 +135,7 @@ const TodoEntry: React.FC<Props> = ({
         })
       }).then(({ data: { success } }) => {
         if (success)
-          refreshData('/todoList', 'replace')
+          refreshData(TODOLIST_URL_PAGE(currentPage), 'replace')
       })
     }
     catch (err) {

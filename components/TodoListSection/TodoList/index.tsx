@@ -12,15 +12,24 @@ import { refreshData } from 'lib/utils/refresh_data';
 import { initializeTodo } from 'lib/initialize';
 import { getUserIP } from 'lib/get/getIP';
 import { UserContext } from 'components/User';
-
+import PageNavigation from 'components/Pagination';
+import { TODOLIST_URL_PAGE } from 'lib/data/pageUrl';
+import { control_string_length } from 'lib/utils/control_string_length';
+import { NextRouter, useRouter } from 'next/router';
 interface Props {
   todoList: TodoProps[]
+  allTodoList: TodoProps[],
+  pageArray: number[]
 }
 
 const TodoList: React.FC<Props> = ({
-  todoList
+  todoList,
+  allTodoList,
+  pageArray
 }) => {
   const ip = getUserIP()
+  const router: NextRouter = useRouter()
+  const currentPage: number = parseInt(router?.query?.page as string)
   const [addTodo, setAddTodo] = useState<TodoProps>(initializeTodo)
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
@@ -51,10 +60,10 @@ const TodoList: React.FC<Props> = ({
         userID: userInfo?.user.id,
         userName: userInfo?.user.username,
         ip,
-        todoList: [...todoList, addTodo]
+        todoList: [...allTodoList, { ...addTodo, title: control_string_length(addTodo.title, 20)[1] as string }]
       }).then(({ data: { success } }) => {
         if (success) {
-          refreshData('/todoList', 'replace')
+          refreshData(TODOLIST_URL_PAGE(currentPage), 'replace')
           setStatus('Done')
         }
         else
@@ -98,10 +107,11 @@ const TodoList: React.FC<Props> = ({
               <TodoEntry
                 key={idx}
                 user={userInfo?.user}
-                todoList={todoList}
+                allTodoList={allTodoList}
                 title={todo.title}
                 description={todo.description}
                 finished={todo.finished}
+                currentPage={currentPage}
               />)
           }
           <Flex
@@ -128,6 +138,10 @@ const TodoList: React.FC<Props> = ({
           </Flex>
           {status?.length > 0 && <Text color='red'>{status}</Text>}
         </Flex>
+        <PageNavigation
+          pageArray={pageArray}
+          setPage={TODOLIST_URL_PAGE}
+        />
       </Flex>
     </Box>
   )

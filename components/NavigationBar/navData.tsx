@@ -1,5 +1,4 @@
-import { addDays } from "date-fns";
-import { getYearMonth } from "lib/get/getDate";
+import { QUIZBOOK_URL, TODOLIST_URL, TASKS_URL, CALENDAR_URL, DASHBOARD_URL } from "lib/data/pageUrl";
 import { FaTasks } from "react-icons/fa";
 import { ImCalendar, ImList } from "react-icons/im";
 import { MdQuiz, MdSpaceDashboard } from "react-icons/md";
@@ -13,27 +12,27 @@ export interface NavDataProps {
 export const navData: NavDataProps[] = [
   {
     name: 'Dashboard',
-    destination: '/dashboard',
+    destination: DASHBOARD_URL,
     icon: <MdSpaceDashboard size='30px' />,
   },
   {
     name: 'Calendar',
-    destination: `/year/${getYearMonth(addDays(new Date(), 1))}`,
+    destination: CALENDAR_URL,
     icon: <ImCalendar size='25px' />,
   },
   {
     name: 'Tasks',
-    destination: '/tasks',
+    destination: TASKS_URL,
     icon: <ImList size='25px' />,
   },
   {
     name: 'TodoList',
-    destination: '/todoList',
+    destination: TODOLIST_URL,
     icon: <FaTasks size='30px' />,
   },
   {
     name: 'QuizBook',
-    destination: '/quizBook/1',
+    destination: QUIZBOOK_URL,
     icon: <MdQuiz size='30px' />,
   },
 ]

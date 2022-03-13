@@ -38,12 +38,14 @@ const QuizBookDescription = styled(Box)`
 
 interface Props {
   quizBook: QuizBookProps
-  quizBooks: QuizBookProps[]
+  allQuizBooks: QuizBookProps[]
+  currentPage: number
 }
 
 const QuizBook: React.FC<Props> = ({
   quizBook,
-  quizBooks
+  allQuizBooks,
+  currentPage
 }): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false)
   const modalContext = useContext(ModalContext)
@@ -53,8 +55,9 @@ const QuizBook: React.FC<Props> = ({
       <Box width='50vw'>
         <QuizBookPanel
           quizBook={quizBook}
-          quizBooks={quizBooks}
           action='modify'
+          allQuizBooks={allQuizBooks}
+          currentPage={currentPage}
         />
       </Box>
     )
@@ -109,7 +112,7 @@ const QuizBook: React.FC<Props> = ({
         </QuizBookTitle>
         {quizBook?.quiz.length === 0 &&
           <Text color='red' fontWeight={700}>
-            Please add questions for the QuizBook first!
+            Please add questions to the QuizBook first!
           </Text>
         }
         {open &&

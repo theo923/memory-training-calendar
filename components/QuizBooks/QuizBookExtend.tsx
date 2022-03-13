@@ -14,6 +14,7 @@ import { refreshData } from 'lib/utils/refresh_data'
 import axios from 'axios'
 import { getUserIP } from 'lib/get/getIP'
 import { UserContext } from 'components/User'
+import { QUIZBOOK_URL_PAGE } from 'lib/data/pageUrl'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -21,14 +22,16 @@ const InputText = styled(Box)`
 
 interface Props {
   addQuizBook: QuizBookProps
-  quizBooks: QuizBookProps[]
   action: 'create' | 'modify'
+  allQuizBooks: QuizBookProps[]
+  currentPage: number
 }
 
 const QuizBookExtend: React.FC<Props> = ({
   addQuizBook,
-  quizBooks,
-  action
+  action,
+  allQuizBooks,
+  currentPage
 }): JSX.Element => {
   const userInfo = useContext(UserContext)
   const modalContext = useContext(ModalContext)
@@ -52,10 +55,10 @@ const QuizBookExtend: React.FC<Props> = ({
         userID: userInfo?.user.id,
         userName: userInfo?.user.username,
         ip,
-        quizbook: [...quizBooks, { ...addQuizBook, name, description }]
+        quizbook: [...allQuizBooks, { ...addQuizBook, name, description }]
       }).then(({ data: { success } }) => {
         if (success)
-          refreshData('', 'reload')
+          refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
         else
           setStatus('Failed to create Quiz Book, please try again...')
       })
@@ -64,7 +67,7 @@ const QuizBookExtend: React.FC<Props> = ({
         userID: userInfo?.user.id,
         userName: userInfo?.user.username,
         ip,
-        quizbook: quizBooks.map((quizBook: QuizBookProps) => {
+        quizbook: allQuizBooks.map((quizBook: QuizBookProps) => {
           if (quizBook.id === addQuizBook.id)
             return {
               ...addQuizBook,
@@ -75,7 +78,7 @@ const QuizBookExtend: React.FC<Props> = ({
         })
       }).then(({ data: { success } }) => {
         if (success)
-          refreshData('', 'reload')
+          refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
         else
           setStatus('Failed to modify Quiz Book, please try again...')
       })
@@ -87,10 +90,10 @@ const QuizBookExtend: React.FC<Props> = ({
       userID: userInfo?.user.id,
       userName: userInfo?.user.username,
       ip,
-      quizbook: quizBooks.filter((qb: QuizBookProps) => qb !== addQuizBook)
+      quizbook: allQuizBooks.filter((qb: QuizBookProps) => qb !== addQuizBook)
     }).then(({ data: { success } }) => {
       if (success)
-        refreshData('', 'reload')
+        refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
       else
         setStatus('Failed to delete Quiz Book, please try again...')
     })

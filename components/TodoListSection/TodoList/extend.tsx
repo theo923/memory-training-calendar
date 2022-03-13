@@ -12,7 +12,8 @@ import Input from 'styled/Input'
 import SlateTextBox from 'styled/SlateTextBox'
 import { refreshData } from 'lib/utils/refresh_data'
 import axios from 'axios'
-import {getUserIP} from 'lib/get/getIP'
+import { getUserIP } from 'lib/get/getIP'
+import { control_string_length } from 'lib/utils/control_string_length'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -20,13 +21,13 @@ const InputText = styled(Box)`
 
 interface Props {
   todo: TodoProps
-  todoList: TodoProps[]
+  allTodoList: TodoProps[]
   user: UserProps
 }
 
 const TodoListExtend: React.FC<Props> = ({
   todo,
-  todoList,
+  allTodoList,
   user
 }): JSX.Element => {
   const modalContext = useContext(ModalContext)
@@ -49,10 +50,10 @@ const TodoListExtend: React.FC<Props> = ({
       userID: user.id,
       userName: user.username,
       ip,
-      todoList: todoList.map((todo: TodoProps) => {
+      todoList: allTodoList.map((todo: TodoProps) => {
         if (todo.title === inputVal.title)
           return {
-            title,
+            title: control_string_length(todo.title, 20)[1] as string,
             description,
             finished: todo?.finished || false
           }

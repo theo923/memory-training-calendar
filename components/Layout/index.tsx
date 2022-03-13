@@ -12,6 +12,10 @@ import { initializeUser } from "lib/initialize";
 const Wrapper = styled(Box) <{ bgcolor: string }>`
   min-height: 100vh;
   min-width: 100vw;
+
+  @media only screen and (max-width: 768px) {
+    min-width: auto;
+  }
   
   ${({ bgcolor }) => css`
     background: ${bgcolor}
@@ -66,6 +70,7 @@ const Layout: React.FC<Props> = ({
           alignItems='center'
         >
           <GlassBox
+            borderRadius={['0', null, '30px']}
             display='flex'
             flexDirection={['column', null, 'row']}
             justifyContent='center'

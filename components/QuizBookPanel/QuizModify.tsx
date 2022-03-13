@@ -15,20 +15,24 @@ import axios from 'axios'
 import { getUserIP } from 'lib/get/getIP'
 import { initializeQuiz } from 'lib/initialize'
 import { UserContext } from 'components/User'
+import { QUIZBOOK_URL_PAGE } from 'lib/data/pageUrl'
+import QuizBookPanel from '.'
 
 const InputText = styled(Box)`
   align-self: center;
 `
 
 interface Props {
-  quizBooks: QuizBookProps[]
   quizBook: QuizBookProps
   action: 'create' | 'modify' | 'delete'
   quiz?: QuizProps
+  allQuizBooks: QuizBookProps[]
+  currentPage: number
 }
 
 const QuizModify: React.FC<Props> = ({
-  quizBooks,
+  allQuizBooks,
+  currentPage,
   quizBook,
   action,
   quiz
@@ -40,84 +44,111 @@ const QuizModify: React.FC<Props> = ({
   const [status, setStatus] = useState<string>('')
   const [inputVal, setInputVal] = useState<QuizProps>(quiz ? quiz : initializeQuiz)
 
-  // export interface QuizProps {
-  //   id?: string
-  //   question: string
-  //   answer: string
-  //   prompt: string
-  //   finished_date: Date | null
-  //   last_answer: string | null
-  // }
+
+  const handleQuizBookPanel = (newBooks: any, currentNewBook: any) => {
+    modalContext.setModalContent(
+      <Box width='50vw'>
+        <QuizBookPanel
+          quizBook={currentNewBook}
+          action='modify'
+          allQuizBooks={newBooks}
+          currentPage={currentPage}
+        />
+      </Box>
+    )
+    modalContext.setModalIsOpen(true)
+  }
 
   const handleSubmit = async () => {
     setLoading(true)
     setStatus('Loading...')
-    if (action === 'create')
-      await axios.post('/api/updateQuizBooks', {
-        userID: userInfo?.user.id,
-        userName: userInfo?.user.username,
-        ip,
-        quizbook: quizBooks.map((qb: QuizBookProps) => {
-          if (qb === quizBook)
-            return {
-              ...quizBook,
-              quiz: [...qb?.quiz, inputVal]
-            }
-          return qb
-        })
-      }).then(({ data: { success } }) => {
-        if (success)
-          refreshData('', 'reload')
-        else
-          setStatus('Failed to create Quiz Book, please try again...')
+
+    if (action === 'create') {
+      let currentNewBook = {}
+      const newBooks = allQuizBooks.map((qb: QuizBookProps) => {
+        if (qb.id === quizBook.id) {
+          currentNewBook = {
+            ...quizBook,
+            quiz: [...qb?.quiz, inputVal]
+          }
+          return currentNewBook
+        }
+        return qb
       })
 
-    if (action === 'modify')
       await axios.post('/api/updateQuizBooks', {
         userID: userInfo?.user.id,
         userName: userInfo?.user.username,
         ip,
-        quizbook: quizBooks.map((qb: QuizBookProps) => {
-          if (qb === quizBook)
-            return {
-              ...qb,
-              quiz: qb?.quiz?.map((q: QuizProps) => {
-                if (q === quiz)
-                  return {
-                    ...quiz,
-                    ...inputVal
-                  }
-                return q
-              })
-            }
-          return qb
-        })
+        quizbook: newBooks
       }).then(({ data: { success } }) => {
-        if (success)
-          refreshData('', 'reload')
+        if (success) {
+          refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
+
+          handleQuizBookPanel(newBooks, currentNewBook)
+        }
         else
           setStatus('Failed to create Quiz Book, please try again...')
       })
+    }
+
+    if (action === 'modify') {
+      let currentNewBook = {}
+      const newBooks = allQuizBooks.map((qb: QuizBookProps) => {
+        if (qb.id === quizBook.id)
+          return {
+            ...qb,
+            quiz: qb?.quiz?.map((q: QuizProps) => {
+              if (q === quiz)
+                return {
+                  ...quiz,
+                  ...inputVal
+                }
+              return q
+            })
+          }
+        return qb
+      })
+
+      await axios.post('/api/updateQuizBooks', {
+        userID: userInfo?.user.id,
+        userName: userInfo?.user.username,
+        ip,
+        quizbook: newBooks
+      }).then(({ data: { success } }) => {
+        if (success) {
+          refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
+          handleQuizBookPanel(newBooks, currentNewBook)
+        }
+        else
+          setStatus('Failed to create Quiz Book, please try again...')
+      })
+    }
 
     setLoading(false)
   }
 
   const handleDeleteQuiz = async () => {
+    let currentNewBook = {}
+    const newBooks = allQuizBooks.map((qb: QuizBookProps) => {
+      if (qb === quizBook)
+        return {
+          ...qb,
+          quiz: qb?.quiz?.filter((q: QuizProps) => q !== quiz)
+        }
+      return qb
+    })
+
     await axios.post('/api/updateQuizBooks', {
       userID: userInfo?.user.id,
       userName: userInfo?.user.username,
       ip,
-      quizbook: quizBooks.map((qb: QuizBookProps) => {
-        if (qb === quizBook)
-          return {
-            ...qb,
-            quiz: qb?.quiz?.filter((q: QuizProps) => q !== quiz)
-          }
-        return qb
-      })
+      quizbook: newBooks
     }).then(({ data: { success } }) => {
-      if (success)
-        refreshData('', 'reload')
+      if (success) {
+        refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
+        handleQuizBookPanel(newBooks, currentNewBook)
+      }
       else
         setStatus('Failed to create Quiz Book, please try again...')
     })
