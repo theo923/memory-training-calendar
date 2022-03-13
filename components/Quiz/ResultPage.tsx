@@ -8,16 +8,15 @@ import styled from 'styled-components'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
-import GlassBox from 'styled/GlassBox'
 import Grid from 'styled/Grid'
 import Text from 'styled/Text'
 
-const QuestionBoard = styled(GlassBox)`
+const QuestionBoard = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80%;
+  height: 100%;
   text-align: center;
 `
 
@@ -57,7 +56,7 @@ const ResultPage: React.FC<Props> = ({
       <Text fontSize='30px' mb='40px'>
         Scoreboard:
       </Text>
-      <AnswerList mb='20px' gridTemplateColumns='1fr 1fr 1fr 1fr'>
+      <AnswerList mb='20px' gridTemplateColumns='1fr 1fr 1fr 1fr' gridGap='20px'>
         <Box></Box>
         <Text>Question</Text>
         <Text>Your Answer</Text>

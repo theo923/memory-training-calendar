@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
-import GlassBox from 'styled/GlassBox'
 import Input from 'styled/Input'
 import ReadSlateText from 'styled/ReadSlateText'
 import Text from 'styled/Text'
@@ -14,12 +13,12 @@ import page_pass from 'lib/utils/page_pass'
 import { refreshData } from 'lib/utils/refresh_data'
 import ResultPage from './ResultPage'
 
-const QuestionBoard = styled(GlassBox)`
+const QuestionBoard = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80%;
+  height: 100%;
   text-align: center;
 `
 

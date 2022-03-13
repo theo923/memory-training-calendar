@@ -90,7 +90,7 @@ const QuizBookExtend: React.FC<Props> = ({
       userID: userInfo?.user.id,
       userName: userInfo?.user.username,
       ip,
-      quizbook: allQuizBooks.filter((qb: QuizBookProps) => qb !== addQuizBook)
+      quizbook: allQuizBooks.filter((qb: QuizBookProps) => qb.id !== addQuizBook.id)
     }).then(({ data: { success } }) => {
       if (success)
         refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
