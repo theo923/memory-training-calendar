@@ -202,7 +202,10 @@ const QuizModify: React.FC<Props> = ({
           onChange={(e: ChangeEvent<HTMLInputElement>) => setInputVal({ ...inputVal, answer: e.target.value })}
         />
         <Flex justifyContent='space-around'>
-          <Button disabled={loading} onClick={() => handleSubmit()}>Submit</Button>
+          <Button disabled={loading && !Boolean(inputVal.answer.length > 0)}
+            onClick={() => handleSubmit()}
+          >Submit
+          </Button>
           <Button disabled={loading}
             onClick={() => quiz ? setInputVal(quiz) : setInputVal(initializeQuiz)}>
             Reset
