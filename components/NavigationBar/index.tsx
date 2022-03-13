@@ -4,7 +4,7 @@ import { getUserIP } from 'lib/get/getIP';
 import { refreshData } from 'lib/utils/refresh_data';
 import { NextRouter, useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react'
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Box from 'styled/Box';
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
@@ -15,21 +15,18 @@ import ReactTooltip from 'react-tooltip';
 import { navData, NavDataProps } from './navData';
 import { ServerSettingsContext } from 'components/ServerSettings';
 import { UserContext } from 'components/User';
+import Button from 'styled/Button';
 
 const NavigationBarWrapper = styled(Box)`
   z-index: 50;
   ${tw`rounded-md`}
 `
 
-const NavButton = styled(MotionBox) <{ bgcolor: string, selected: boolean }>`
+const MotionFlexContainer = styled(MotionBox)`
   cursor: pointer;
   border: .2px solid transparent;
   border-radius: 50px;
-  
-  // ${({ bgcolor, selected }) => css`
-  //   background: ${bgcolor || '#fff'};
-  //   border: ${selected ? '1px solid #000' : null}
-  // `}
+  display: flex;
 `
 
 interface InputValProp {
@@ -42,6 +39,7 @@ const NavigationBar = (): JSX.Element => {
   const userInfo = useContext(UserContext)
   const [inputVal, setInputVal] = useState<InputValProp>()
   const router: NextRouter = useRouter()
+  const [itemHover, setItemHover] = useState('')
 
   useEffect(() => {
     setInputVal({ bgColor: userInfo?.userSettings?.bgColor })
@@ -100,26 +98,37 @@ const NavigationBar = (): JSX.Element => {
         >
           {navData && navData.map(
             (nav: NavDataProps, idx: number) =>
-              <NavButton
+              <MotionFlexContainer
                 key={idx}
-                my={['0', null, '20px']}
-                mr={['10px', null, '0']}
                 variants={motionBoxVariant}
                 initial="initial"
                 animate="animate"
                 whileHover='hover'
+                flexDirection={['row', null, null, 'column']}
+                alignItems="center"
+                my={['0', null, '20px']}
+                onMouseOver={() => setItemHover(nav.name)}
+                onMouseLeave={() => setItemHover('')}
                 onClick={() => {
                   if (router.asPath === nav.destination)
                     refreshData('', 'reload')
                   else
                     refreshData(nav.destination, 'replace')
                 }}
-                bgcolor={'#fff'}
-                selected={true}
-                data-tip data-for={`navTip-${nav.name}`}
               >
-                {nav.icon}
-              </NavButton>
+                <Button
+                  mr={['10px', null, '0']}
+                  mb={['0px', null, '10px']}
+                  data-tip data-for={`navTip-${nav.name}`}
+                >
+                  {nav.icon}
+                </Button>
+                {itemHover === nav.name &&
+                  <Text display={['none', null, null, null, 'block']}>
+                    {nav.name}
+                  </Text>
+                }
+              </MotionFlexContainer>
           )}
         </Flex>
         {userInfo?.user?.id ?
@@ -134,19 +143,20 @@ const NavigationBar = (): JSX.Element => {
           <Box />
         }
 
-        {navData && navData.map(
-          (nav: NavDataProps, idx: number) =>
+      </Flex>
+      {navData && navData.map(
+        (nav: NavDataProps, idx: number) =>
+          <Box key={idx} display={['block', null, null, null, 'none']}>
             <ReactTooltip
-              key={idx}
               id={`navTip-${nav.name}`} place="top" effect="solid"
             >
               <Text>
                 {nav.name}
               </Text>
             </ReactTooltip>
-        )}
-      </Flex>
-    </NavigationBarWrapper >
+          </Box>
+      )}
+    </NavigationBarWrapper>
   )
 }
 

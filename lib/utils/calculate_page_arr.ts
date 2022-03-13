@@ -8,10 +8,12 @@ export const calculatePageArray = (current: number, max: number) => {
     }
   } else if (current + 2 >= max) {
     for (let i = max - 4; i <= max; i++) {
+      if (i == 0) continue
       pageArray.push(i)
     }
   } else {
     for (let i = current - 2; i <= current + 2; i++) {
+      if (i == 0) continue
       pageArray.push(i)
     }
   }

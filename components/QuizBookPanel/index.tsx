@@ -12,13 +12,15 @@ import { RiAddCircleLine } from 'react-icons/ri'
 import QuizModify from './QuizModify'
 
 interface Props {
-  quizBooks: QuizBookProps[]
   quizBook: QuizBookProps
   action: 'create' | 'modify'
+  allQuizBooks: QuizBookProps[]
+  currentPage: number
 }
 
 const QuizBookPanel: React.FC<Props> = ({
-  quizBooks,
+  allQuizBooks,
+  currentPage,
   quizBook,
   // action
 }): JSX.Element => {
@@ -29,8 +31,9 @@ const QuizBookPanel: React.FC<Props> = ({
       <Box width='50vw'>
         <QuizBookExtend
           addQuizBook={quizBook}
-          quizBooks={quizBooks}
           action='modify'
+          allQuizBooks={allQuizBooks}
+          currentPage={currentPage}
         />
       </Box>
     )
@@ -42,19 +45,22 @@ const QuizBookPanel: React.FC<Props> = ({
       modalContext.setModalContent(
         <Box width='50vw'>
           <QuizModify
-            quizBooks={quizBooks}
             quizBook={quizBook}
             action='create'
+            allQuizBooks={allQuizBooks}
+            currentPage={currentPage}
           />
         </Box>
       )
       modalContext.setModalIsOpen(true)
     }
+    
     if (action === 'modify' && data) {
       modalContext.setModalContent(
         <Box width='50vw'>
           <QuizModify
-            quizBooks={quizBooks}
+            allQuizBooks={allQuizBooks}
+            currentPage={currentPage}
             quizBook={quizBook}
             action='modify'
             quiz={data}
@@ -96,11 +102,6 @@ const QuizBookPanel: React.FC<Props> = ({
       {quizBook?.quiz && quizBook?.quiz?.map((q: QuizProps) =>
         <Flex mt='10px' justifyContent='space-between' alignItems='center'>
           <Text fontSize='20px'>
-            {/* question: string
-            answer: string
-            prompt: string
-            finished_date: Date | null
-            last_answer: string | null */}
             {q?.question}
           </Text>
           <Button onClick={() => handleQuiz('modify', q)}>

@@ -32,7 +32,7 @@ const TodayTaskTitle = styled(GlassBox) <{ setTaskColor: string }>`
   `}
 `
 
-const TodayTaskDescription = styled(GlassBox) <{ setTaskColor: string }>`
+export const TodayTaskDescription = styled(GlassBox) <{ setTaskColor: string }>`
   display: flex;
   border-radius: 5px;
   font-weight: 700;

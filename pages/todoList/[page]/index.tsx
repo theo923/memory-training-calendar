@@ -3,55 +3,54 @@ import React, { useEffect } from "react";
 import Layout from "components/Layout";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
-import QuizBooks from "components/QuizBooks";
+import TodoList from "components/TodoListSection/TodoList";
 import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
 import { initializeUser } from "lib/initialize";
-import { QuizBookProps, ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
+import { ServerSettingsProps, TodoProps, UserProps, UserSettingsProps } from "lib/interface";
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
-import { getQuizBooks } from "lib/get/getQuizBooks";
+import { getTodoList } from "lib/get/getTodoList";
 import Modal from "components/Modal";
+import { TODO_FETCH_COUNT } from "lib/data/fetch_numbers";
 import { calculatePageArray } from "lib/utils/calculate_page_arr";
-import { QUIZBOOK_FETCH_COUNT } from "lib/data/fetch_numbers";
-import { QUIZBOOK_URL_PAGE } from "lib/data/pageUrl";
 import { refreshData } from "lib/utils/refresh_data";
+import { TODOLIST_URL_PAGE } from "lib/data/pageUrl";
 import { split_array } from "lib/utils/split_array";
 
 interface Props {
   serverSettings: ServerSettingsProps
   user: UserProps
   userSettings: UserSettingsProps
-  quizBooks: QuizBookProps[]
-  allQuizBooks: QuizBookProps[]
+  todoList: TodoProps[]
+  allTodoList: TodoProps[]
   status: boolean
   pageArray: number[]
 }
 
-const quizBook: React.FC<Props> = ({
+const todoList: React.FC<Props> = ({
   serverSettings,
   user,
   userSettings,
-  quizBooks,
-  allQuizBooks,
+  todoList,
+  allTodoList,
   status,
   pageArray
 }): JSX.Element => {
 
   useEffect(() => {
-    console.log('999', allQuizBooks, quizBooks.length == 0)
-    if (allQuizBooks.length > 0 && quizBooks.length == 0)
-      refreshData(QUIZBOOK_URL_PAGE(
-        split_array(allQuizBooks, QUIZBOOK_FETCH_COUNT)[1] as number
+    if (allTodoList.length > 0 && todoList.length == 0)
+      refreshData(TODOLIST_URL_PAGE(
+        split_array(allTodoList, TODO_FETCH_COUNT)[1] as number
       ), 'push')
-  }, [allQuizBooks])
+  }, [allTodoList])
 
   return (
     <>
       <Head>
-        <title>QuizBook | Memory Training Calendar</title>
+        <title>TodoList | Memory Training Calendar</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Modal />
@@ -62,10 +61,10 @@ const quizBook: React.FC<Props> = ({
       >
         <NavigationBar />
         <MainComponent>
-          <QuizBooks
+          <TodoList
+            todoList={todoList}
+            allTodoList={allTodoList}
             pageArray={pageArray}
-            quizBooks={quizBooks}
-            allQuizBooks={allQuizBooks}
           />
         </MainComponent>
         <JobBoard>
@@ -93,18 +92,17 @@ const quizBook: React.FC<Props> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, req }) => {
   try {
     const serverSettings = await getServerSettings()
-    const itemsForPages = QUIZBOOK_FETCH_COUNT;
+    const itemsForPages = TODO_FETCH_COUNT;
 
     if (!req.cookies['calendar-user-token'])
       return {
         props: {
           serverSettings,
           user: initializeUser,
-          quizBooks: [],
-          allQuizBooks: [],
+          todoList: [],
           userSettings: {},
           status: false,
           pageArray: [1]
@@ -112,7 +110,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       }
 
     const { user } = await getUserInfo(req)
-    const { quizBooks, allQuizBooks } = await getQuizBooks(
+    const { todoList, allTodoList } = await getTodoList(
       user,
       (parseInt(query?.page as string) - 1) * itemsForPages || 0,
       req
@@ -121,15 +119,15 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
     const pageArray = calculatePageArray(
       parseInt(query.page as string),
-      Math.ceil(allQuizBooks.length / itemsForPages)
+      Math.ceil(allTodoList.length / itemsForPages)
     );
 
     return {
       props: {
         serverSettings,
         user,
-        quizBooks,
-        allQuizBooks,
+        todoList,
+        allTodoList,
         userSettings,
         status: true,
         pageArray
@@ -141,8 +139,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       props: {
         serverSettings: {},
         user: initializeUser,
-        quizBooks: [],
-        allQuizBooks: [],
+        todoList: [],
+        allTodoList: [],
         userSettings: {},
         status: false,
         pageArray: [1]
@@ -151,4 +149,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
   }
 }
 
-export default quizBook;
+export default todoList;

@@ -1,4 +1,4 @@
-import { QuizBookProps, QuizProps } from 'lib/interface'
+import { QuizBookProps } from 'lib/interface'
 import { verify_answer } from 'lib/utils/slug_util'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import styled from 'styled-components'
@@ -6,13 +6,13 @@ import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
 import GlassBox from 'styled/GlassBox'
-import Grid from 'styled/Grid'
 import Input from 'styled/Input'
 import ReadSlateText from 'styled/ReadSlateText'
 import Text from 'styled/Text'
-import { TiTick, TiTimes } from 'react-icons/ti'
+import { RiArrowGoBackFill } from 'react-icons/ri'
 import page_pass from 'lib/utils/page_pass'
 import { refreshData } from 'lib/utils/refresh_data'
+import ResultPage from './ResultPage'
 
 const QuestionBoard = styled(GlassBox)`
   display: flex;
@@ -20,13 +20,6 @@ const QuestionBoard = styled(GlassBox)`
   justify-content: center;
   align-items: center;
   height: 80%;
-  text-align: center;
-`
-
-const ScoreBoard = styled(Box)`
-`
-
-const AnswerList = styled(Grid)`
   text-align: center;
 `
 
@@ -46,9 +39,6 @@ const Quiz: React.FC<Props> = ({
     Array(quizBook?.quiz?.length)
   )
   const [currentAnswer, setCurrentAnswer] = useState<string>('')
-  const [showAnswer, setShowAnswer] = useState<boolean[]>(
-    Array(quizBook?.quiz?.length).fill(false)
-  )
   const [finalScores, setFinalScores] = useState<number>(0)
 
 
@@ -69,11 +59,6 @@ const Quiz: React.FC<Props> = ({
     setAnswer(answerCopy)
   }
 
-  const handleShowAnswer = (num: number) => {
-    let showAnswerCopy = [...showAnswer];
-    showAnswerCopy[num] = true;
-    setShowAnswer(showAnswerCopy)
-  }
 
   return (
     <Box
@@ -81,6 +66,16 @@ const Quiz: React.FC<Props> = ({
       minHeight='800px'
       height='100%'
     >
+      <Flex justifyContent={['flex-start', null, 'flex-end']} alignContent='center'>
+        <Box mr='20px'>
+          <Button onClick={() => refreshData('', 'back')}>
+            <RiArrowGoBackFill size='25px' />
+          </Button>
+        </Box>
+        <Text fontSize='25px'>
+          Back to Question Book
+        </Text>
+      </Flex>
       {pass && questionIndex <= quizBook.quiz.length - 1 &&
         <QuestionBoard minHeight='600px' p='20px'>
           <Text fontSize='20px' mb='30px'>{`Question ${questionIndex + 1} / ${quizBook.quiz.length} `}</Text>
@@ -117,55 +112,13 @@ const Quiz: React.FC<Props> = ({
           </Flex>
         </QuestionBoard>
       }
-      {pass && answer.length === quizBook.quiz.length && questionIndex > quizBook.quiz.length - 1 &&
-        <QuestionBoard m='20px'>
-          <Text fontSize='30px'>
-            You have completed {quizBook.name}.
-          </Text>
-          <Text fontSize='30px' mb='40px'>
-            Scoreboard:
-          </Text>
-          <AnswerList mb='20px' gridTemplateColumns='1fr 1fr 1fr 1fr'>
-            <Box></Box>
-            <Text>Question</Text>
-            <Text>Your Answer</Text>
-            <Text>Model Answer</Text>
-            {quizBook.quiz.map((q: QuizProps, idx: number) => {
-              const bool = verify_answer(answer[idx], q.answer)
-              return (
-                <>
-                  <Flex alignItems='center' justifyContent='center'>
-                    {bool ? <TiTick color='green' size='20px' /> : <TiTimes color='red' size='20px' />}
-                  </Flex>
-                  <Text color={bool ? 'green' : 'red'} fontSize='20px'>
-                    {q.question}
-                  </Text>
-                  <Text color={bool ? 'green' : 'red'} fontSize='20px'>
-                    {answer[idx]}
-                  </Text>
-                  {bool ? <Flex alignItems='center' justifyContent='center'>
-                    {bool ? <TiTick color='green' size='20px' /> : <TiTimes color='red' size='20px' />}
-                  </Flex>
-                    : showAnswer[idx] ?
-                      <Text fontSize='20px' >
-                        {q.answer}
-                      </Text>
-                      : <Button onClick={() => handleShowAnswer(idx)}>
-                        Answer
-                      </Button>
-                  }
-                </>
-              )
-            }
-            )}
-          </AnswerList>
-          <ScoreBoard>
-            <Text>
-              Scores : {finalScores} / {quizBook.quiz.length}
-            </Text>
-          </ScoreBoard>
-          <Button onClick={() => refreshData('/quizBook/1')}>Menu</Button>
-        </QuestionBoard>
+      {pass && answer.length === quizBook.quiz.length &&
+        questionIndex > quizBook.quiz.length - 1 &&
+        <ResultPage
+          quizBook={quizBook}
+          answer={answer}
+          finalScores={finalScores}
+        />
       }
     </Box >
   )

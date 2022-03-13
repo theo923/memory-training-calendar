@@ -11,24 +11,26 @@ import { initializeQuizBook } from 'lib/initialize';
 import QuizBookExtend from './QuizBookExtend';
 import { ModalContext } from 'components/Modal/ModalContext';
 import PageNavigation from 'components/Pagination';
-import { refreshData } from 'lib/utils/refresh_data';
+import { control_string_length } from 'lib/utils/control_string_length';
+import { QUIZBOOK_URL_PAGE } from 'lib/data/pageUrl';
+import { NextRouter, useRouter } from 'next/router';
 
 interface Props {
   quizBooks: QuizBookProps[],
+  allQuizBooks: QuizBookProps[],
   pageArray: number[]
 }
 
 const QuizBooks: React.FC<Props> = ({
   quizBooks,
+  allQuizBooks,
   pageArray
 }) => {
-  const [page, setPage] = useState<number>(1)
+  const router: NextRouter = useRouter()
+  const currentPage: number = parseInt(router?.query?.page as string)
+
   const [addQuizBook, setAddQuizBook] = useState<QuizBookProps>(initializeQuizBook)
   const modalContext = useContext(ModalContext)
-
-  useEffect(() => {
-    refreshData(`/quizBook/${page}`, 'replace')
-  }, [page])
 
   useEffect(() => {
     if (!modalContext.modalIsOpen) {
@@ -41,8 +43,9 @@ const QuizBooks: React.FC<Props> = ({
       <Box width='50vw'>
         <QuizBookExtend
           addQuizBook={addQuizBook}
-          quizBooks={quizBooks}
           action='create'
+          allQuizBooks={allQuizBooks}
+          currentPage={currentPage}
         />
       </Box>
     )
@@ -79,7 +82,8 @@ const QuizBooks: React.FC<Props> = ({
               <QuizBook
                 key={idx}
                 quizBook={quizBook}
-                quizBooks={quizBooks}
+                allQuizBooks={allQuizBooks}
+                currentPage={currentPage}
               />
             )
           }
@@ -91,7 +95,12 @@ const QuizBooks: React.FC<Props> = ({
         >
           <Input
             placeholder="Create New Quiz Book"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setAddQuizBook({ ...addQuizBook, name: e.target.value })}
+            value={addQuizBook.name}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setAddQuizBook({
+                ...addQuizBook,
+                name: control_string_length(e.target.value, 10)[1] as string
+              })}
           />
           <Flex
             justifyContent='center'
@@ -107,8 +116,7 @@ const QuizBooks: React.FC<Props> = ({
         </Flex>
         <PageNavigation
           pageArray={pageArray}
-          page={page}
-          setPage={setPage}
+          setPage={QUIZBOOK_URL_PAGE}
         />
       </Flex>
     </Box>

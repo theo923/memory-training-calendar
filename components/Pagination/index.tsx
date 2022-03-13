@@ -1,19 +1,19 @@
-import { Dispatch } from "react";
 import Button from "styled/Button";
 import Flex from "styled/Flex";
 import Box from "styled/Box";
+import { NextRouter, useRouter } from "next/router";
 
 interface Props {
   pageArray: number[]
-  page: number
-  setPage: Dispatch<React.SetStateAction<number>>
+  setPage: (page: number) => string
 }
 
 const Pagination: React.FC<Props> = ({
   pageArray,
-  // page,
   setPage
 }): JSX.Element => {
+  const router: NextRouter = useRouter()
+
   return (
     <Flex
       data-test="component-pagination"
@@ -27,7 +27,8 @@ const Pagination: React.FC<Props> = ({
           <Box mr='10px'>
             <Button
               key={item}
-              onClick={() => setPage(item)}
+              onClick={() => router.push(setPage(item))}
+              disabled={Boolean(item === parseInt(router.query['page'] as string))}
             >
               {item}
             </Button>

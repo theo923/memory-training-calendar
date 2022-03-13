@@ -8,8 +8,9 @@ import { TaskProps, UserTasksProps } from 'lib/interface';
 import { getFullDate } from 'lib/get/getDate';
 import { checkNum } from 'lib/utils/check_valid_num';
 import DashboardTask from './DashboardTask';
-import TodayTask from './TodayTask';
+import TodayTask, { TodayTaskDescription } from './TodayTask';
 import { UserContext } from 'components/User';
+import { setTextColor } from 'lib/controller/controlColor';
 
 interface Props {
   tasks: UserTasksProps
@@ -97,10 +98,32 @@ const Dashboard: React.FC<Props> = ({
             width='100%'
           >
             {tasks != null &&
-              tasks![getFullDate(today)] &&
+              tasks![getFullDate(today)] ?
               <TodayTask
                 task={tasks![getFullDate(today)][Math.floor(Math.random() * tasks![getFullDate(today)].length)]}
               />
+              :
+              <TodayTaskDescription
+                my={['10px']}
+                mx={['10px', '0px']}
+                setTaskColor={'#fff'}
+              >
+                <Box
+                  mx='10px'
+                  my='8px'
+                  p={['3px']}
+                  maxHeight='300px'
+                  width='auto'
+                  maxWidth={['400px', '600px', '425px']}
+                >
+                  <Text
+                    fontSize='18px'
+                    color={setTextColor(7)}
+                  >
+                    No Tasks for Today!
+                  </Text>
+                </Box>
+              </TodayTaskDescription>
             }
           </Flex>
         </Flex>
