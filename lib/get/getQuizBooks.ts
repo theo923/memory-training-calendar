@@ -44,6 +44,7 @@ export const getQuizBooks = async (user: UserProps, page: number, req: any) => {
               description: q.description,
               attempt: q.attempt,
               slug: q.slug,
+              public: q.public,
               quiz: q.quiz.map((qz: QuizProps) => {
                 return {
                   id: qz.id,
@@ -63,6 +64,7 @@ export const getQuizBooks = async (user: UserProps, page: number, req: any) => {
               description: q.description,
               attempt: q.attempt,
               slug: q.slug,
+              public: q.public,
               quiz: q.quiz.map((qz: QuizProps) => {
                 return {
                   id: qz.id,
@@ -91,6 +93,7 @@ export const getQuizBooks = async (user: UserProps, page: number, req: any) => {
                 description: q.description,
                 attempt: q.attempt,
                 slug: q.slug,
+                public: q.public,
                 quiz: q.quiz.map((qz: QuizProps) => {
                   return {
                     id: qz.id,

@@ -40,9 +40,8 @@ const Quiz: React.FC<Props> = ({
   const [currentAnswer, setCurrentAnswer] = useState<string>('')
   const [finalScores, setFinalScores] = useState<number>(0)
 
-
   useEffect(() => {
-    if (answer.length === quizBook.quiz.length && questionIndex > quizBook.quiz.length - 1) {
+    if (answer.length === quizBook?.quiz.length && questionIndex > quizBook?.quiz.length - 1) {
       let scores = 0
       answer.forEach((a: string, idx: number) => {
         if (verify_answer(a, quizBook.quiz[idx].answer))
@@ -96,6 +95,7 @@ const Quiz: React.FC<Props> = ({
               <Button onClick={() => {
                 setQuestionIndex(prev => prev + 1);
                 handleAnswers(currentAnswer, questionIndex)
+                setCurrentAnswer('')
               }}
                 disabled={!Boolean(currentAnswer.length > 0)}
               >

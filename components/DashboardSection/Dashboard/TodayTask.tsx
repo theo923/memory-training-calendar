@@ -87,7 +87,7 @@ const TodayTask: React.FC<Props> = ({
           mx='10px'
           my='8px'
           p={['3px']}
-          maxHeight='300px'
+          height='300px'
           width='auto'
           maxWidth={['400px', '600px', '425px']}
         >

@@ -65,6 +65,7 @@ export const initializeQuizBook = {
   attempt: 0,
   slug: '',
   quiz: [],
+  public: false,
 }
 
 export const initializeQuiz = {

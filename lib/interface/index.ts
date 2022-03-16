@@ -86,6 +86,7 @@ export interface QuizBookProps {
   description: string
   attempt: number
   slug: string
+  public: boolean
   quiz: QuizProps[]
 }
 
