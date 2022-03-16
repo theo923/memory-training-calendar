@@ -1,31 +1,27 @@
 import Head from "next/head";
-import React, { useEffect } from "react";
+import React from "react";
 import Layout from "components/Layout";
 import NavigationBar from "components/NavigationBar";
 import MainComponent from "components/MainComponent";
-import QuizBooks from "components/QuizBooks";
 import Board from "components/Board";
 import JobBoard from "components/JobBoard";
 import { GetServerSideProps } from "next";
 import { initializeUser } from "lib/initialize";
-import { QuizBookProps, ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
+import { PublicQuizBookProps, ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
 import { getUserInfo } from "lib/get/getUserInfo";
 import { getUserSettings } from "lib/get/getUserSettings";
 import { getServerSettings } from "lib/get/getServerSettings";
-import { getQuizBooks } from "lib/get/getQuizBooks";
 import Modal from "components/Modal";
 import { calculatePageArray } from "lib/utils/calculate_page_arr";
 import { QUIZBOOK_RANKING_FETCH_COUNT } from "lib/data/fetch_numbers";
-import { QUIZBOOK_URL_PAGE } from "lib/data/pageUrl";
-import { refreshData } from "lib/utils/refresh_data";
-import { split_array } from "lib/utils/split_array";
+import { getPublicQuizBooks } from "lib/get/getPublicQuizBooks";
+import QuizBooks from "components/QuizBooksRanking";
 
 interface Props {
   serverSettings: ServerSettingsProps
   user: UserProps
   userSettings: UserSettingsProps
-  quizBooks: QuizBookProps[]
-  allQuizBooks: QuizBookProps[]
+  publicQuizBooks: PublicQuizBookProps[]
   status: boolean
   pageArray: number[]
 }
@@ -34,19 +30,11 @@ const quizBook: React.FC<Props> = ({
   serverSettings,
   user,
   userSettings,
-  quizBooks,
-  allQuizBooks,
+  publicQuizBooks,
   status,
   pageArray
 }): JSX.Element => {
-
-  useEffect(() => {
-    if (allQuizBooks.length > 0 && quizBooks.length == 0)
-      refreshData(QUIZBOOK_URL_PAGE(
-        split_array(allQuizBooks, QUIZBOOK_RANKING_FETCH_COUNT)[1] as number
-      ), 'push')
-  }, [allQuizBooks])
-
+  console.log(publicQuizBooks)
   return (
     <>
       <Head>
@@ -63,8 +51,7 @@ const quizBook: React.FC<Props> = ({
         <MainComponent>
           <QuizBooks
             pageArray={pageArray}
-            quizBooks={quizBooks}
-            allQuizBooks={allQuizBooks}
+            quizBooks={publicQuizBooks}
           />
         </MainComponent>
         <JobBoard>
@@ -102,8 +89,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
         props: {
           serverSettings,
           user: initializeUser,
-          quizBooks: [],
-          allQuizBooks: [],
+          publicQuizBooks: [],
           userSettings: {},
           status: false,
           pageArray: [1]
@@ -111,24 +97,23 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       }
 
     const { user } = await getUserInfo(req)
-    const { quizBooks, allQuizBooks } = await getQuizBooks(
-      user,
-      (parseInt(query?.page as string) - 1) * itemsForPages || 0,
-      req
+    const { metadata, publicQuizBooks } = await getPublicQuizBooks(
+      (parseInt(query?.page as string) - 1) * itemsForPages || 0
     )
+
     const userSettings = await getUserSettings(user?.id, req)
 
     const pageArray = calculatePageArray(
       parseInt(query.page as string),
-      Math.ceil(allQuizBooks.length / itemsForPages)
+      Math.ceil(metadata.total / itemsForPages)
     );
+    console.log(pageArray)
 
     return {
       props: {
         serverSettings,
         user,
-        quizBooks,
-        allQuizBooks,
+        publicQuizBooks,
         userSettings,
         status: true,
         pageArray
@@ -140,8 +125,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       props: {
         serverSettings: {},
         user: initializeUser,
-        quizBooks: [],
-        allQuizBooks: [],
+        publicQuizBooks: [],
         userSettings: {},
         status: false,
         pageArray: [1]

@@ -41,7 +41,6 @@ const quizBook: React.FC<Props> = ({
 }): JSX.Element => {
 
   useEffect(() => {
-    console.log('999', allQuizBooks, quizBooks.length == 0)
     if (allQuizBooks.length > 0 && quizBooks.length == 0)
       refreshData(QUIZBOOK_URL_PAGE(
         split_array(allQuizBooks, QUIZBOOK_FETCH_COUNT)[1] as number

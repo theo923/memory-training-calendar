@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { QuizBookProps, QuizProps } from 'lib/interface'
+import { QuizBookProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
@@ -15,8 +15,10 @@ import ReadSlateText from 'styled/ReadSlateText'
 import { ModalContext } from 'components/Modal/ModalContext'
 import QuizBookPanel from 'components/QuizBookPanel'
 import { refreshData } from 'lib/utils/refresh_data'
-// import { UserContext } from 'components/User'
+import { UserContext } from 'components/User'
 import axios from 'axios'
+import { getUserIP } from 'lib/get/getIP'
+import { QUIZBOOK_URL_PAGE } from 'lib/data/pageUrl'
 
 const QuizBookEntry = styled(GlassBox) <{ setTaskColor: string }>`
   border-radius: 5px;
@@ -50,7 +52,8 @@ const QuizBook: React.FC<Props> = ({
   allQuizBooks,
   currentPage
 }): JSX.Element => {
-  // const userInfo = useContext(UserContext)
+  const ip = getUserIP()
+  const userInfo = useContext(UserContext)
   const [open, setOpen] = useState<boolean>(false)
   const modalContext = useContext(ModalContext)
 
@@ -69,17 +72,16 @@ const QuizBook: React.FC<Props> = ({
   }
 
   const handleUpload = async () => {
-    let qb = quizBook
-    delete qb.id
-    qb['quiz'] = qb.quiz.map((q: QuizProps) => {
-      delete q.id
-      return q
-    })
-
+    console.log(quizBook)
     await axios.post('/api/createPublicQuizBook', {
-      quizBook: quizBook
+      ip,
+      userID: userInfo?.user?.id,
+      userName: userInfo?.user?.username,
+      quizBook,
+      quizBooks: allQuizBooks
     }).then(({ data }) => {
-      console.log(data)
+      if (data.success)
+        refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
     })
   }
 

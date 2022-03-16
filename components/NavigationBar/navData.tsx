@@ -1,7 +1,8 @@
-import { QUIZBOOK_URL, TODOLIST_URL, TASKS_URL, CALENDAR_URL, DASHBOARD_URL } from "lib/data/pageUrl";
+import { QUIZBOOK_URL, TODOLIST_URL, TASKS_URL, CALENDAR_URL, DASHBOARD_URL, QUIZBOOK_RANKING_URL } from "lib/data/pageUrl";
 import { FaTasks } from "react-icons/fa";
 import { ImCalendar, ImList } from "react-icons/im";
 import { MdQuiz, MdSpaceDashboard } from "react-icons/md";
+import { RiVipCrownFill } from "react-icons/ri";
 
 export interface NavDataProps {
   name: string,
@@ -31,7 +32,12 @@ export const navData: NavDataProps[] = [
     icon: <FaTasks size='30px' />,
   },
   {
-    name: 'QuizBook',
+    name: 'QuizBook Ranking',
+    destination: QUIZBOOK_RANKING_URL,
+    icon: <RiVipCrownFill size='30px' />,
+  },
+  {
+    name: 'My QuizBook',
     destination: QUIZBOOK_URL,
     icon: <MdQuiz size='30px' />,
   },
