@@ -10,3 +10,7 @@ export const TODOLIST_URL_PAGE = (page: number) => `/todoList/${page}`
 
 export const QUIZBOOK_URL = '/quizBook/1'
 export const QUIZBOOK_URL_PAGE = (page: number) => `/quizBook/${page}`
+
+export const QUIZBOOK_RANKING_URL = '/quizBookRanking/1'
+export const QUIZBOOK_RANKING_URL_PAGE = (page: number) =>
+  `/quizBookRanking/${page}`

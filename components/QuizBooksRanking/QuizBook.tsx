@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { QuizBookProps, QuizProps } from 'lib/interface'
+import { QuizBookProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
@@ -9,14 +9,11 @@ import { setTextColor } from 'lib/controller/controlColor'
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from 'react-icons/fa'
 import { AiFillEdit } from 'react-icons/ai'
 import { VscTriangleRight } from 'react-icons/vsc'
-import { RiUploadCloud2Fill } from 'react-icons/ri'
 import GlassBox from 'styled/GlassBox'
 import ReadSlateText from 'styled/ReadSlateText'
 import { ModalContext } from 'components/Modal/ModalContext'
 import QuizBookPanel from 'components/QuizBookPanel'
 import { refreshData } from 'lib/utils/refresh_data'
-// import { UserContext } from 'components/User'
-import axios from 'axios'
 
 const QuizBookEntry = styled(GlassBox) <{ setTaskColor: string }>`
   border-radius: 5px;
@@ -50,7 +47,6 @@ const QuizBook: React.FC<Props> = ({
   allQuizBooks,
   currentPage
 }): JSX.Element => {
-  // const userInfo = useContext(UserContext)
   const [open, setOpen] = useState<boolean>(false)
   const modalContext = useContext(ModalContext)
 
@@ -66,21 +62,6 @@ const QuizBook: React.FC<Props> = ({
       </Box>
     )
     modalContext.setModalIsOpen(true)
-  }
-
-  const handleUpload = async () => {
-    let qb = quizBook
-    delete qb.id
-    qb['quiz'] = qb.quiz.map((q: QuizProps) => {
-      delete q.id
-      return q
-    })
-
-    await axios.post('/api/createPublicQuizBook', {
-      quizBook: quizBook
-    }).then(({ data }) => {
-      console.log(data)
-    })
   }
 
   return (
@@ -144,13 +125,6 @@ const QuizBook: React.FC<Props> = ({
               width='100%'
               maxWidth={['400px', '600px', '425px']}
             >
-              {quizBook?.quiz.length > 0 && !quizBook?.public &&
-                <Flex mr='10px'>
-                  <Button onClick={() => handleUpload()}>
-                    <RiUploadCloud2Fill size='20px' />
-                  </Button>
-                </Flex>
-              }
               <Text
                 fontSize='18px'
                 color={setTextColor(7)}

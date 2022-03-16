@@ -8,8 +8,8 @@ const ModalWrapper = styled(Flex)`
   position: absolute;
   justify-content: center;
   align-items: center;
-  min-width: 100vw;
-  min-height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
   top: 0; 
   left: 0;
   right: 0; 
@@ -40,8 +40,8 @@ const Modal = () => {
     >
       <ModalWrapper>
         <ContentWrapper
-          minHeight={['auto', null, '70%']}
-          minWidth={['auto', null, '70%']}
+          minHeight={['55%', null, '70%']}
+          minWidth={['90%', null, '70%']}
           mx={['auto', null, '70px', '150px']}
           my={['auto', null, '70px', '150px']}
         >

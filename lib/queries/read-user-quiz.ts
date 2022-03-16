@@ -22,6 +22,7 @@ export const READ_USER_QUIZ_QUERY = gql`
               finished_date
               last_answer
             }
+            public
           }
         }
       }
@@ -51,6 +52,7 @@ export const READ_USER_QUIZ_ALL_QUERY = gql`
               finished_date
               last_answer
             }
+            public
           }
         }
       }
