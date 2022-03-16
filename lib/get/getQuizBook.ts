@@ -1,6 +1,6 @@
 import { client, DEFAULT_HEADERS } from 'lib/apollo'
 import { QuizBookProps, QuizProps, UserProps } from 'lib/interface'
-import { READ_USER_QUIZ_QUERY } from 'lib/queries/read-user-quiz'
+import { READ_USER_QUIZ_ALL_QUERY } from 'lib/queries/read-user-quiz'
 
 export const getQuizBook = async (
   user: UserProps,
@@ -13,7 +13,7 @@ export const getQuizBook = async (
         userTasks: { data: quizData },
       },
     } = await client.query({
-      query: READ_USER_QUIZ_QUERY,
+      query: READ_USER_QUIZ_ALL_QUERY,
       variables: {
         id: user?.id,
       },

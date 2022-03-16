@@ -25,7 +25,7 @@ interface Props {
   status: boolean
 }
 
-const quizBook: React.FC<Props> = ({
+const QuizPage: React.FC<Props> = ({
   serverSettings,
   user,
   userSettings,
@@ -125,4 +125,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
   }
 }
 
-export default quizBook;
+export default QuizPage;

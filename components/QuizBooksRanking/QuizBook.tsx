@@ -1,5 +1,8 @@
-import React, { useContext, useState } from 'react'
-import { QuizBookProps } from 'lib/interface'
+import React, {
+  // useContext,
+  useState
+} from 'react'
+import { PublicQuizBookProps } from 'lib/interface'
 import Box from 'styled/Box'
 import Button from 'styled/Button'
 import Flex from 'styled/Flex'
@@ -7,13 +10,13 @@ import Text from 'styled/Text'
 import styled, { css } from 'styled-components'
 import { setTextColor } from 'lib/controller/controlColor'
 import { FaCompressArrowsAlt, FaExpandArrowsAlt } from 'react-icons/fa'
-import { AiFillEdit } from 'react-icons/ai'
-import { VscTriangleRight } from 'react-icons/vsc'
+// import { AiFillEdit } from 'react-icons/ai'
+// import { VscTriangleRight } from 'react-icons/vsc'
 import GlassBox from 'styled/GlassBox'
 import ReadSlateText from 'styled/ReadSlateText'
-import { ModalContext } from 'components/Modal/ModalContext'
-import QuizBookPanel from 'components/QuizBookPanel'
-import { refreshData } from 'lib/utils/refresh_data'
+// import { ModalContext } from 'components/Modal/ModalContext'
+// import QuizBookPanel from 'components/QuizBookPanel'
+// import { refreshData } from 'lib/utils/refresh_data'
 
 const QuizBookEntry = styled(GlassBox) <{ setTaskColor: string }>`
   border-radius: 5px;
@@ -37,32 +40,16 @@ const QuizBookDescription = styled(Box)`
 `
 
 interface Props {
-  quizBook: QuizBookProps
-  allQuizBooks: QuizBookProps[]
+  quizBook: PublicQuizBookProps
   currentPage: number
 }
 
 const QuizBook: React.FC<Props> = ({
   quizBook,
-  allQuizBooks,
-  currentPage
+  // currentPage
 }): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false)
-  const modalContext = useContext(ModalContext)
-
-  const handleQuizBookPanel = () => {
-    modalContext.setModalContent(
-      <Box width='50vw'>
-        <QuizBookPanel
-          quizBook={quizBook}
-          action='modify'
-          allQuizBooks={allQuizBooks}
-          currentPage={currentPage}
-        />
-      </Box>
-    )
-    modalContext.setModalIsOpen(true)
-  }
+  // const modalContext = useContext(ModalContext)
 
   return (
     <QuizBookEntry
@@ -85,11 +72,6 @@ const QuizBook: React.FC<Props> = ({
           </Box>
           <Flex justifyContent='center' alignItems='center'>
             <Flex mr='10px'>
-              <Button onClick={() => handleQuizBookPanel()}>
-                <AiFillEdit size='20px' />
-              </Button>
-            </Flex>
-            <Flex mr='10px'>
               {open &&
                 <Button onClick={() => setOpen(prev => !prev)}>
                   <FaCompressArrowsAlt size='20px' />
@@ -101,13 +83,6 @@ const QuizBook: React.FC<Props> = ({
                 </Button>
               }
             </Flex>
-            {quizBook?.quiz.length > 0 &&
-              <Flex mr='10px'>
-                <Button onClick={() => refreshData(`/quiz/${quizBook?.slug}`, 'push')}>
-                  <VscTriangleRight size='20px' />
-                </Button>
-              </Flex>
-            }
           </Flex>
         </QuizBookTitle>
         {quizBook?.quiz.length === 0 &&

@@ -90,6 +90,15 @@ export interface QuizBookProps {
   quiz: QuizProps[]
 }
 
+export interface PublicQuizBookProps {
+  id?: string
+  name: string
+  description: string
+  attempt: number
+  slug: string
+  quiz: QuizForPublicProps[]
+}
+
 export interface QuizProps {
   id?: string
   question: string
@@ -97,6 +106,15 @@ export interface QuizProps {
   prompt: string
   finished_date: Date | null
   last_answer: string | null
+}
+
+export interface QuizForPublicProps {
+  id?: string
+  question: string
+  answer?: string
+  prompt?: string
+  finished_date?: Date | null
+  last_answer?: string | null
 }
 
 export interface ScheduleProps {
