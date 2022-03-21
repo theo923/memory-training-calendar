@@ -1,8 +1,6 @@
 import { childNode, ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
 import React, { useContext, useEffect } from "react";
 import Box from "styled/Box";
-import Flex from "styled/Flex";
-import Grid from "styled/Grid";
 import GlassBox from "styled/GlassBox";
 import styled, { css } from "styled-components";
 import { UserContext } from "components/User";
@@ -59,28 +57,14 @@ const Layout: React.FC<Props> = ({
 
   return (
     <Wrapper bgcolor={userInfo?.userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);'}>
-      <Grid
-        data-test="component-layout"
-        gridTemplateColumns={['1fr', '0.5fr 1fr 0.5fr']}
+      <GlassBox
+        borderRadius={['0', null, '30px']}
+        display='flex'
+        flexDirection={['column', null, 'row']}
+        height={main ? '100%' : 'auto'}
       >
-        <Box />
-        <Flex
-          flexDirection={['column', null, 'row']}
-          justifyContent='center'
-          alignItems='center'
-        >
-          <GlassBox
-            borderRadius={['0', null, '30px']}
-            display='flex'
-            flexDirection={['column', null, 'row']}
-            justifyContent='center'
-            height={main ? '100%' : 'auto'}
-          >
-            {children}
-          </GlassBox>
-        </Flex>
-        <Box />
-      </Grid>
+        {children}
+      </GlassBox>
     </Wrapper>
   );
 };
