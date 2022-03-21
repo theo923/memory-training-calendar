@@ -56,7 +56,10 @@ const Layout: React.FC<Props> = ({
   }, [userSettings])
 
   return (
-    <Wrapper bgcolor={userInfo?.userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);'}>
+    <Wrapper
+      data-test="component-layout"
+      bgcolor={userInfo?.userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);'}
+    >
       <GlassBox
         borderRadius={['0', null, '30px']}
         display='flex'
