@@ -61,7 +61,6 @@ const Layout: React.FC<Props> = ({
       bgcolor={userInfo?.userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);'}
     >
       <GlassBox
-        borderRadius={['0', null, '30px']}
         display='flex'
         flexDirection={['column', null, 'row']}
         height={main ? '100%' : 'auto'}
