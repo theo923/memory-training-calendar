@@ -8,16 +8,15 @@ import { ServerSettingsContext } from "components/ServerSettings";
 import { initializeUser } from "lib/initialize";
 
 const Wrapper = styled(Box) <{ bgcolor: string }>`
-  min-height: 100vh;
-  min-width: 100vw;
-
   @media only screen and (max-width: 768px) {
     min-width: auto;
+    
+    ${({ bgcolor }) => css`
+      background: ${bgcolor}
+    `}
   }
   
-  ${({ bgcolor }) => css`
-    background: ${bgcolor}
-  `}
+  background: white;
 `
 
 interface Props {
@@ -64,6 +63,8 @@ const Layout: React.FC<Props> = ({
         display='flex'
         flexDirection={['column', null, 'row']}
         height={main ? '100%' : 'auto'}
+        minHeight={['auto', 'auto', 'auto', '1119px']}
+        minWidth={["20px", '573px', "780px", "921px"]}
       >
         {children}
       </GlassBox>

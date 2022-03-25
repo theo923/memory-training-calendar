@@ -68,10 +68,16 @@ export interface BgColorProps {
 export interface ColorProps {
   colorName: string
   colorValue: string
+  secondary_colorValue: string
+  tertiary_colorValue: string
+  button_textColor: string
 }
 
 export interface UserSettingsProps {
   bgColor: string
+  secondary_colorValue: string
+  tertiary_colorValue: string
+  button_textColor: string
 }
 
 export interface TodoProps {
