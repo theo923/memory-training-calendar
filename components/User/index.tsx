@@ -12,6 +12,11 @@ interface ValuesProps {
 export const UserContext = createContext<ValuesProps>({
   user: initializeUser,
   setUser: () => { },
-  userSettings: { bgColor: '' },
+  userSettings: {
+    bgColor: '',
+    secondary_colorValue: '',
+    tertiary_colorValue: '',
+    button_textColor: ''
+  },
   setUserSettings: () => { },
 })

@@ -36,6 +36,9 @@ const MotionFlexContainer = styled(MotionBox)`
 
 interface InputValProp {
   bgColor: string
+  secondary_colorValue: string
+  tertiary_colorValue: string
+  button_textColor: string
 }
 
 const NavigationBar = (): JSX.Element => {
@@ -47,7 +50,7 @@ const NavigationBar = (): JSX.Element => {
   const [itemHover, setItemHover] = useState('')
 
   useEffect(() => {
-    setInputVal({ bgColor: userInfo?.userSettings?.bgColor })
+    setInputVal({ ...userInfo?.userSettings })
   }, [userInfo?.userSettings?.bgColor])
 
   useEffect(() => {
@@ -62,7 +65,10 @@ const NavigationBar = (): JSX.Element => {
       ip,
       userID: userInfo?.user?.id,
       userName: userInfo?.user.username,
-      bgColor: inputVal?.bgColor
+      bgColor: inputVal?.bgColor,
+      secondary_colorValue: inputVal?.secondary_colorValue,
+      tertiary_colorValue: inputVal?.tertiary_colorValue,
+      button_textColor: inputVal?.button_textColor,
     }).then(({ data }) => {
       if (data.success)
         refreshData('', 'reload')

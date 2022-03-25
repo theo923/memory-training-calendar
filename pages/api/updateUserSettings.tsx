@@ -9,7 +9,10 @@ const updateUserSettings = async (req: any, res: any) => {
       ip,
       userID,
       userName,
-      bgColor
+      bgColor,
+      secondary_colorValue,
+      tertiary_colorValue,
+      button_textColor
     } = req.body
 
     const userData = await getUserSettings(userID, req)
@@ -20,11 +23,14 @@ const updateUserSettings = async (req: any, res: any) => {
         mutation: UPDATE_USER_SETTINGS_MUTATION,
         variables: {
           id,
-          bgColor
+          bgColor: bgColor || '',
+          secondary_colorValue: secondary_colorValue || '',
+          tertiary_colorValue: tertiary_colorValue || '',
+          button_textColor: button_textColor || ''
         },
         context: DEFAULT_HEADERS(req.cookies['calendar-user-token'])
       })
-    
+
     await write_logs('update', 'User Settings', userID, userName, ip, data, req)
 
     res.json({
