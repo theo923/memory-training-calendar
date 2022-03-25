@@ -4,11 +4,10 @@ import { getUserIP } from 'lib/get/getIP';
 import { refreshData } from 'lib/utils/refresh_data';
 import { NextRouter, useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react'
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Box from 'styled/Box';
 import Flex from 'styled/Flex';
 import Text from 'styled/Text';
-import tw from 'twin.macro';
 import { motionBoxVariant } from 'assets/animationVariant';
 import MotionBox from 'styled/MotionBox';
 import ReactTooltip from 'react-tooltip';
@@ -17,9 +16,15 @@ import { ServerSettingsContext } from 'components/ServerSettings';
 import { UserContext } from 'components/User';
 import Button from 'styled/Button';
 
-const NavigationBarWrapper = styled(Box)`
+const NavigationBarWrapper = styled(Box) <{ bgcolor: string }>`
   z-index: 50;
-  ${tw`rounded-md`}
+  ${({ bgcolor }) => css`
+    background: ${bgcolor ? bgcolor : ''};
+  `}
+
+  @media only screen and (max-width: 768px) {
+    background: transparent;
+  }
 `
 
 const MotionFlexContainer = styled(MotionBox)`
@@ -67,22 +72,22 @@ const NavigationBar = (): JSX.Element => {
   return (
     <NavigationBarWrapper
       data-test="component-navigationBar"
+      bgcolor={userInfo?.userSettings?.bgColor || 'white'}
       minWidth={['100px', null, null, null, '200px']}
-      height="100%"
     >
       <Flex
         flexDirection={['row', null, 'column']}
         justifyContent='space-between'
         alignItems="center"
-        height="100%"
         flexWrap='wrap'
       >
         <Box>
           <Text
             fontSize={['30px', null, null, null, '50px']}
             mr={['20px', null, '0']}
+            color='white'
           >
-            M-T-C
+            LOGO
           </Text>
           <Box
             className='border-t-8 border-gray-300 rounded-lg shadow-xl mb-10'
