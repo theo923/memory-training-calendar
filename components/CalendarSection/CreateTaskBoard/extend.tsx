@@ -35,6 +35,7 @@ const CreateTaskBoardExtend: React.FC<Props> = ({
         <Button onClick={() => modalContext.setModalIsOpen(false)}><RiCloseCircleFill size='20px' /></Button>
       </Flex>
       <CreateTaskBoardDefaultLayout
+        extend
         userTasks={userTasks}
         setUserTasks={setUserTasks}
         target={target}

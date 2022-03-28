@@ -1,7 +1,7 @@
 import { Editor, Transforms, Element as SlateElement, BaseEditor } from "slate"
 import { ReactEditor, useSlate } from "slate-react"
 import styled from "styled-components"
-import Box from "styled/Box"
+import Text from "styled/Text"
 import tw from "twin.macro"
 import { Button, Icon } from "./components"
 import { CustomElement, ButtonInterface, CustomText, ElementInterface } from "./interface"
@@ -14,7 +14,7 @@ declare module 'slate' {
   }
 }
 
-export const SlateWrapper = styled(Box)`
+export const SlateWrapper = styled(Text)`
   position: 'relative';
   width: 100%;
   overflow-y: auto;

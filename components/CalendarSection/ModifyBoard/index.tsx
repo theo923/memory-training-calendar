@@ -5,6 +5,7 @@ import Button from 'styled/Button'
 import ModifyBoardDefaultLayout from './defaultLayout'
 import { ModalContext } from 'components/Modal/ModalContext'
 import ModifyBoardExtend from './extend'
+import Text from 'styled/Text'
 
 interface Props {
   targetedTask: TaskProps
@@ -40,9 +41,9 @@ const ModifyBoard: React.FC<Props> = ({
           />
         </>
         :
-        <Box>
+        <Text>
           No Tasks is founded. You must select one first.
-        </Box>
+        </Text>
       }
     </Box>
   )

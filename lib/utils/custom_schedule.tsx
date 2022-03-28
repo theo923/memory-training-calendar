@@ -6,6 +6,7 @@ import Input from "styled/Input"
 import { ScheduleProps, TaskDateProps } from "lib/interface"
 import { addDays } from "date-fns"
 import { getFullDate } from "lib/get/getDate"
+import Text from "styled/Text"
 
 export const custom_schedule = (target: Date, inputVal: ScheduleProps) => {
   let cTarget: Date = target
@@ -56,18 +57,20 @@ export const custom_schedule = (target: Date, inputVal: ScheduleProps) => {
   return returnVal
 }
 
-const InputText = styled(Box)`
+const InputText = styled(Text)`
   align-self: center;
 `
 
 interface Props {
   inputVal: ScheduleProps
   setInputVal: React.Dispatch<React.SetStateAction<ScheduleProps>>
+  extend?: boolean
 }
 
 const CustomSchedule: React.FC<Props> = ({
   inputVal,
-  setInputVal
+  setInputVal,
+  extend
 }) => {
 
   return (
@@ -75,6 +78,7 @@ const CustomSchedule: React.FC<Props> = ({
       <Flex>
         <Box width='100%'>
           <InputText
+            extend={extend ? true : false}
             fontSize={['20px', null, '20px']}
             lineHeight={['20px', null, '28px']}
           >
@@ -100,6 +104,7 @@ const CustomSchedule: React.FC<Props> = ({
       <Flex>
         <Box width='100%'>
           <InputText
+            extend={extend ? true : false}
             fontSize={['20px', null, '20px']}
             lineHeight={['20px', null, '28px']}
           >
@@ -125,6 +130,7 @@ const CustomSchedule: React.FC<Props> = ({
       <Flex>
         <Box width='100%'>
           <InputText
+            extend={extend ? true : false}
             fontSize={['20px', null, '20px']}
             lineHeight={['20px', null, '28px']}
           >
@@ -150,6 +156,7 @@ const CustomSchedule: React.FC<Props> = ({
       <Flex>
         <Box width='100%'>
           <InputText
+            extend={extend ? true : false}
             fontSize={['20px', null, '20px']}
             lineHeight={['20px', null, '28px']}
           >

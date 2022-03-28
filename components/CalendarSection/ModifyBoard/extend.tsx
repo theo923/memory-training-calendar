@@ -47,6 +47,7 @@ const ModifyBoardExtend: React.FC<Props> = ({
         <RiDeleteBin5Line />
       </Button>
       <ModifyBoardDefaultLayout
+        extend
         targetedTask={targetedTask}
         reload={reload}
       />

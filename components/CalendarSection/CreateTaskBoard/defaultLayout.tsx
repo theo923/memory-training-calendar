@@ -27,7 +27,7 @@ import RadioButton from 'styled/RadioButton'
 import CustomSchedule, { custom_schedule } from 'lib/utils/custom_schedule'
 
 
-const InputText = styled(Box)`
+const InputText = styled(Text)`
   align-self: center;
 `
 
@@ -40,6 +40,7 @@ interface Props {
   setUserTasks: React.Dispatch<React.SetStateAction<UserTasksProps>>,
   target: Date,
   setTarget: React.Dispatch<React.SetStateAction<Date>>,
+  extend?: boolean
 }
 
 const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
@@ -47,6 +48,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
   setUserTasks,
   target,
   setTarget,
+  extend
 }): JSX.Element => {
   const ip = getUserIP()
   const [colorPicker, setColorPicker] = useState<string>('gradient')
@@ -108,6 +110,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       <Flex justifyContent='center' mt='10px'>
         <Box width='100%'>
           <InputText
+            extend={extend ? true : false}
             fontSize={['20px', null, '20px']}
             lineHeight={['20px', null, '28px']}
           >
@@ -125,6 +128,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       <Flex>
         <Box width='100%'>
           <InputText
+            extend={extend ? true : false}
             fontSize={['20px', null, '20px']}
             lineHeight={['20px', null, '28px']}
           >
@@ -143,11 +147,13 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       </Flex>
       {schedule === 'Customizable' &&
         <CustomSchedule
+          extend
           inputVal={scheduleInputVal}
           setInputVal={setScheduleInputVal}
         />
       }
       <InputText
+        extend={extend ? true : false}
         fontSize={['20px', null, '20px']}
         lineHeight={['20px', null, '28px']}
       >
@@ -158,6 +164,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
         onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskTitle(setInputVal, e)}
       />
       <InputText
+        extend={extend ? true : false}
         fontSize={['20px', null, '20px']}
         lineHeight={['20px', null, '28px']}
       >
@@ -166,6 +173,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       <SlateTextBox callChangeFunction={controlTaskDescription} insideObject changeHook={setInputVal} />
       <Flex>
         <InputText
+          extend={extend ? true : false}
           fontSize={['20px', null, '20px']}
           lineHeight={['20px', null, '28px']}
           mr='10px'

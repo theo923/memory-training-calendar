@@ -1,7 +1,6 @@
 import { childNode, ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
 import React, { useContext, useEffect } from "react";
 import Box from "styled/Box";
-import GlassBox from "styled/GlassBox";
 import styled, { css } from "styled-components";
 import { UserContext } from "components/User";
 import { ServerSettingsContext } from "components/ServerSettings";
@@ -10,13 +9,11 @@ import { initializeUser } from "lib/initialize";
 const Wrapper = styled(Box) <{ bgcolor: string }>`
   @media only screen and (max-width: 768px) {
     min-width: auto;
-    
-    ${({ bgcolor }) => css`
-      background: ${bgcolor}
-    `}
   }
   
-  background: white;
+  ${({ bgcolor }) => css`
+    background: ${bgcolor}
+  `}
 `
 
 interface Props {
@@ -59,7 +56,7 @@ const Layout: React.FC<Props> = ({
       data-test="component-layout"
       bgcolor={userInfo?.userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);'}
     >
-      <GlassBox
+      <Box
         display='flex'
         flexDirection={['column', null, 'row']}
         height={main ? '100%' : 'auto'}
@@ -67,7 +64,7 @@ const Layout: React.FC<Props> = ({
         minWidth={["20px", '573px', "780px", "921px"]}
       >
         {children}
-      </GlassBox>
+      </Box>
     </Wrapper>
   );
 };
