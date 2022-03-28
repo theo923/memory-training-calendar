@@ -15,18 +15,20 @@ import { getUserIP } from 'lib/get/getIP'
 import { ServerSettingsContext } from 'components/ServerSettings'
 import { UserContext } from 'components/User'
 
-const InputText = styled(Box)`
+const InputText = styled(Text)`
   align-self: center;
 `
 
 interface Props {
   targetedTask: TaskProps,
   reload?: boolean
+  extend?: boolean
 }
 
 const ModifyBoardDefaultLayout: React.FC<Props> = ({
   targetedTask,
-  reload = false
+  reload = false,
+  extend
 }): JSX.Element => {
   const ip = getUserIP()
   const [colorPicker, setColorPicker] = useState<string>('gradient')
@@ -83,6 +85,7 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
   return (
     <Box data-test="modifyBoard-defaultLayout">
       <InputText
+        extend={extend ? true : false}
         fontSize={['20px', null, '20px']}
         lineHeight={['20px', null, '28px']}
         mr='2'
@@ -94,6 +97,7 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
         onChange={(e: ChangeEvent<HTMLInputElement>) => controlTaskTitle(setInputVal, e)}
       />
       <InputText
+        extend={extend ? true : false}
         fontSize={['20px', null, '20px']}
         lineHeight={['20px', null, '28px']}
         mr='2'
@@ -108,6 +112,7 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
       />
       <Flex>
         <InputText
+          extend={extend ? true : false}
           fontSize={['20px', null, '20px']}
           lineHeight={['20px', null, '28px']}
           mr='10px'

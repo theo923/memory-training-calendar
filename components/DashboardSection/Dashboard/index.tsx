@@ -11,6 +11,15 @@ import DashboardTask from './DashboardTask';
 import TodayTask, { TodayTaskDescription } from './TodayTask';
 import { UserContext } from 'components/User';
 import { setTextColor } from 'lib/controller/controlColor';
+import GlassBox from 'styled/GlassBox';
+import styled from 'styled-components';
+
+const GlassCard = styled(GlassBox)`
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 interface Props {
   tasks: UserTasksProps
@@ -55,101 +64,99 @@ const Dashboard: React.FC<Props> = ({
             {`Welcome back! ${userInfo?.user?.username || ''}`}
           </Text>
         </Flex>
-        <Flex my='20px'>
-          <Text fontSize="30px">
-            Here is Your Progress
-          </Text>
-        </Flex>
       </Flex>
-      <Grid gridTemplateColumns={['1fr 1fr']} my='20px'>
-        <Flex
-          flexDirection='column'
-          justifyContent='center'
-          alignItems='center'
-        >
-          <CircleProgress percents={checkNum(percentageDay)} />
-          <Text fontSize={['20px', '30px']}>
-            {`${checkNum(percentageDay)}% Tasks Finished (Day)`}
-          </Text>
-        </Flex>
-        <Flex
-          flexDirection='column'
-          justifyContent='center'
-          alignItems='center'
-        >
-          <CircleProgress percents={checkNum(percentageMonth)} />
-          <Text fontSize={['20px', '30px']}>
-            {`${checkNum(percentageMonth)}% Tasks Finished (Month)`}
-          </Text>
-        </Flex>
-      </Grid>
-      <Grid
-        mt='50px'
-        gridTemplateColumns={['1fr', null, '1fr 1fr']}
-      >
-        <Flex
-          flexDirection='column'
-          alignItems='center'
-        >
-          <Text fontSize={['20px', '30px']}>Today's Task</Text>
+      <Grid gridTemplateColumns={['1fr 1fr', null, '1fr 1fr 1fr 1fr']} gridGap='30px' my='20px'>
+        <GlassCard round>
           <Flex
             flexDirection='column'
-            my='20px'
-            width='100%'
+            justifyContent='center'
+            alignItems='center'
           >
-            {tasks != null &&
-              tasks![getFullDate(today)] ?
-              <TodayTask
-                task={tasks![getFullDate(today)][Math.floor(Math.random() * tasks![getFullDate(today)].length)]}
-              />
-              :
-              <TodayTaskDescription
-                my={['10px']}
-                mx={['10px', '0px']}
-                setTaskColor={'#fff'}
-              >
-                <Box
-                  mx='10px'
-                  my='8px'
-                  p={['3px']}
-                  height='300px'
-                  width='auto'
-                  maxWidth={['400px', '600px', '425px']}
-                >
-                  <Text
-                    fontSize='18px'
-                    color={setTextColor(7)}
-
-                  >
-                    No Tasks for Today!
-                  </Text>
-                </Box>
-              </TodayTaskDescription>
-            }
+            <CircleProgress percents={checkNum(percentageDay)} />
+            <Text fontSize={['20px', '30px']}>
+              {`${checkNum(percentageDay)}% Tasks Finished (Day)`}
+            </Text>
           </Flex>
-        </Flex>
-        <Flex
-          flexDirection='column'
-          alignItems='center'
-        >
-          <Text fontSize={['20px', '30px']}>Task's Progress</Text>
+        </GlassCard>
+        <GlassCard round>
           <Flex
             flexDirection='column'
-            my='20px'
-            mx={['0', '50px', '20px']}
-            width={['100%', '80%', '80%']}
+            justifyContent='center'
+            alignItems='center'
           >
-            {unsorted?.length > 0 &&
-              unsorted.filter((_: any, idx: number) => idx < 5).map((task: any, idx: number) =>
-                <DashboardTask
-                  key={idx}
-                  task={task}
-                  successTasks={task?.successTasks || 0}
-                  totalTasks={task?.totalTasks || 0}
+            <CircleProgress percents={checkNum(percentageMonth)} />
+            <Text fontSize={['20px', '30px']}>
+              {`${checkNum(percentageMonth)}% Tasks Finished (Month)`}
+            </Text>
+          </Flex>
+        </GlassCard>
+        <GlassCard round>
+          <Flex
+            flexDirection='column'
+            alignItems='center'
+          >
+            <Text fontSize={['20px', '30px']}>Today's Task</Text>
+            <Flex
+              flexDirection='column'
+              my='20px'
+              width='100%'
+            >
+              {tasks != null &&
+                tasks![getFullDate(today)] ?
+                <TodayTask
+                  task={tasks![getFullDate(today)][Math.floor(Math.random() * tasks![getFullDate(today)].length)]}
                 />
-              )}
+                :
+                <TodayTaskDescription
+                  my={['10px']}
+                  mx={['10px', '0px']}
+                  setTaskColor={'#fff'}
+                >
+                  <Box
+                    mx='10px'
+                    my='8px'
+                    p={['3px']}
+                    height='300px'
+                    width='auto'
+                    maxWidth={['400px', '600px', '425px']}
+                  >
+                    <Text
+                      fontSize='18px'
+                      color={setTextColor(7)}
+
+                    >
+                      No Tasks for Today!
+                    </Text>
+                  </Box>
+                </TodayTaskDescription>
+              }
+            </Flex>
           </Flex>
-        </Flex>
+        </GlassCard>
+        <GlassCard round>
+          <Flex
+            flexDirection='column'
+            alignItems='center'
+          >
+            <Text fontSize={['20px', '30px']}>Task's Progress</Text>
+            <Flex
+              flexDirection='column'
+              my='20px'
+              mx={['0', '50px', '20px']}
+              width={['100%', '80%', '80%']}
+            >
+              {unsorted?.length > 0 &&
+                unsorted.filter((_: any, idx: number) => idx < 5).map((task: any, idx: number) =>
+                  <DashboardTask
+                    key={idx}
+                    task={task}
+                    successTasks={task?.successTasks || 0}
+                    totalTasks={task?.totalTasks || 0}
+                  />
+                )}
+            </Flex>
+          </Flex>
+        </GlassCard>
       </Grid>
     </Box>
   )
