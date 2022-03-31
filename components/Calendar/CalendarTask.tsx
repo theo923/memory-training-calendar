@@ -10,7 +10,7 @@ import ReactTooltip from "react-tooltip";
 import styled, { css } from "styled-components";
 import Box from "styled/Box";
 import Flex from "styled/Flex";
-import GlassBox from "styled/GlassBox";
+import TaskGlassBox from "styled/TaskGlassBox";
 import Text from "styled/Text";
 import tw from "twin.macro";
 
@@ -27,7 +27,7 @@ const FinishedIdentifier = styled(Flex) <FinishedIdentifier>`
   `}
 `;
 
-const CalendarTaskWrapper = styled(GlassBox) <{ setTaskColor: string }>`
+const CalendarTaskWrapper = styled(TaskGlassBox) <{ setTaskColor: string }>`
   display: flex;
   border-radius: 5px;
   font-weight: 700;
