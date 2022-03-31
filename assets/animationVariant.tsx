@@ -47,6 +47,12 @@ export const buttonVariant = (color: string, bgcolor: string) => {
             backgroundColor: bgcolor || "#525252",
             color: color || "#BADEFC",
             borderRadius: "10px",
+        },
+        flat: {
+            outline: "none",
+            backgroundColor: bgcolor || "#525252",
+            color: color || "#BADEFC",
+            borderRadius: "20px",
         }
     }
 };

@@ -13,12 +13,22 @@ import { UserContext } from 'components/User';
 import { setTextColor } from 'lib/controller/controlColor';
 import GlassBox from 'styled/GlassBox';
 import styled from 'styled-components';
+import IconWrapper from 'styled/IconWrapper';
+import { GrValidate } from 'react-icons/gr'
+import { BiPieChart, BiTask } from 'react-icons/bi'
+import { BsPieChartFill } from 'react-icons/bs'
 
 const GlassCard = styled(GlassBox)`
   min-height: 500px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+`
+
+const SpanGlassCard = styled(GlassCard)`
+  @media only screen and (max-width: 768px) {
+    grid-column: 1 / 3;
+  }
 `
 
 interface Props {
@@ -52,6 +62,30 @@ const Dashboard: React.FC<Props> = ({
   }
   const percentageMonth = Math.ceil(Math.abs(monthDone / numOfTasks * 100))
 
+  const entry = (icon: React.ReactNode, title: string, content: React.ReactNode, paddingX?: string) => {
+    return (
+      <>
+        <Flex mx='30px' mt='30px' mb='30px' alignSelf='flex-start'>
+          <IconWrapper>
+            {icon}
+          </IconWrapper>
+        </Flex>
+        <Flex
+          width='100%'
+          height='100%'
+          flexDirection='column'
+        >
+          <Text px={['30px', '50px']} mb='20px' fontSize={['20px', '30px']}>
+            {title}
+          </Text>
+          <Box px={paddingX ? paddingX : '0'}>
+            {content}
+          </Box>
+        </Flex>
+      </>
+    )
+  }
+
   return (
     <Box data-test='component-dashboard' textAlign='center'>
       <Flex
@@ -65,98 +99,77 @@ const Dashboard: React.FC<Props> = ({
           </Text>
         </Flex>
       </Flex>
-      <Grid gridTemplateColumns={['1fr 1fr', null, '1fr 1fr 1fr 1fr']} gridGap='30px' my='20px'>
+      <Grid gridTemplateColumns={['1fr 1fr', null, null, '1fr 1fr', '1fr 1fr 1fr 1fr']} gridGap='30px' my='20px'>
         <GlassCard round>
-          <Flex
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='center'
-          >
-            <CircleProgress percents={checkNum(percentageDay)} />
-            <Text fontSize={['20px', '30px']}>
-              {`${checkNum(percentageDay)}% Tasks Finished (Day)`}
-            </Text>
-          </Flex>
+          {entry(
+            <GrValidate size='30px' />,
+            'Tasks Finished (Day)',
+            <CircleProgress
+              percents={checkNum(percentageDay)}
+              emptyStroke={checkNum(percentageDay) === 0 ? '#e2e2e2' : 'transparent'}
+            />
+          )}
         </GlassCard>
         <GlassCard round>
-          <Flex
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='center'
-          >
-            <CircleProgress percents={checkNum(percentageMonth)} />
-            <Text fontSize={['20px', '30px']}>
-              {`${checkNum(percentageMonth)}% Tasks Finished (Month)`}
-            </Text>
-          </Flex>
+          {entry(
+            <BiPieChart size='30px' />,
+            'Tasks Finished (Month)',
+            <CircleProgress
+              percents={checkNum(percentageMonth)}
+              emptyStroke={checkNum(percentageMonth) === 0 ? '#e2e2e2' : 'transparent'}
+            />
+          )}
         </GlassCard>
-        <GlassCard round>
-          <Flex
-            flexDirection='column'
-            alignItems='center'
-          >
-            <Text fontSize={['20px', '30px']}>Today's Task</Text>
-            <Flex
-              flexDirection='column'
-              my='20px'
-              width='100%'
-            >
-              {tasks != null &&
-                tasks![getFullDate(today)] ?
-                <TodayTask
-                  task={tasks![getFullDate(today)][Math.floor(Math.random() * tasks![getFullDate(today)].length)]}
-                />
-                :
-                <TodayTaskDescription
-                  my={['10px']}
-                  mx={['10px', '0px']}
-                  setTaskColor={'#fff'}
+        <SpanGlassCard round>
+          {entry(
+            <BiTask size='30px' />,
+            "Today's Task",
+            tasks != null &&
+              tasks![getFullDate(today)] ?
+              <TodayTask
+                task={tasks![getFullDate(today)][Math.floor(Math.random() * tasks![getFullDate(today)].length)]}
+              />
+              :
+              <TodayTaskDescription
+                my={['10px']}
+                mx={['10px', '0px']}
+                setTaskColor={'#fff'}
+              >
+                <Box
+                  mx='10px'
+                  my='8px'
+                  p={['3px']}
+                  height='300px'
+                  width='auto'
+                  maxWidth={['400px', '600px', '425px']}
                 >
-                  <Box
-                    mx='10px'
-                    my='8px'
-                    p={['3px']}
-                    height='300px'
-                    width='auto'
-                    maxWidth={['400px', '600px', '425px']}
-                  >
-                    <Text
-                      fontSize='18px'
-                      color={setTextColor(7)}
+                  <Text
+                    fontSize='18px'
+                    color={setTextColor(7)}
 
-                    >
-                      No Tasks for Today!
-                    </Text>
-                  </Box>
-                </TodayTaskDescription>
-              }
-            </Flex>
-          </Flex>
-        </GlassCard>
-        <GlassCard round>
-          <Flex
-            flexDirection='column'
-            alignItems='center'
-          >
-            <Text fontSize={['20px', '30px']}>Task's Progress</Text>
-            <Flex
-              flexDirection='column'
-              my='20px'
-              mx={['0', '50px', '20px']}
-              width={['100%', '80%', '80%']}
-            >
-              {unsorted?.length > 0 &&
-                unsorted.filter((_: any, idx: number) => idx < 5).map((task: any, idx: number) =>
-                  <DashboardTask
-                    key={idx}
-                    task={task}
-                    successTasks={task?.successTasks || 0}
-                    totalTasks={task?.totalTasks || 0}
-                  />
-                )}
-            </Flex>
-          </Flex>
-        </GlassCard>
+                  >
+                    No Tasks for Today!
+                  </Text>
+                </Box>
+              </TodayTaskDescription>
+          )}
+        </SpanGlassCard>
+        <SpanGlassCard round>
+          {entry(
+            <BsPieChartFill size='30px' />,
+            "Task's Progress",
+            unsorted?.length > 0 &&
+            unsorted.filter((_: any, idx: number) => idx < 5).map((task: any, idx: number) =>
+              <DashboardTask
+                key={idx}
+                task={task}
+                successTasks={task?.successTasks || 0}
+                totalTasks={task?.totalTasks || 0}
+              />
+            ),
+            '20px'
+          )}
+        </SpanGlassCard>
       </Grid>
     </Box>
   )
