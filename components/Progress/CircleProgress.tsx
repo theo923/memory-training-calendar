@@ -2,14 +2,15 @@ import React from "react";
 import Box from "styled/Box";
 import Flex from "styled/Flex";
 import { motion } from "framer-motion";
+import Text from "styled/Text";
 
 const CircleProgress = ({
   percents = 50,
   radius = 30,
   stroke = '',
   emptyStroke = '#e2e2e2',
-  size = 150,
-  strokeWidth = 20,
+  size = 250,
+  strokeWidth = 10,
   delay = 0.5,
   duration = 2,
   ease = [0.12, 0.23, 0.5, 1]
@@ -40,6 +41,11 @@ const CircleProgress = ({
       justifyContent="center"
       alignItems="center"
     >
+      <Box position='absolute'>
+        <Text fontSize={['20px', '30px']}>
+          {`${percents}%`}
+        </Text>
+      </Box>
       <Box
         position="relative"
         height={size}
