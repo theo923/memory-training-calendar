@@ -1,7 +1,7 @@
 import router from 'next/router'
 
 export const refreshData = (
-  location: string = `/year/${router.query['year'] as string}`,
+  location: string = `/calendar/${router.query['year'] as string}`,
   method: string = 'replace'
 ): void => {
   if (method === 'reload') router.reload()
