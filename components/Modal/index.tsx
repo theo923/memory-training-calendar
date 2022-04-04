@@ -15,7 +15,7 @@ const ModalWrapper = styled(Flex)`
   right: 0; 
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 50;
+  z-index: 99999;
 `
 
 const ContentWrapper = styled(Box)`
@@ -26,7 +26,7 @@ const ContentWrapper = styled(Box)`
   right: 0; 
   bottom: 0;
   background-color: #fff;
-  z-index: 50;
+  z-index: 99998;
   word-break: break-all;
   white-space: pre-line;
 `

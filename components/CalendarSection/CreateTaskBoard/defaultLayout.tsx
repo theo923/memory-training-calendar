@@ -137,6 +137,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
         </Box>
         <Box width='100%'>
           <RadioButton
+            extend={extend ? true : false}
             layout='row'
             name='schedule'
             values={['Default', 'Customizable']}
@@ -170,7 +171,12 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       >
         Description:
       </InputText>
-      <SlateTextBox callChangeFunction={controlTaskDescription} insideObject changeHook={setInputVal} />
+      <SlateTextBox
+        insideObject
+        color={extend ? '#000' : '#fff'}
+        callChangeFunction={controlTaskDescription}
+        changeHook={setInputVal}
+      />
       <Flex>
         <InputText
           extend={extend ? true : false}

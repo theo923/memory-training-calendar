@@ -106,6 +106,7 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
       </InputText>
       <SlateTextBox
         insideObject
+        color={extend ? '#000' : '#fff'}
         values={inputVal?.taskDescription ? JSON.parse(inputVal.taskDescription) : ''}
         callChangeFunction={controlTaskDescription}
         changeHook={setInputVal}

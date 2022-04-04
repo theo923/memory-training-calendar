@@ -24,6 +24,7 @@ interface Props {
   changeHook: React.Dispatch<React.SetStateAction<any>>;
   property?: string
   height?: string
+  color?: string
 }
 
 const SlateTextBox: React.FC<Props> = ({
@@ -32,7 +33,8 @@ const SlateTextBox: React.FC<Props> = ({
   insideObject,
   changeHook,
   property,
-  height = '300px'
+  height = '300px',
+  color = '#000'
 }) => {
   try {
     const [value, setValue] = useState<Descendant[]>(values || initialValue)
@@ -62,7 +64,7 @@ const SlateTextBox: React.FC<Props> = ({
             <BlockButton format="numbered-list" icon={<ImListNumbered size='20px' />} />
             <BlockButton format="bulleted-list" icon={<ImList size='20px' />} />
           </Toolbar>
-          <SlateWrapper height={height}>
+          <SlateWrapper color={color} height={height}>
             <Editable
               renderElement={renderElement}
               renderLeaf={renderLeaf}
