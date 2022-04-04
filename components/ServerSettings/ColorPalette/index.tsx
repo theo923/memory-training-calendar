@@ -67,7 +67,7 @@ const ColorPanel: React.FC<Props> = ({
             key={idx}
             id={`colorTip-${inputProperties}-${color.colorValue}`} place="top" effect="solid"
           >
-            <Text>
+            <Text color='white'>
               {color.colorName}
             </Text>
           </ReactTooltip>

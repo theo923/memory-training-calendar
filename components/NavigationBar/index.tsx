@@ -19,7 +19,7 @@ import Button from 'styled/Button';
 const NavigationBarWrapper = styled(Box) <{ bgcolor: string }>`
   z-index: 50;
   ${({ bgcolor }) => css`
-    background: ${bgcolor ? bgcolor : ''};
+    background: ${bgcolor};
   `}
 
   @media only screen and (max-width: 768px) {
@@ -78,7 +78,7 @@ const NavigationBar = (): JSX.Element => {
   return (
     <NavigationBarWrapper
       data-test="component-navigationBar"
-      bgcolor={userInfo?.userSettings?.bgColor || 'white'}
+      bgcolor={userInfo?.userSettings?.bgColor || 'linear-gradient(120deg, #d4fc79 0 %, #96e6a1 100 %);'}
       minWidth={['100px', null, null, null, '200px']}
     >
       <Flex
@@ -91,7 +91,7 @@ const NavigationBar = (): JSX.Element => {
           <Text
             fontSize={['30px', null, null, null, '50px']}
             mr={['20px', null, '0']}
-            color='white'
+            color={userInfo?.userSettings?.tertiary_colorValue}
           >
             LOGO
           </Text>

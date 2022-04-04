@@ -9,6 +9,7 @@ const Wrapper = styled(Flex)``
 const StyledRadio = styled.input``
 
 interface Props {
+  extend?: boolean
   layout: 'column' | 'row'
   name: string
   values: string[]
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const RadioButton: React.FC<Props> = ({
+  extend,
   layout,
   name,
   values,
@@ -34,7 +36,7 @@ const RadioButton: React.FC<Props> = ({
             mr={layout === 'row' ? '20px' : '0'}
           >
             <Box mr='10px'>
-              <Text>
+              <Text extend={extend ? extend : false}>
                 {val}
               </Text>
             </Box>
