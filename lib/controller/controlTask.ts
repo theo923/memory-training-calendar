@@ -34,7 +34,6 @@ export const controlTaskColor = (
   color: ColorProps,
   inputProperties: string
 ) => {
-  console.log(123, color, inputProperties)
   setInputVal((prev) => {
     return { ...prev, [inputProperties]: color.colorValue, ...color }
   })

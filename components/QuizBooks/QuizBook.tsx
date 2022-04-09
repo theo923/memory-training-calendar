@@ -72,7 +72,6 @@ const QuizBook: React.FC<Props> = ({
   }
 
   const handleUpload = async () => {
-    console.log(quizBook)
     await axios.post('/api/createPublicQuizBook', {
       ip,
       userID: userInfo?.user?.id,

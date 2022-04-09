@@ -34,7 +34,6 @@ const quizBook: React.FC<Props> = ({
   status,
   pageArray
 }): JSX.Element => {
-  console.log(publicQuizBooks)
   return (
     <>
       <Head>
@@ -107,7 +106,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
       parseInt(query.page as string),
       Math.ceil(metadata.total / itemsForPages)
     );
-    console.log(pageArray)
 
     return {
       props: {
