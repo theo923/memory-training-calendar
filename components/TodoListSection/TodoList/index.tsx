@@ -108,6 +108,7 @@ const TodoList: React.FC<Props> = ({
                 key={idx}
                 user={userInfo?.user}
                 allTodoList={allTodoList}
+                id={todo.id}
                 title={todo.title}
                 description={todo.description}
                 finished={todo.finished}

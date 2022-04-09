@@ -39,6 +39,7 @@ export const getTodoList = async (user: UserProps, page: number, req: any) => {
       return {
         todoList: returnArr.map((t: TodoProps) => {
           return {
+            id: t.id,
             title: t.title,
             description: t.description,
             finished: t.finished,
@@ -46,6 +47,7 @@ export const getTodoList = async (user: UserProps, page: number, req: any) => {
         }),
         allTodoList: returnAllArr.map((t: TodoProps) => {
           return {
+            id: t.id,
             title: t.title,
             description: t.description,
             finished: t.finished,
@@ -58,6 +60,7 @@ export const getTodoList = async (user: UserProps, page: number, req: any) => {
         todoList: [],
         allTodoList: returnAllArr.map((t: TodoProps) => {
           return {
+            id: t.id,
             title: t.title,
             description: t.description,
             finished: t.finished,

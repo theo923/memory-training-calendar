@@ -81,6 +81,7 @@ export interface UserSettingsProps {
 }
 
 export interface TodoProps {
+  id?: string
   title: string
   description: string
   finished: boolean

@@ -69,7 +69,7 @@ const createPublicQuizBook = async (req: any, res: any) => {
     })
   }
   catch (err) {
-    console.log(JSON.stringify(err))
+    console.log(err)
     res.json({ success: false })
   }
 }

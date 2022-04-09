@@ -9,6 +9,7 @@ export const READ_USER_TODO_QUERY = gql`
           userID
           userName
           todo(pagination: { start: $start, limit: 10 }) {
+            id
             title
             description
             finished
@@ -28,6 +29,7 @@ export const READ_USER_TODO_ALL_QUERY = gql`
           userID
           userName
           todo(pagination: { start: 0, limit: 99999 }) {
+            id
             title
             description
             finished

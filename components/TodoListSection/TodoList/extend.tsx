@@ -13,7 +13,6 @@ import SlateTextBox from 'styled/SlateTextBox'
 import { refreshData } from 'lib/utils/refresh_data'
 import axios from 'axios'
 import { getUserIP } from 'lib/get/getIP'
-import { control_string_length } from 'lib/utils/control_string_length'
 
 const InputText = styled(Box)`
   align-self: center;
@@ -51,13 +50,14 @@ const TodoListExtend: React.FC<Props> = ({
       userName: user.username,
       ip,
       todoList: allTodoList.map((todo: TodoProps) => {
-        if (todo.title === inputVal.title)
+        if (todo.id === inputVal.id)
           return {
-            title: control_string_length(todo.title, 20)[1] as string,
+            title,
             description,
             finished: todo?.finished || false
           }
-        else return todo
+
+        return todo
       })
     }).then(({ data: { success } }) => {
       if (success)

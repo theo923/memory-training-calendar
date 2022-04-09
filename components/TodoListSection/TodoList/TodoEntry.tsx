@@ -4,6 +4,7 @@ import { setTextColor, setBooleanColor } from "lib/controller/controlColor";
 import { TODOLIST_URL_PAGE } from "lib/data/pageUrl";
 import { getUserIP } from "lib/get/getIP";
 import { UserProps, TodoProps } from "lib/interface";
+import { control_string_length } from "lib/utils/control_string_length";
 import { refreshData } from "lib/utils/refresh_data";
 import { useContext, useEffect, useState } from "react";
 import { BiDetail } from "react-icons/bi";
@@ -59,6 +60,7 @@ const TodoEntryDescription = styled(GlassBox) <{ setTaskColor: string }>`
 `
 
 interface Props {
+  id: string
   title: string
   description: string
   finished: boolean
@@ -68,6 +70,7 @@ interface Props {
 }
 
 const TodoEntry: React.FC<Props> = ({
+  id,
   title,
   description,
   finished,
@@ -90,6 +93,7 @@ const TodoEntry: React.FC<Props> = ({
       <Box width='50vw'>
         <TodoListExtend
           todo={{
+            id,
             title,
             description,
             finished
@@ -166,7 +170,7 @@ const TodoEntry: React.FC<Props> = ({
             fontSize='18px'
             color={setTextColor(7)}
           >
-            {title}
+            {control_string_length(title, 20)[1] as string}
           </Text>
         </Box>
         <Flex justifyContent='center' alignItems='center'>
