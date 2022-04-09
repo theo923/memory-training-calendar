@@ -42,6 +42,7 @@ export interface RegisterInfoProps {
 export interface UserProps {
   id: string
   username: string
+  ip?: string
 }
 
 export interface TaskDateProps {

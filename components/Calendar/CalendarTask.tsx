@@ -1,6 +1,5 @@
 import axios from "axios";
 import { setTextColor, targetIdentifier, dayIdentifier, setBooleanColor } from "lib/controller/controlColor";
-import { getUserIP } from "lib/get/getIP";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
 import { TaskProps, UserProps } from "lib/interface";
 import { refreshData } from "lib/utils/refresh_data";
@@ -66,7 +65,6 @@ const CalendarTask: React.FC<Props> = ({
   setTargetedTask,
   currentUser
 }) => {
-  const ip = getUserIP()
   const width = useWindowDimensions()?.width
   const [textlimit, setTextlimit] = useState<number>(0);
   const taskColor = (targetedTask === task ? setTextColor(targetIdentifier(task, targetedTask)) : task?.taskColor) || '#fff'
@@ -92,7 +90,7 @@ const CalendarTask: React.FC<Props> = ({
             t_finished: entry!['t_finished']
           }
         }),
-        ip,
+        ip: currentUser?.ip || '',
         userID: currentUser?.id || '',
         userName: currentUser?.username || ''
       }).then(({ data: { success } }) => {

@@ -10,7 +10,6 @@ import { TodoProps } from 'lib/interface';
 import axios from 'axios';
 import { refreshData } from 'lib/utils/refresh_data';
 import { initializeTodo } from 'lib/initialize';
-import { getUserIP } from 'lib/get/getIP';
 import { UserContext } from 'components/User';
 import PageNavigation from 'components/Pagination';
 import { TODOLIST_URL_PAGE } from 'lib/data/pageUrl';
@@ -27,7 +26,6 @@ const TodoList: React.FC<Props> = ({
   allTodoList,
   pageArray
 }) => {
-  const ip = getUserIP()
   const router: NextRouter = useRouter()
   const currentPage: number = parseInt(router?.query?.page as string)
   const [addTodo, setAddTodo] = useState<TodoProps>(initializeTodo)
@@ -59,7 +57,7 @@ const TodoList: React.FC<Props> = ({
       await axios.post('/api/updateTodo', {
         userID: userInfo?.user.id,
         userName: userInfo?.user.username,
-        ip,
+        ip: userInfo?.user?.ip,
         todoList: [...allTodoList, { ...addTodo, title: control_string_length(addTodo.title, 20)[1] as string }]
       }).then(({ data: { success } }) => {
         if (success) {
@@ -103,12 +101,12 @@ const TodoList: React.FC<Props> = ({
           width={['100%', null, '50%']}
         >
           {todoList?.length > 0 &&
-            todoList?.map((todo: any, idx: number) =>
+            todoList?.map((todo: TodoProps, idx: number) =>
               <TodoEntry
-                key={idx}
+                key={`todo_${idx}`}
                 user={userInfo?.user}
                 allTodoList={allTodoList}
-                id={todo.id}
+                id={todo.id || '9999'}
                 title={todo.title}
                 description={todo.description}
                 finished={todo.finished}

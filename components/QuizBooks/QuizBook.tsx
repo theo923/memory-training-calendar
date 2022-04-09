@@ -17,7 +17,6 @@ import QuizBookPanel from 'components/QuizBookPanel'
 import { refreshData } from 'lib/utils/refresh_data'
 import { UserContext } from 'components/User'
 import axios from 'axios'
-import { getUserIP } from 'lib/get/getIP'
 import { QUIZBOOK_URL_PAGE } from 'lib/data/pageUrl'
 
 const QuizBookEntry = styled(GlassBox) <{ setTaskColor: string }>`
@@ -52,7 +51,6 @@ const QuizBook: React.FC<Props> = ({
   allQuizBooks,
   currentPage
 }): JSX.Element => {
-  const ip = getUserIP()
   const userInfo = useContext(UserContext)
   const [open, setOpen] = useState<boolean>(false)
   const modalContext = useContext(ModalContext)
@@ -73,7 +71,7 @@ const QuizBook: React.FC<Props> = ({
 
   const handleUpload = async () => {
     await axios.post('/api/createPublicQuizBook', {
-      ip,
+      ip: userInfo?.user?.ip,
       userID: userInfo?.user?.id,
       userName: userInfo?.user?.username,
       quizBook,

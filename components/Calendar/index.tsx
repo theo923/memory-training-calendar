@@ -89,13 +89,13 @@ const Calendar: React.FC<Props> = ({
           gridTemplateColumns={["1fr", "1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
         >
           {[...Array(7)].map((_, dnidx: number) =>
-            <Text key={dnidx} textAlign='center'>{days[dnidx]}</Text>
+            <Text key={`dayName_${dnidx}`} textAlign='center'>{days[dnidx]}</Text>
           )}
         </Grid>
       }
       {calendar.map((week: Date[], cidx: number) => (
         <Grid
-          key={cidx}
+          key={`week_${cidx}`}
           gridTemplateColumns={["1fr", "1fr 1fr 1fr 1fr 1fr 1fr 1fr"]}
         >
           {week.map((day: Date, didx: number) => {
@@ -107,7 +107,7 @@ const Calendar: React.FC<Props> = ({
             }
             return (
               <CalendarColumn
-                key={didx}
+                key={`day_${didx}`}
                 setColor={setBgColor(dayIdentifier(day, target)) || 'transparent'}
                 onClick={() => setTarget(day)}
               >
@@ -159,9 +159,11 @@ const Calendar: React.FC<Props> = ({
                     (task: TaskProps, tidx: number) => {
                       if (tidx >= 3 && width >= 540) return null
                       return (
-                        <Box onDoubleClick={() => modalContext.setModalIsOpen(true)}>
+                        <Box
+                          key={tidx}
+                          onDoubleClick={() => modalContext.setModalIsOpen(true)}
+                        >
                           <TaskBox
-                            key={tidx}
                             task={task}
                             day={day}
                             target={target}

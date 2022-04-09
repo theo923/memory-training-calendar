@@ -24,7 +24,7 @@ const Pagination: React.FC<Props> = ({
     >
       {pageArray.map((item: number) => {
         return (
-          <Box mr='10px'>
+          <Box key={`page_${item}`} mr='10px'>
             <Button
               key={item}
               onClick={() => router.push(setPage(item))}

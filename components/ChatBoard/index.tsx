@@ -52,7 +52,7 @@ const ChatBoard = () => {
           <Flex flexDirection='column'>
             {chatSnapshot?.docs.map(chat => (
               <ChatUser
-                key={chat.id}
+                key={`chat_${chat.id}`}
                 setStartChat={setStartChat}
                 chat={chat}
               />
