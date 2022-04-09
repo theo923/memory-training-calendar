@@ -20,7 +20,6 @@ import SlateTextBox from 'styled/SlateTextBox/'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import tw from 'twin.macro'
-import { getUserIP } from 'lib/get/getIP'
 import { ServerSettingsContext } from 'components/ServerSettings'
 import { UserContext } from 'components/User'
 import RadioButton from 'styled/RadioButton'
@@ -50,7 +49,6 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
   setTarget,
   extend
 }): JSX.Element => {
-  const ip = getUserIP()
   const [colorPicker, setColorPicker] = useState<string>('gradient')
   const [inputVal, setInputVal] = useState<TaskProps>(initializeTask)
   const [loading, setLoading] = useState<boolean | undefined>()
@@ -88,7 +86,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
         taskDescription: inputVal.taskDescription,
         targetedDate,
         taskColor: inputVal.taskColor,
-        ip
+        ip: userInfo?.user?.ip
       }).then(({ data: { success } }) => {
         if (success) {
           refreshData()

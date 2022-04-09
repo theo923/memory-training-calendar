@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { setBooleanColor, setTextColor } from 'lib/controller/controlColor'
-import {getUserIP} from 'lib/get/getIP'
 import { UserProps } from 'lib/interface'
 import { refreshData } from 'lib/utils/refresh_data'
 import React from 'react'
@@ -39,14 +38,12 @@ const TaskCard: React.FC<Props> = ({
   finished,
   currentUser
 }): JSX.Element => {
-  const ip = getUserIP()
-
   const handleSubmit = async () => {
     await axios.post('/api/deleteTask', {
       id: taskID,
       userID: currentUser.id,
       userName: currentUser.username,
-      ip
+      ip: currentUser?.ip
     }).then(({ data: { success } }) => {
       if (success)
         refreshData()

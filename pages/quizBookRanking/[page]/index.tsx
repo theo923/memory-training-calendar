@@ -15,7 +15,7 @@ import Modal from "components/Modal";
 import { calculatePageArray } from "lib/utils/calculate_page_arr";
 import { QUIZBOOK_RANKING_FETCH_COUNT } from "lib/data/fetch_numbers";
 import { getPublicQuizBooks } from "lib/get/getPublicQuizBooks";
-import QuizBooks from "components/QuizBooksRanking";
+import QuizBooks from "components/QuizBooksRanking/MoreItems";
 
 interface Props {
   serverSettings: ServerSettingsProps

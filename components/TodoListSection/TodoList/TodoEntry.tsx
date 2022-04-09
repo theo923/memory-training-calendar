@@ -2,7 +2,6 @@ import axios from "axios";
 import { ModalContext } from "components/Modal/ModalContext";
 import { setTextColor, setBooleanColor } from "lib/controller/controlColor";
 import { TODOLIST_URL_PAGE } from "lib/data/pageUrl";
-import { getUserIP } from "lib/get/getIP";
 import { UserProps, TodoProps } from "lib/interface";
 import { control_string_length } from "lib/utils/control_string_length";
 import { refreshData } from "lib/utils/refresh_data";
@@ -78,7 +77,6 @@ const TodoEntry: React.FC<Props> = ({
   allTodoList,
   currentPage
 }) => {
-  const ip = getUserIP()
   const modalContext = useContext(ModalContext)
   const [open, setOpen] = useState<boolean>(false)
 
@@ -111,7 +109,7 @@ const TodoEntry: React.FC<Props> = ({
       await axios.post('/api/updateTodo', {
         userID: user.id,
         userName: user.username,
-        ip,
+        ip: user.ip,
         todoList: allTodoList.filter((todo: TodoProps) => todo.title !== title)
       }).then(({ data: { success } }) => {
         if (success) {
@@ -129,7 +127,7 @@ const TodoEntry: React.FC<Props> = ({
       await axios.post('/api/updateTodo', {
         userID: user.id,
         userName: user.username,
-        ip,
+        ip: user.ip,
         todoList: allTodoList.map((todo: TodoProps) => {
           if (todo.title === title) return {
             ...todo,

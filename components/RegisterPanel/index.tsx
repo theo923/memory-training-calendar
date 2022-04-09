@@ -1,10 +1,10 @@
 import axios from 'axios';
+import { UserContext } from 'components/User';
 import { auth } from 'lib/firebase';
-import { getUserIP } from 'lib/get/getIP';
 import { initializeRegisterInfo } from 'lib/initialize';
 import { RegisterInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { BsFillArrowLeftSquareFill } from 'react-icons/bs'
 import styled from 'styled-components';
@@ -21,7 +21,7 @@ const ContentBox = styled(Box)`
 `
 
 const RegisterPanel = () => {
-  const ip = getUserIP()
+  const userInfo = useContext(UserContext)
   const [_c, setCookie, _rC] = useCookies(['calendar-user-token']);
   const [registerInfo, setRegisterInfo] = useState<RegisterInfoProps>(initializeRegisterInfo)
   const [status, setStatus] = useState<string>('')
@@ -47,7 +47,7 @@ const RegisterPanel = () => {
       email: registerInfo.email,
       username: registerInfo.username,
       password: registerInfo.password,
-      ip
+      ip: userInfo?.user?.ip,
     })
     const { success } = response.data
     if (success) {

@@ -159,9 +159,9 @@ const Dashboard: React.FC<Props> = ({
             <BsPieChartFill size='30px' />,
             "Task's Progress",
             unsorted?.length > 0 &&
-            unsorted.filter((_: any, idx: number) => idx < 5).map((task: any, idx: number) =>
+            unsorted.filter((_: any, idx: number) => idx < 5).map((task: any, iidx: number) =>
               <DashboardTask
-                key={idx}
+                key={`dashboardTask_${iidx}`}
                 task={task}
                 successTasks={task?.successTasks || 0}
                 totalTasks={task?.totalTasks || 0}

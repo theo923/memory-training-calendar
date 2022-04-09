@@ -80,7 +80,7 @@ const QuizBooks: React.FC<Props> = ({
           {quizBooks?.length > 0 &&
             quizBooks?.map((quizBook: QuizBookProps, idx: number) =>
               <QuizBook
-                key={idx}
+                key={`quizBooks_${idx}`}
                 quizBook={quizBook}
                 allQuizBooks={allQuizBooks}
                 currentPage={currentPage}

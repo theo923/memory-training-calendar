@@ -1,16 +1,20 @@
 import publicIp from 'public-ip'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 export const getUserIP = (): string => {
+  return '1'
+}
+
+export const retrieveUserIP = (): string => {
   const [IP, setIP] = useState<string>('')
-  useEffect(() => {
-    handleGet()
+
+  const handleGet = useCallback(async () => {
+    setIP(await publicIp.v4())
   }, [IP])
 
-  const handleGet = async () => {
-    const ip = (await publicIp.v4()) || ''
-    setIP(ip)
-  }
+  useEffect(() => {
+    handleGet()
+  }, [handleGet])
 
   return IP
 }

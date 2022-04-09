@@ -11,7 +11,6 @@ import axios from 'axios'
 import { refreshData } from 'lib/utils/refresh_data'
 import ColorPanel from 'components/ServerSettings/ColorPalette'
 import SlateTextBox from 'styled/SlateTextBox'
-import { getUserIP } from 'lib/get/getIP'
 import { ServerSettingsContext } from 'components/ServerSettings'
 import { UserContext } from 'components/User'
 
@@ -30,7 +29,6 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
   reload = false,
   extend
 }): JSX.Element => {
-  const ip = getUserIP()
   const [colorPicker, setColorPicker] = useState<string>('gradient')
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
@@ -66,7 +64,7 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
         taskTitle: inputVal.taskTitle,
         taskDescription: inputVal.taskDescription,
         taskColor: inputVal.taskColor,
-        ip
+        ip: userInfo?.user?.ip
       }).then(({ data: { success } }) => {
         if (success) {
           if (reload) refreshData('', 'reload')

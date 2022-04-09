@@ -12,7 +12,6 @@ import Input from 'styled/Input'
 import SlateTextBox from 'styled/SlateTextBox'
 import { refreshData } from 'lib/utils/refresh_data'
 import axios from 'axios'
-import { getUserIP } from 'lib/get/getIP'
 import { initializeQuiz } from 'lib/initialize'
 import { UserContext } from 'components/User'
 import { QUIZBOOK_URL_PAGE } from 'lib/data/pageUrl'
@@ -39,11 +38,9 @@ const QuizModify: React.FC<Props> = ({
 }): JSX.Element => {
   const userInfo = useContext(UserContext)
   const modalContext = useContext(ModalContext)
-  const ip = getUserIP()
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
   const [inputVal, setInputVal] = useState<QuizProps>(quiz ? quiz : initializeQuiz)
-
 
   const handleQuizBookPanel = (newBooks: any, currentNewBook: any) => {
     modalContext.setModalContent(
@@ -79,7 +76,7 @@ const QuizModify: React.FC<Props> = ({
       await axios.post('/api/updateQuizBooks', {
         userID: userInfo?.user.id,
         userName: userInfo?.user.username,
-        ip,
+        ip: userInfo?.user?.ip,
         quizbook: newBooks
       }).then(({ data: { success } }) => {
         if (success) {
@@ -113,7 +110,7 @@ const QuizModify: React.FC<Props> = ({
       await axios.post('/api/updateQuizBooks', {
         userID: userInfo?.user.id,
         userName: userInfo?.user.username,
-        ip,
+        ip: userInfo?.user?.ip,
         quizbook: newBooks
       }).then(({ data: { success } }) => {
         if (success) {
@@ -142,7 +139,7 @@ const QuizModify: React.FC<Props> = ({
     await axios.post('/api/updateQuizBooks', {
       userID: userInfo?.user.id,
       userName: userInfo?.user.username,
-      ip,
+      ip: userInfo?.user?.ip,
       quizbook: newBooks
     }).then(({ data: { success } }) => {
       if (success) {

@@ -54,7 +54,7 @@ const QuizBookPanel: React.FC<Props> = ({
       )
       modalContext.setModalIsOpen(true)
     }
-    
+
     if (action === 'modify' && data) {
       modalContext.setModalContent(
         <Box width='50vw'>
@@ -100,7 +100,12 @@ const QuizBookPanel: React.FC<Props> = ({
         </Button>
       </Flex>
       {quizBook?.quiz && quizBook?.quiz?.map((q: QuizProps) =>
-        <Flex mt='10px' justifyContent='space-between' alignItems='center'>
+        <Flex
+          key={`quizBook_quiz_${q?.id}`}
+          mt='10px'
+          justifyContent='space-between'
+          alignItems='center'
+        >
           <Text fontSize='20px'>
             {q?.question}
           </Text>

@@ -21,7 +21,7 @@ const TaskBoard: React.FC<Props> = ({
         userTasks![getFullDate(target)]?.map(
           (task: TaskProps, idx: number) => (
             <TaskCard
-              key={idx}
+              key={`taskCard_${idx}`}
               taskID={task.id}
               taskTitle={task.taskTitle}
               taskDescription={task.taskDescription}

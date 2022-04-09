@@ -64,7 +64,7 @@ const ResultPage: React.FC<Props> = ({
         {quizBook.quiz.map((q: QuizProps, idx: number) => {
           const bool = verify_answer(answer[idx], q.answer)
           return (
-            <>
+            <Box key={`panel_${idx}`}>
               <Flex alignItems='center' justifyContent='center'>
                 {bool ? <TiTick color='green' size='20px' /> : <TiTimes color='red' size='20px' />}
               </Flex>
@@ -85,7 +85,7 @@ const ResultPage: React.FC<Props> = ({
                     Answer
                   </Button>
               }
-            </>
+            </Box>
           )
         }
         )}

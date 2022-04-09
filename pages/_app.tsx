@@ -13,44 +13,44 @@ import { UserProps } from "lib/interface";
 import { initializeUser } from "lib/initialize";
 
 function MyApp({ Component, pageProps }: AppProps) {
-    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
-    const [modalContent, setModalContent] = useState<ReactNode | null>(null)
-    const [colorPalette, setColorPalette] = useState<any>({})
-    const [user, setUser] = useState<UserProps>(initializeUser)
-    const [userSettings, setUserSettings] = useState<any>({})
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+  const [modalContent, setModalContent] = useState<ReactNode | null>(null)
+  const [colorPalette, setColorPalette] = useState<any>({})
+  const [user, setUser] = useState<UserProps>(initializeUser)
+  const [userSettings, setUserSettings] = useState<any>({})
 
-    const VALUES = {
-        modalIsOpen,
-        setModalIsOpen,
-        modalContent,
-        setModalContent
-    }
+  const VALUES = {
+    modalIsOpen,
+    setModalIsOpen,
+    modalContent,
+    setModalContent
+  }
 
-    const VALUES2 = {
-        colorPalette,
-        setColorPalette
-    }
+  const VALUES2 = {
+    colorPalette,
+    setColorPalette
+  }
 
-    const VALUES3 = {
-        user,
-        setUser,
-        userSettings,
-        setUserSettings
-    }
+  const VALUES3 = {
+    user,
+    setUser,
+    userSettings,
+    setUserSettings
+  }
 
-    return (
-        <ApolloProvider client={client}>
-            <ThemeProvider theme={theme}>
-                <ModalContext.Provider value={VALUES}>
-                    <ServerSettingsContext.Provider value={VALUES2}>
-                        <UserContext.Provider value={VALUES3}>
-                            <Component {...pageProps} />
-                        </UserContext.Provider>
-                    </ServerSettingsContext.Provider>
-                </ModalContext.Provider>
-            </ThemeProvider>
-        </ApolloProvider>
-    )
+  return (
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <ModalContext.Provider value={VALUES}>
+          <ServerSettingsContext.Provider value={VALUES2}>
+            <UserContext.Provider value={VALUES3}>
+              <Component {...pageProps} />
+            </UserContext.Provider>
+          </ServerSettingsContext.Provider>
+        </ModalContext.Provider>
+      </ThemeProvider>
+    </ApolloProvider>
+  )
 }
 
 export default MyApp;

@@ -52,7 +52,7 @@ const Chat: React.FC<Props> = ({
     if (messageSnapshot) {
       return messageSnapshot.docs.map((message) =>
         <ChatMessageBox
-          key={message.id}
+          key={`message_snapshot_${message.id}`}
           me={user?.email || ''}
           user={message.data().user}
           message={{
@@ -65,7 +65,7 @@ const Chat: React.FC<Props> = ({
     else {
       return messages.map((message: any) => {
         <ChatMessageBox
-          key={message.id}
+          key={`message_${message.id}`}
           me={user?.email || ''}
           user={message.user}
           message={message}

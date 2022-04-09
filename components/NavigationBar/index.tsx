@@ -1,6 +1,5 @@
 import axios from 'axios';
 import ColorPanel from 'components/ServerSettings/ColorPalette';
-import { getUserIP } from 'lib/get/getIP';
 import { refreshData } from 'lib/utils/refresh_data';
 import { NextRouter, useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react'
@@ -42,7 +41,6 @@ interface InputValProp {
 }
 
 const NavigationBar = (): JSX.Element => {
-  const ip = getUserIP()
   const serverSettingsInfo = useContext(ServerSettingsContext)
   const userInfo = useContext(UserContext)
   const [inputVal, setInputVal] = useState<InputValProp>()
@@ -62,7 +60,7 @@ const NavigationBar = (): JSX.Element => {
 
   const updateSettings = async (inputVal: InputValProp) => {
     await axios.post('/api/updateUserSettings', {
-      ip,
+      ip: userInfo?.user?.ip,
       userID: userInfo?.user?.id,
       userName: userInfo?.user.username,
       bgColor: inputVal?.bgColor,
@@ -110,7 +108,7 @@ const NavigationBar = (): JSX.Element => {
           {navData && navData.map(
             (nav: NavDataProps, idx: number) =>
               <MotionFlexContainer
-                key={idx}
+                key={`nav_${idx}`}
                 variants={motionBoxVariant}
                 initial="initial"
                 animate="animate"

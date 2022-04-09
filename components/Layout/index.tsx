@@ -1,10 +1,11 @@
 import { childNode, ServerSettingsProps, UserProps, UserSettingsProps } from "lib/interface";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useMemo } from "react";
 import Box from "styled/Box";
 import styled, { css } from "styled-components";
 import { UserContext } from "components/User";
 import { ServerSettingsContext } from "components/ServerSettings";
 import { initializeUser } from "lib/initialize";
+import publicIp from "public-ip";
 
 const Wrapper = styled(Box) <{ bgcolor: string }>`
   @media only screen and (max-width: 768px) {
@@ -34,19 +35,26 @@ const Layout: React.FC<Props> = ({
   const serverSettingsInfo = useContext(ServerSettingsContext)
   const userInfo = useContext(UserContext)
 
-  useEffect(() => {
+  useMemo(() => {
     if (serverSettings?.taskColor)
       serverSettingsInfo.setColorPalette(serverSettings.taskColor)
   }, [serverSettings])
 
-  useEffect(() => {
+  useMemo(async () => {
+    const ip = await publicIp.v4()
     if (user)
-      userInfo.setUser(user)
+      userInfo.setUser({
+        ...user,
+        ip
+      })
     else
-      userInfo.setUser(initializeUser)
+      userInfo.setUser({
+        ...initializeUser,
+        ip
+      })
   }, [user])
 
-  useEffect(() => {
+  useMemo(() => {
     if (userSettings)
       userInfo.setUserSettings(userSettings)
   }, [userSettings])

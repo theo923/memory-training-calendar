@@ -8,7 +8,6 @@ import { ModalContext } from 'components/Modal/ModalContext'
 import ModifyBoardDefaultLayout from './defaultLayout'
 import axios from 'axios'
 import { refreshData } from 'lib/utils/refresh_data'
-import { getUserIP } from 'lib/get/getIP'
 import { UserContext } from 'components/User'
 
 interface Props {
@@ -21,7 +20,6 @@ const ModifyBoardExtend: React.FC<Props> = ({
   reload = false
 }): JSX.Element => {
   const modalContext = useContext(ModalContext)
-  const ip = getUserIP()
   const userInfo = useContext(UserContext)
 
   const handleDelete = async () => {
@@ -29,7 +27,7 @@ const ModifyBoardExtend: React.FC<Props> = ({
       userID: userInfo?.user?.id,
       userName: userInfo?.user?.username,
       id: targetedTask.id,
-      ip
+      ip: userInfo?.user?.ip
     }).then(({ data: { success } }) => {
       if (success)
         refreshData('', 'reload')

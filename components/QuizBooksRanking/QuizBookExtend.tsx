@@ -12,7 +12,6 @@ import Input from 'styled/Input'
 import SlateTextBox from 'styled/SlateTextBox'
 import { refreshData } from 'lib/utils/refresh_data'
 import axios from 'axios'
-import { getUserIP } from 'lib/get/getIP'
 import { UserContext } from 'components/User'
 import { QUIZBOOK_URL_PAGE } from 'lib/data/pageUrl'
 
@@ -35,7 +34,6 @@ const QuizBookExtend: React.FC<Props> = ({
 }): JSX.Element => {
   const userInfo = useContext(UserContext)
   const modalContext = useContext(ModalContext)
-  const ip = getUserIP()
   const [loading, setLoading] = useState<boolean | undefined>()
   const [status, setStatus] = useState<string>('')
   const [name, setName] = useState<string>(addQuizBook?.name || '')
@@ -55,7 +53,7 @@ const QuizBookExtend: React.FC<Props> = ({
       await axios.post('/api/updateQuizBooks', {
         userID: userInfo?.user.id,
         userName: userInfo?.user.username,
-        ip,
+        ip: userInfo?.user?.ip,
         quizbook: [...allQuizBooks, { ...addQuizBook, name, description }]
       }).then(({ data: { success } }) => {
         if (success)
@@ -68,7 +66,7 @@ const QuizBookExtend: React.FC<Props> = ({
       await axios.post('/api/updateQuizBooks', {
         userID: userInfo?.user.id,
         userName: userInfo?.user.username,
-        ip,
+        ip: userInfo?.user?.ip,
         quizbook: allQuizBooks.map((quizBook: QuizBookProps) => {
           if (quizBook.id === addQuizBook.id)
             return {
@@ -92,7 +90,7 @@ const QuizBookExtend: React.FC<Props> = ({
     await axios.post('/api/updateQuizBooks', {
       userID: userInfo?.user.id,
       userName: userInfo?.user.username,
-      ip,
+      ip: userInfo?.user?.ip,
       quizbook: allQuizBooks.filter((qb: QuizBookProps) => qb.id !== addQuizBook.id)
     }).then(({ data: { success } }) => {
       if (success)

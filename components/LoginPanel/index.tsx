@@ -1,10 +1,10 @@
 import axios from 'axios';
+import { UserContext } from 'components/User';
 import { auth } from 'lib/firebase';
-import { getUserIP } from 'lib/get/getIP';
 import { initializeLoginInfo } from 'lib/initialize';
 import { LoginInfoProps } from 'lib/interface';
 import { refreshData } from 'lib/utils/refresh_data';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { BsFillArrowLeftSquareFill } from 'react-icons/bs'
 import styled from 'styled-components';
@@ -21,7 +21,7 @@ const ContentBox = styled(Box)`
 `
 
 const LoginPanel = () => {
-  const ip = getUserIP()
+  const userInfo = useContext(UserContext)
   const [_cT, setTokenCookie, _rTC] = useCookies(['calendar-user-token']);
   const [_cI, setIDCookie, _rIC] = useCookies(['calendar-user-id']);
   const [_cN, setNameCookie, _rNC] = useCookies(['calendar-user-name']);
@@ -33,7 +33,7 @@ const LoginPanel = () => {
     const response = await axios.post('/api/authorization', {
       identifier: loginInfo.email,
       password: loginInfo.password,
-      ip
+      ip: userInfo?.user?.ip
     })
     const { success } = response.data
     if (success) {

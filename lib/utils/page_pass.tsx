@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 const page_pass = (
   identifier: boolean,
@@ -6,12 +6,16 @@ const page_pass = (
 ) => {
   const [pass, setPass] = useState<boolean>(false)
 
+  const callback = useCallback(() => {
+    fail_func()
+  }, [identifier])
+
   useEffect(() => {
     if (identifier)
-      fail_func()
+      callback()
     else
       setPass(true)
-  }, [])
+  }, [callback])
 
   return pass
 }
