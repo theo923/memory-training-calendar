@@ -2,15 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  min-height: 100%;
-  min-width: 100%;
-}
-
-body {
+body,
+html,
+#__next {
   height: 100%;
-  width: 100%;
-  background-attachment: fixed;
+  margin: 0;
 }
 
 /* html,
@@ -19,11 +15,6 @@ body,
 #app > div {
 
 } */
-
-#__next {
-  display: flex;
-  flex-direction: column;
-}
 
 blockquote {
   background: #f9f9f9;
