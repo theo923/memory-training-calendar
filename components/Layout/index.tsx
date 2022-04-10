@@ -41,7 +41,12 @@ const Layout: React.FC<Props> = ({
   }, [serverSettings])
 
   useMemo(async () => {
-    const ip = await publicIp.v4()
+    let ip
+    try {
+      ip = await publicIp.v4()
+    } catch (err) {
+      ip = ''
+    }
     if (user)
       userInfo.setUser({
         ...user,
