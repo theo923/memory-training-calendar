@@ -1,5 +1,9 @@
 import axios from "axios";
-import { setTextColor, targetIdentifier, dayIdentifier, setBooleanColor } from "lib/controller/controlColor";
+import {
+  setTextColor, targetIdentifier,
+  // dayIdentifier,
+  setBooleanColor
+} from "lib/controller/controlColor";
 import { useWindowDimensions } from "lib/get/getWindowDimensions";
 import { TaskProps, UserProps } from "lib/interface";
 import { refreshData } from "lib/utils/refresh_data";
@@ -59,8 +63,8 @@ interface Props {
 
 const CalendarTask: React.FC<Props> = ({
   task,
-  day,
-  target,
+  // day,
+  // target,
   targetedTask,
   setTargetedTask,
   currentUser
@@ -132,8 +136,7 @@ const CalendarTask: React.FC<Props> = ({
           p={['3px']}
         >
           <CalendarText
-
-            color={task === targetedTask ? setTextColor(6) : setTextColor(dayIdentifier(day, target))}
+            color={task === targetedTask ? setTextColor(6) : 'black'}
           >
             {
               textlimit ?
@@ -148,7 +151,7 @@ const CalendarTask: React.FC<Props> = ({
       <ReactTooltip
         id={`taskTip-${task?.taskTitle}`} place="top" effect="solid"
       >
-        <Text>
+        <Text color='white'>
           {task?.taskTitle}
         </Text>
       </ReactTooltip>
