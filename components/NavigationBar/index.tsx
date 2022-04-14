@@ -159,7 +159,7 @@ const NavigationBar = (): JSX.Element => {
             <ReactTooltip
               id={`navTip-${nav.name}`} place="top" effect="solid"
             >
-              <Text>
+              <Text color='white'>
                 {nav.name}
               </Text>
             </ReactTooltip>

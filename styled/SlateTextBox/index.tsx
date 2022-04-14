@@ -34,7 +34,7 @@ const SlateTextBox: React.FC<Props> = ({
   changeHook,
   property,
   height = '300px',
-  color = '#000'
+  // color = '#000'
 }) => {
   try {
     const [value, setValue] = useState<Descendant[]>(values || initialValue)
@@ -64,7 +64,7 @@ const SlateTextBox: React.FC<Props> = ({
             <BlockButton format="numbered-list" icon={<ImListNumbered size='20px' />} />
             <BlockButton format="bulleted-list" icon={<ImList size='20px' />} />
           </Toolbar>
-          <SlateWrapper color={color} height={height}>
+          <SlateWrapper background='white' color={'#000'} height={height}>
             <Editable
               renderElement={renderElement}
               renderLeaf={renderLeaf}
