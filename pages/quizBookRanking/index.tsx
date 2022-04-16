@@ -14,7 +14,7 @@ import { getServerSettings } from "lib/get/getServerSettings";
 import Modal from "components/Modal";
 import { QUIZBOOK_RANKING_TOP_FETCH_COUNT } from "lib/data/fetch_numbers";
 import { getPublicQuizBooks } from "lib/get/getPublicQuizBooks";
-import QuizBooks from "components/QuizBooksRanking";
+import QuizBooksRanking from "components/QuizBooksRanking";
 
 interface Props {
   serverSettings: ServerSettingsProps
@@ -45,7 +45,7 @@ const quizBook: React.FC<Props> = ({
       >
         <NavigationBar />
         <MainComponent>
-          <QuizBooks
+          <QuizBooksRanking
             quizBooks={publicQuizBooks}
           />
         </MainComponent>
