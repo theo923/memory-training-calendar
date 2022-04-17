@@ -24,6 +24,7 @@ import { ServerSettingsContext } from 'components/ServerSettings'
 import { UserContext } from 'components/User'
 import RadioButton from 'styled/RadioButton'
 import CustomSchedule, { custom_schedule } from 'lib/utils/custom_schedule'
+import { ModalContext } from 'components/Modal/ModalContext'
 
 
 const InputText = styled(Text)`
@@ -63,6 +64,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
   const userInfo = useContext(UserContext)
   const [schedule, setSchedule] = useState<string>('Default')
   const [scheduleInputVal, setScheduleInputVal] = useState<ScheduleProps>(initializeSchedule)
+  const modalContext = useContext(ModalContext)
 
   useEffect(() => {
     if (!userTasks![getFullDate(target)])
@@ -90,6 +92,8 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       }).then(({ data: { success } }) => {
         if (success) {
           refreshData()
+          modalContext.setModalIsOpen(false)
+          modalContext.setModalContent(null)
           setStatus('Done')
         }
         else
