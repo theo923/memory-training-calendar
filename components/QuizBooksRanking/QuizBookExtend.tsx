@@ -56,8 +56,11 @@ const QuizBookExtend: React.FC<Props> = ({
         ip: userInfo?.user?.ip,
         quizbook: [...allQuizBooks, { ...addQuizBook, name, description }]
       }).then(({ data: { success } }) => {
-        if (success)
+        if (success){
           refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
+          modalContext.setModalIsOpen(false)
+          modalContext.setModalContent(null)
+        }
         else
           setStatus('Failed to create Quiz Book, please try again...')
       })
@@ -77,8 +80,11 @@ const QuizBookExtend: React.FC<Props> = ({
           return quizBook
         })
       }).then(({ data: { success } }) => {
-        if (success)
+        if (success) {
           refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
+          modalContext.setModalIsOpen(false)
+          modalContext.setModalContent(null)
+        }
         else
           setStatus('Failed to modify Quiz Book, please try again...')
       })
@@ -93,8 +99,11 @@ const QuizBookExtend: React.FC<Props> = ({
       ip: userInfo?.user?.ip,
       quizbook: allQuizBooks.filter((qb: QuizBookProps) => qb.id !== addQuizBook.id)
     }).then(({ data: { success } }) => {
-      if (success)
+      if (success){
         refreshData(QUIZBOOK_URL_PAGE(currentPage), 'replace')
+        modalContext.setModalIsOpen(false)
+        modalContext.setModalContent(null)
+      }
       else
         setStatus('Failed to delete Quiz Book, please try again...')
     })

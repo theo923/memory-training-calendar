@@ -13,6 +13,7 @@ import ColorPanel from 'components/ServerSettings/ColorPalette'
 import SlateTextBox from 'styled/SlateTextBox'
 import { ServerSettingsContext } from 'components/ServerSettings'
 import { UserContext } from 'components/User'
+import { ModalContext } from 'components/Modal/ModalContext'
 
 const InputText = styled(Text)`
   align-self: center;
@@ -35,6 +36,7 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
   const [inputVal, setInputVal] = useState<TaskProps>(targetedTask)
   const serverSettingsInfo = useContext(ServerSettingsContext)
   const userInfo = useContext(UserContext)
+  const modalContext = useContext(ModalContext)
 
   useEffect(() => {
     setInputVal(targetedTask)
@@ -69,6 +71,8 @@ const ModifyBoardDefaultLayout: React.FC<Props> = ({
         if (success) {
           if (reload) refreshData('', 'reload')
           refreshData()
+          modalContext.setModalIsOpen(false)
+          modalContext.setModalContent(null)
           setStatus('Done')
         }
         else
