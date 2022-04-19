@@ -4,6 +4,7 @@ import { getFullDate } from 'lib/get/getDate'
 import { TaskProps, UserTasksProps } from 'lib/interface'
 import React, { useContext } from 'react'
 import Box from 'styled/Box'
+import Text from 'styled/Text'
 
 interface Props {
   userTasks: UserTasksProps,
@@ -29,9 +30,10 @@ const TaskBoard: React.FC<Props> = ({
               currentUser={userInfo?.user}
             />
           ))
-        : <Box>
+        : <Text>
           No Tasks is founded. You must create one first.
-        </Box>}
+        </Text>
+      }
     </Box>
   )
 }

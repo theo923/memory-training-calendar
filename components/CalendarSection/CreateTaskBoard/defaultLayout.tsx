@@ -150,7 +150,7 @@ const CreateTaskBoardDefaultLayout: React.FC<Props> = ({
       </Flex>
       {schedule === 'Customizable' &&
         <CustomSchedule
-          extend
+          extend={extend ? true : false}
           inputVal={scheduleInputVal}
           setInputVal={setScheduleInputVal}
         />

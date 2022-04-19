@@ -7,6 +7,7 @@ import Flex from 'styled/Flex'
 import Text from 'styled/Text'
 import { motionBoxVariant } from 'assets/animationVariant'
 import ReactTooltip from "react-tooltip";
+import Grid from 'styled/Grid'
 
 const ColorCircle = styled(MotionBox) <{ bgcolor: string, selected: boolean }>`
   cursor: pointer;
@@ -27,52 +28,94 @@ interface Props {
   currentValue?: string
   setInputVal: React.Dispatch<React.SetStateAction<any>>,
   inputProperties: string
+  grid?: string[]
 }
 
 const ColorPanel: React.FC<Props> = ({
   colors,
   currentValue,
   setInputVal,
-  inputProperties
+  inputProperties,
+  grid
 }): JSX.Element => {
   useEffect(() => {
     ReactTooltip.rebuild();
   });
 
   return (
-    <Flex
-      data-test="ServerSettings-colorPalette"
-      flexWrap='wrap'
-      mb='20px'
-    >
-      {colors && colors?.map(
-        (color: ColorProps, idx: number) =>
-          <ColorCircle
-            key={idx}
-            variants={motionBoxVariant}
-            initial="initial"
-            animate="animate"
-            whileHover='hover'
-            my='10px'
-            mx='10px'
-            onClick={() => controlTaskColor(setInputVal, color, inputProperties)}
-            selected={currentValue === color?.colorValue}
-            bgcolor={color?.colorValue}
-            data-tip data-for={`colorTip-${inputProperties}-${color.colorValue}`}
-          />
-      )}
-      {colors && colors?.map(
-        (color: ColorProps, idx: number) =>
-          <ReactTooltip
-            key={idx}
-            id={`colorTip-${inputProperties}-${color.colorValue}`} place="top" effect="solid"
-          >
-            <Text color='white'>
-              {color.colorName}
-            </Text>
-          </ReactTooltip>
-      )}
-    </Flex>
+    <>
+      {!grid &&
+        <Flex
+          data-test="ServerSettings-colorPalette"
+          flexWrap='wrap'
+          mb='20px'
+        >
+          {colors && colors?.map(
+            (color: ColorProps, idx: number) =>
+              <ColorCircle
+                key={idx}
+                variants={motionBoxVariant}
+                initial="initial"
+                animate="animate"
+                whileHover='hover'
+                my='10px'
+                mx='10px'
+                onClick={() => controlTaskColor(setInputVal, color, inputProperties)}
+                selected={currentValue === color?.colorValue}
+                bgcolor={color?.colorValue}
+                data-tip data-for={`colorTip-${inputProperties}-${color.colorValue}`}
+              />
+          )}
+          {colors && colors?.map(
+            (color: ColorProps, idx: number) =>
+              <ReactTooltip
+                key={idx}
+                id={`colorTip-${inputProperties}-${color.colorValue}`} place="top" effect="solid"
+              >
+                <Text color='white'>
+                  {color.colorName}
+                </Text>
+              </ReactTooltip>
+          )}
+        </Flex>
+      }
+      {grid &&
+        <Grid
+          data-test="ServerSettings-colorPalette"
+          gridTemplateColumns={grid}
+          mb='20px'
+        >
+          {colors && colors?.map(
+            (color: ColorProps, idx: number) =>
+              <ColorCircle
+                key={idx}
+                variants={motionBoxVariant}
+                initial="initial"
+                animate="animate"
+                whileHover='hover'
+                my='10px'
+                mx='10px'
+                onClick={() => controlTaskColor(setInputVal, color, inputProperties)}
+                selected={currentValue === color?.colorValue}
+                bgcolor={color?.colorValue}
+                data-tip data-for={`colorTip-${inputProperties}-${color.colorValue}`}
+              />
+          )}
+          {colors && colors?.map(
+            (color: ColorProps, idx: number) =>
+              <ReactTooltip
+                key={idx}
+                id={`colorTip-${inputProperties}-${color.colorValue}`} place="top" effect="solid"
+              >
+                <Text color='white'>
+                  {color.colorName}
+                </Text>
+              </ReactTooltip>
+          )}
+        </Grid>
+        
+      }
+    </>
   )
 }
 
