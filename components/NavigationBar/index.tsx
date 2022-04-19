@@ -84,6 +84,7 @@ const NavigationBar = (): JSX.Element => {
         justifyContent='space-between'
         alignItems="center"
         flexWrap='wrap'
+        height='100%'
       >
         <Box>
           <Text
@@ -147,6 +148,7 @@ const NavigationBar = (): JSX.Element => {
               setInputVal={setInputVal}
               colors={serverSettingsInfo?.colorPalette?.color_gradient}
               inputProperties='bgColor'
+              grid={['1fr 1fr 1fr 1fr', '1fr 1fr 1fr']}
             />
           </Flex> :
           <Box />
