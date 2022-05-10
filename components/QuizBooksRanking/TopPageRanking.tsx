@@ -83,7 +83,7 @@ const TopPageRanking: React.FC<Props> = ({
               </Box>
             </QuizBookTitle>
           </Flex>
-          <Flex justifyContent='flex-start'>
+          <Flex justifyContent='flex-start' flexDirection='column'>
             {quizBook?.quiz.length > 0 &&
               quizBook?.quiz.slice(0, 5).map((qz: QuizForPublicProps) => (
                 <Flex
