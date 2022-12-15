@@ -1222,7 +1222,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/core@npm:^27.5.1":
+"@jest/core@npm:^27.4.5, @jest/core@npm:^27.5.1":
   version: 27.5.1
   resolution: "@jest/core@npm:27.5.1"
   dependencies:
@@ -2041,12 +2041,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:17.0.2":
-  version: 17.0.2
-  resolution: "@types/react-dom@npm:17.0.2"
+"@types/react-dom@npm:16.9.8":
+  version: 16.9.8
+  resolution: "@types/react-dom@npm:16.9.8"
   dependencies:
     "@types/react": "*"
-  checksum: 1725928a1c3a0026044e6401e6b53729e1a88849034fc67138d7784ec44a5132fe2e9056a19b741ccb462ff0ec0d8c2c01ef316bda19be0e31f2ead9346f600b
+  checksum: eef9f4ef0c297dd621fc4ab9aa7100ad7d7ccb4a1b8ec04170779b131aa9ea50d76a9ee9cd052cba6ef8389da7e8e8ab718e29fb6662a37d74862794a42094ec
   languageName: node
   linkType: hard
 
@@ -2059,13 +2059,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:17.0.2":
-  version: 17.0.2
-  resolution: "@types/react@npm:17.0.2"
+"@types/react@npm:16.9.53":
+  version: 16.9.53
+  resolution: "@types/react@npm:16.9.53"
   dependencies:
     "@types/prop-types": "*"
     csstype: ^3.0.2
-  checksum: a5198857165feddcbfc7d33e3322460ac62b8894d702414496a825b0c82272911ec33a42ef7c9d623a59308070eef4dfee6ff834b0674aa3f87eeb644196ee3b
+  checksum: 858b53f1b9c09a8eb65826c9bef0d61cfab8befb968745777fe18a1b32eb707ffaa70fdb6c1a5697251a530dfe5b0b926e5d7a033fddcb6952bc67291eb175a8
   languageName: node
   linkType: hard
 
@@ -4777,7 +4777,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-cli@npm:^27.5.1":
+"jest-cli@npm:^27.4.5":
   version: 27.5.1
   resolution: "jest-cli@npm:27.5.1"
   dependencies:
@@ -5210,13 +5210,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^27.4.5":
-  version: 27.5.1
-  resolution: "jest@npm:27.5.1"
+"jest@npm:27.4.5":
+  version: 27.4.5
+  resolution: "jest@npm:27.4.5"
   dependencies:
-    "@jest/core": ^27.5.1
+    "@jest/core": ^27.4.5
     import-local: ^3.0.2
-    jest-cli: ^27.5.1
+    jest-cli: ^27.4.5
   peerDependencies:
     node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
   peerDependenciesMeta:
@@ -5224,7 +5224,7 @@ __metadata:
       optional: true
   bin:
     jest: bin/jest.js
-  checksum: 96f1d69042b3c6dfc695f2a4e4b0db38af6fb78582ad1a02beaa57cfcd77cbd31567d7d865c1c85709b7c3e176eefa3b2035ffecd646005f15d8ef528eccf205
+  checksum: 57ee4be68650dd1f89e077cca48813d824779a07626e84178c672727ace1ef3cd489f124a27dc02b88601774413330e6d35080b11919efa6460ee61d378c6610
   languageName: node
   linkType: hard
 
@@ -6620,7 +6620,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^17.0.2":
+"react-dom@npm:17.0.2":
   version: 17.0.2
   resolution: "react-dom@npm:17.0.2"
   dependencies:
@@ -6754,12 +6754,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.0.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
+"react@npm:17.0.0":
+  version: 17.0.0
+  resolution: "react@npm:17.0.0"
   dependencies:
     loose-envify: ^1.1.0
-  checksum: 88e38092da8839b830cda6feef2e8505dec8ace60579e46aa5490fc3dc9bba0bd50336507dc166f43e3afc1c42939c09fe33b25fae889d6f402721dcd78fca1b
+    object-assign: ^4.1.1
+  checksum: ae732f4568b05df138b75c6d67100deff231fc571bea67c73eae7ddf4e9812a372c808d6eaeda5edf8cb1a9d85eea059356e5681cfd9563b018199140b5ad4ab
   languageName: node
   linkType: hard
 
@@ -6967,16 +6968,16 @@ __metadata:
     framer-motion: ^5.5.4
     fs: ^0.0.1-security
     graphql: ^16.2.0
-    jest: ^27.4.5
+    jest: 27.4.5
     next: ^12.0.7
     postcss: ^8.4.4
     prettier: 2.5.1
     process: ^0.11.10
     public-ip: ^5.0.0
-    react: ^18.0.0
+    react: 17.0.0
     react-cookie: ^4.1.1
     react-datepicker: ^4.6.0
-    react-dom: ^17.0.2
+    react-dom: 17.0.2
     react-firebase-hooks: ^4.0.1
     react-icons: ^4.3.1
     react-tooltip: ^4.2.21
