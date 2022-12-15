@@ -14,6 +14,7 @@ import { navData, NavDataProps } from './navData';
 import { ServerSettingsContext } from 'components/ServerSettings';
 import { UserContext } from 'components/User';
 import Button from 'styled/Button';
+const LOGO = '/Logo/LOGO.png'
 
 const NavigationBarWrapper = styled(Box) <{ bgcolor: string }>`
   z-index: 50;
@@ -87,17 +88,28 @@ const NavigationBar = (): JSX.Element => {
         height='100%'
       >
         <Box>
-          <Text
+          {/* <Text
             fontSize={['30px', null, null, null, '50px']}
             mr={['20px', null, '0']}
             color={userInfo?.userSettings?.tertiary_colorValue}
           >
             LOGO
-          </Text>
-          <Box
+          </Text> */}
+          {/* <Box
             className='border-t-8 border-gray-300 rounded-lg shadow-xl mb-10'
             width='90%'
-          />
+          /> */}
+          <Box
+            position='relative'
+            width={['100px', null, null, '150px']}
+            fontSize={['30px', null, null, null, '50px']}
+            mr={['20px', null, '0']}
+            mt={['0', null, '50px']}
+            style={{ cursor: "pointer" }}
+            onClick={() => { refreshData('/') }}
+          >
+            <img src={LOGO} />
+          </Box>
         </Box>
         <Flex
           flexDirection={['row', null, 'column']}
