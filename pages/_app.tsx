@@ -2,7 +2,7 @@ import { ApolloProvider } from "@apollo/client";
 import { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import { client } from "../lib/apollo";
-import { theme } from "../lib/theme";
+import { CustomeTheme, theme } from "../lib/theme";
 import "styles/globals.css";
 import "assets/fonts.css";
 import { ModalContext } from "components/Modal/ModalContext";
@@ -13,6 +13,7 @@ import { UserProps } from "lib/interface";
 import { initializeUser } from "lib/initialize";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const ThemeProviderFixed = ThemeProvider as unknown as React.FC<{ children: any; theme: CustomeTheme; }>;
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [modalContent, setModalContent] = useState<ReactNode | null>(null)
   const [colorPalette, setColorPalette] = useState<any>({})
@@ -40,7 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
+      <ThemeProviderFixed theme={theme}>
         <ModalContext.Provider value={VALUES}>
           <ServerSettingsContext.Provider value={VALUES2}>
             <UserContext.Provider value={VALUES3}>
@@ -48,7 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             </UserContext.Provider>
           </ServerSettingsContext.Provider>
         </ModalContext.Provider>
-      </ThemeProvider>
+      </ThemeProviderFixed>
     </ApolloProvider>
   )
 }
